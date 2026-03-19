@@ -1,21 +1,19 @@
 import React from 'react'
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
+
+import AdminSignup from './pages/AdminSignup'
+import UserSignin from './pages/UserSignin'
 import AdminSignin from './pages/AdminSignin'
-import User from './pages/User'
-import Login from './pages/Login'
 const App = () => {
   return (
     <>
       
         <Routes>
-          <Route path='/' element={<Login/>}/>
-          <Route path='/admin' element={<AdminSignin/>}/>
-          <Route path='/user' element={<User/>}/>
+          <Route path='/' element={<UserSignin/>}/>
+          <Route path='/AdminSignup' element={<AdminSignup/>}/>
+          <Route path='/AdminSignin' element={<AdminSignin/>}/>
+         
         </Routes>
-     
-      
-
-      
     </>
   )
 }

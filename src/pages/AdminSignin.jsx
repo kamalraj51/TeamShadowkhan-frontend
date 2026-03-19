@@ -1,32 +1,27 @@
 import React from 'react'
-
+import { NavLink } from 'react-router-dom'
 
 const AdminSignin = () => {
+    console.log("hii")
   return (
     <>
         <div>
-            <label htmlFor="userid">userid</label>
-            <input type='text' placeholder='userid' id='userid' name='userid'/>
+            <label htmlFor="email">email</label>
+            <input type='email' placeholder='email' id='email' name='email'/>
         </div>
         <div>
             <label htmlFor="password">password</label>
             <input type='password' placeholder='password' id='password' name='password'/>
         </div>
         <div>
-            <label htmlFor="email">email</label>
-            <input type='email' placeholder='email' id='email' name='email'/>
+            <button type='submit'>submit</button>
         </div>
-        
-       <div>
-         <button type='submit'>submit</button>
-       </div>
-       
-         
-         
-       
-
+         <div>
+            <NavLink to="/admin">admin</NavLink>
+            <NavLink to="/user">user</NavLink>
+        </div>
     </>
   )
 }
 
-export default AdminSignin
+export default AdminSignin;
