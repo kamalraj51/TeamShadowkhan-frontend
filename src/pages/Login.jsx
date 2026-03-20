@@ -1,27 +1,54 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React from "react";
+import {
+  Button,
+  Container,
+  Form,
+  Input,
+  Label,
+  RegisterCredintials,
+} from "../styles/Signup.styles";
+import { NavLink } from "react-router-dom";
 
 const Login = () => {
-    console.log("hii")
+  const title = {
+    textAlign: "center",
+  };
   return (
     <>
-        <div>
-            <label htmlFor="email">email</label>
-            <input type='email' placeholder='email' id='email' name='email'/>
-        </div>
-        <div>
-            <label htmlFor="password">password</label>
-            <input type='password' placeholder='password' id='password' name='password'/>
-        </div>
-        <div>
-            <button type='submit'>submit</button>
-        </div>
-         <div>
-            <NavLink to="/admin">admin</NavLink>
-            <NavLink to="/user">user</NavLink>
-        </div>
-    </>
-  )
-}
+      <Container>
+        <Form>
+          <h2 style={title}>Admin Register</h2>
+          <RegisterCredintials>
+            <Label for="username">UserName</Label>
+            <Input type="text" placeholder="username" id="username" />
+          </RegisterCredintials>
+          <RegisterCredintials>
+            <Label for="email">Email</Label>
+            <Input type="email" placeholder="email" id="email" />
+          </RegisterCredintials>
 
-export default Login
+          <RegisterCredintials>
+            <Label for="password">Password</Label>
+            <Input type="password" placeholder="password" id="password" />
+          </RegisterCredintials>
+          <RegisterCredintials>
+            <Label for="confirmpassword">ConfirmPassword</Label>
+            <Input
+              type="confirmPassword"
+              placeholder="confirmPassword"
+              id="ConfirmPaasword"
+            />
+          </RegisterCredintials>
+          <Button type="submit">signup</Button>
+          <RegisterCredintials>
+            <p>
+              already having account<NavLink to="/">go to login</NavLink>
+            </p>
+          </RegisterCredintials>
+        </Form>
+      </Container>
+    </>
+  );
+};
+
+export default AdminSignin;
