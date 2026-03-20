@@ -1,21 +1,38 @@
-import React from 'react'
+import React from "react";
+import {
+  Button,
+  Container,
+  Form,
+  Input,
+  Label,
+  RegisterCredintials,
+} from "../styles/Registerstyle";
+import { NavLink } from "react-router-dom";
 
-const User = () => {
+const UserSignin = () => {
+  const title = {
+    textAlign: "center",
+  };
   return (
     <>
-        <div>
-            <label htmlFor="email">email</label>
-            <input type='email' placeholder='email' id='email' name='email'/>
-        </div>
-        <div>
-            <label htmlFor="password">password</label>
-            <input type='password' placeholder='password' id='password' name='password'/>
-        </div>
-        <div>
-            <button type='submit'>submit</button>
-        </div>
-    </>
-  )
-}
+      <Container>
+        <Form>
+          <h2 style={title}>Examini Login</h2>
+          <RegisterCredintials>
+            <Label for="username">UserName</Label>
+            <Input type="text" id="username" />
+          </RegisterCredintials>
 
-export default User
+          <RegisterCredintials>
+            <Label for="password">Password</Label>
+            <Input type="password" id="password" />
+          </RegisterCredintials>
+
+          <Button type="submit">signup</Button>
+        </Form>
+      </Container>
+    </>
+  );
+};
+
+export default UserSignin;
