@@ -12,11 +12,10 @@ import Layout from "../component/Layout";
 
 // REGEX
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
 
-// 👇 phone validation (10 digits, India style)
-const phoneRegex = /^[6-9]\d{9}$/;
+// 👇 phNo validation (10 digits, India style)
+const phNoRegex = /^[6-9]\d{9}$/;
 
 const usernameRegex = /^[a-zA-Z0-9_]{3,15}$/;
 
@@ -24,9 +23,11 @@ const UserSignup = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
     username: "",
     email: "",
-    phone: "",
+    phNo: "",
     password: "",
     confirmPassword: "",
   });
@@ -53,6 +54,14 @@ const UserSignup = () => {
   const validate = () => {
     let newErrors = {};
 
+    if (!formData.username) {
+      newErrors.firstName = "must should be fill the firstName";
+    }
+
+    if (!formData.lastName) {
+      newErrors.lastName = "must should be fill the last";
+    }
+
     if (!usernameRegex.test(formData.username)) {
       newErrors.username = "3-15 chars, letters/numbers/_ only";
     }
@@ -61,8 +70,8 @@ const UserSignup = () => {
       newErrors.email = "Invalid email format";
     }
 
-    if (!phoneRegex.test(formData.phone)) {
-      newErrors.phone = "Enter valid 10-digit Indian number";
+    if (!phNoRegex.test(formData.phNo)) {
+      newErrors.phNo = "Enter valid 10-digit Indian number";
     }
 
     if (!passwordRegex.test(formData.password)) {
@@ -88,13 +97,16 @@ const UserSignup = () => {
     setApiError("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://localhost:8443/sphinx/api/user/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
         },
-        body: JSON.stringify(formData),
-      });
+      );
 
       const data = await response.json();
 
@@ -123,6 +135,37 @@ const UserSignup = () => {
               {apiError}
             </p>
           )}
+          {/* firstName */}
+          <RegisterCredintials>
+            <Label htmlFor="firstName">firstName</Label>
+            <Input
+              type="text"
+              id="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+            />
+            {errors.firstName && (
+              <p style={{ color: "red", fontSize: "12px" }}>
+                {errors.firstName}
+              </p>
+            )}
+          </RegisterCredintials>
+
+          {/* lastName */}
+          <RegisterCredintials>
+            <Label htmlFor="lastName">lastName</Label>
+            <Input
+              type="text"
+              id="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+            />
+            {errors.lastName && (
+              <p style={{ color: "red", fontSize: "12px" }}>
+                {errors.lastName}
+              </p>
+            )}
+          </RegisterCredintials>
 
           {/* USERNAME */}
           <RegisterCredintials>
@@ -133,7 +176,11 @@ const UserSignup = () => {
               value={formData.username}
               onChange={handleChange}
             />
-            {errors.username && <p style={{ color: "red", fontSize: "12px" }}>{errors.username}</p>}
+            {errors.username && (
+              <p style={{ color: "red", fontSize: "12px" }}>
+                {errors.username}
+              </p>
+            )}
           </RegisterCredintials>
 
           {/* EMAIL */}
@@ -145,20 +192,24 @@ const UserSignup = () => {
               value={formData.email}
               onChange={handleChange}
             />
-            {errors.email && <p style={{ color: "red", fontSize: "12px" }}>{errors.email}</p>}
+            {errors.email && (
+              <p style={{ color: "red", fontSize: "12px" }}>{errors.email}</p>
+            )}
           </RegisterCredintials>
 
-          {/* PHONE */}
+          {/* phNo */}
           <RegisterCredintials>
-            <Label htmlFor="phone">Phone Number</Label>
+            <Label htmlFor="phNo">phNo Number</Label>
             <Input
               type="text"
-              id="phone"
-              value={formData.phone}
+              id="phNo"
+              value={formData.phNo}
               onChange={handleChange}
               placeholder="Enter 10 digit number"
             />
-            {errors.phone && <p style={{ color: "red", fontSize: "12px" }}>{errors.phone}</p>}
+            {errors.phNo && (
+              <p style={{ color: "red", fontSize: "12px" }}>{errors.phNo}</p>
+            )}
           </RegisterCredintials>
 
           {/* PASSWORD */}
@@ -170,7 +221,11 @@ const UserSignup = () => {
               value={formData.password}
               onChange={handleChange}
             />
-            {errors.password && <p style={{ color: "red", fontSize: "12px" }}>{errors.password}</p>}
+            {errors.password && (
+              <p style={{ color: "red", fontSize: "12px" }}>
+                {errors.password}
+              </p>
+            )}
           </RegisterCredintials>
 
           {/* CONFIRM PASSWORD */}
@@ -195,8 +250,7 @@ const UserSignup = () => {
 
           <RegisterCredintials>
             <p style={{ textAlign: "center", fontSize: "13px" }}>
-              Already have an account?{" "}
-              <NavLink to="/">Go to login</NavLink>
+              Already have an account? <NavLink to="/">Go to login</NavLink>
             </p>
           </RegisterCredintials>
         </Form>
