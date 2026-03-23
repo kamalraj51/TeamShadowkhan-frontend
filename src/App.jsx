@@ -10,13 +10,16 @@ import TestLogin from "./pages/TestLogin";
 const App = () => {
   return (
     <>
-      <Routes>
+    <BrowserRouter>
+       <Routes>
         <Route path="/" element={<UserSignin />} />
         <Route path="/usersignup" element={<UserSignup />} />
         <Route path="/adminsignin" element={<AdminSignin />} />
         <Route path="/usersignin" element={<UserSignin />} />
         <Route path="/test" element={<TestLogin />} />
       </Routes>
+    </BrowserRouter>
+     
     </>
   );
 };
