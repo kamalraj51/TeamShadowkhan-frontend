@@ -12,7 +12,8 @@ import Getalluser from "./database/Getalluser";
 const App = () => {
   return (
     <>
-      <Routes>
+    <BrowserRouter>
+       <Routes>
         <Route path="/" element={<UserSignin />} />
         <Route path="/usersignup" element={<UserSignup />} />
         <Route path="/adminsignin" element={<AdminSignin />} />
@@ -21,6 +22,8 @@ const App = () => {
         <Route path="/userpromote" element={<UserPromote/>}/>
         <Route path="/getalluser" element={<Getalluser/>}/>
       </Routes>
+    </BrowserRouter>
+     
     </>
   );
 };
