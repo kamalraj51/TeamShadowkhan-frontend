@@ -1,20 +1,15 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Container,
-  Form,
-  Input,
-  Label,
-  RegisterCredintials,
-} from "../styles/Registerstyle";
+
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
+
+import { LoginButton, LoginContainer, LoginError, LoginField, LoginFooter, LoginForm, LoginInput, LoginLabel, LoginTitle, LoginWrapper } from "../styles/LoginStyle";
 //riswan
 const UserSignin = () => {
   const[formData,setFormData]=useState({
     username:"",
     password:"",
   })
-  const usernameRegex = /^[a-zA-Z0-9_]{3,15}$/;
+ 
 
 const navigate = useNavigate();
   const [errors, setErrors] = useState({});
@@ -41,11 +36,11 @@ const navigate = useNavigate();
  //regex validate
  const validate=()=>{
   let newErrors={}
-   if (!usernameRegex.test(formData.username)) {
-      newErrors.username = "3-15 chars, letters/numbers/_ only";
+   if (!formData.username) {
+      newErrors.username = "userName should not be blank";
     }
     if(!formData.password){
-      newErrors.password="password should be blank"
+      newErrors.password="password should not be blank"
     }
 
    
@@ -78,7 +73,7 @@ const handleSubmit=async (e)=>{
     Navigate("/")
 
   }catch(err){
-    setApiError("NNetwork error. Please try again.")
+    setApiError("Network error. Please try again.")
   }finally{
     setLoading(false)
   }
@@ -86,43 +81,48 @@ const handleSubmit=async (e)=>{
 
   return (
     <>
-      <Container>
-        <Form onSubmit={handleSubmit}>
-          <h2 style={{textAlign:"center"}}>Examini Login</h2>
-           {apiError && (
-            <p style={{ color: "red", textAlign: "center", fontSize: "13px" }}>
-              {apiError}
-            </p>
-          )}
-          <RegisterCredintials>
-            <Label htmlFor="username">UserName</Label>
-            <Input type="text" id="username" value={formData.username}  onChange={handleForm}/>
-             {errors.username && (
-              <p style={{ color: "red", fontSize: "12px" }}>
-                {errors.username}
-              </p>
-            )}
-          </RegisterCredintials>
+     
+      <LoginContainer>
+  <LoginWrapper>
+    <LoginTitle>SPHINX</LoginTitle>
+    
 
-          <RegisterCredintials>
-            <Label htmlFor="password">Password</Label>
-            <Input type="password" id="password" value={formData.password} onChange={handleForm} />
-             {errors.password && (
-              <p style={{ color: "red", fontSize: "12px" }}>
-                {errors.password}
-              </p>
-            )}
-          </RegisterCredintials>
+    <LoginForm onSubmit={handleSubmit}>
+      <h2>Login</h2>
 
-          <Button type="submit" disabled={loading}>
-                      {loading ? "Signing up..." : "Signup"}
-                    </Button>
-            <p style={{ textAlign: "center", fontSize: "13px" }}>
-                      Register?{" "}
-                      <NavLink to="/usersignup">Go to Register</NavLink>
-                    </p>
-        </Form>
-      </Container>
+      <LoginField>
+        <LoginLabel htmlFor="username">Username</LoginLabel>
+        <LoginInput
+          type="text"
+          id="username"
+          value={formData.username}
+          onChange={handleForm}
+        />
+        {errors.username && <LoginError>{errors.username}</LoginError>}
+      </LoginField>
+
+      <LoginField>
+        <LoginLabel htmlFor="password">Password</LoginLabel>
+        <LoginInput
+          type="password"
+          id="password"
+          value={formData.password}
+          onChange={handleForm}
+        />
+        {errors.password && <LoginError>{errors.password}</LoginError>}
+      </LoginField>
+
+      <LoginButton type="submit" disabled={loading}>
+        {loading ? "Signing in..." : "Login"}
+      </LoginButton>
+
+      <LoginFooter>
+        Don’t have an account?{" "}
+        <NavLink to="/usersignup">Register</NavLink>
+      </LoginFooter>
+    </LoginForm>
+  </LoginWrapper>
+</LoginContainer>
     </>
   );
 };

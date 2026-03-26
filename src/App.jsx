@@ -7,6 +7,8 @@ import AdminSignin from "./pages/AdminSignin";
 import UserSignin from "./pages/UserSiginin";
 import UserSignup from "./pages/UserSignup";
 import TestLogin from "./pages/TestLogin";
+import Header from "./component/Header";
+import Home from "./pages/Home";
 const App = () => {
   return (
     <>
@@ -17,9 +19,11 @@ const App = () => {
         <Route path="/adminsignin" element={<AdminSignin />} />
         <Route path="/usersignin" element={<UserSignin />} />
         <Route path="/test" element={<TestLogin />} />
+         <Route path="/home" element={<Home />} />
       </Routes>
     </BrowserRouter>
      
+   
     </>
   );
 };

@@ -1,14 +1,8 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Container,
-  Form,
-  Input,
-  Label,
-  RegisterCredintials,
-} from "../styles/Registerstyle";
+
 import { NavLink, useNavigate } from "react-router-dom";
-import Layout from "../component/Layout";
+import { ApiError, RegisterButton, RegisterContainer, RegisterError, RegisterField, RegisterFooter, RegisterForm, RegisterInput, RegisterLabel, RegisterSubtitle, RegisterTitle, RegisterWrapper } from "../styles/SignupStyle";
+
 
 // REGEX
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -124,138 +118,123 @@ const UserSignup = () => {
   };
 
   return (
-    <Layout>
-      <Container>
-        <Form onSubmit={handleSubmit}>
-          <h2 style={{ textAlign: "center" }}>Admin Register</h2>
+    
+       <RegisterContainer>
+      <RegisterWrapper>
+        {/* PROJECT NAME */}
+        <RegisterTitle>SPHINX</RegisterTitle>
+        <RegisterSubtitle>Admin Registration</RegisterSubtitle>
 
-          {/* API ERROR */}
-          {apiError && (
-            <p style={{ color: "red", textAlign: "center", fontSize: "13px" }}>
-              {apiError}
-            </p>
-          )}
-          {/* firstName */}
-          <RegisterCredintials>
-            <Label htmlFor="firstName">firstName</Label>
-            <Input
+        <RegisterForm onSubmit={handleSubmit}>
+          <h2>Register</h2>
+
+          {apiError && <ApiError>{apiError}</ApiError>}
+
+          <RegisterField>
+            <RegisterLabel>First Name</RegisterLabel>
+            <RegisterInput
               type="text"
               id="firstName"
               value={formData.firstName}
               onChange={handleChange}
             />
             {errors.firstName && (
-              <p style={{ color: "red", fontSize: "12px" }}>
-                {errors.firstName}
-              </p>
+              <RegisterError>{errors.firstName}</RegisterError>
             )}
-          </RegisterCredintials>
+          </RegisterField>
 
-          {/* lastName */}
-          <RegisterCredintials>
-            <Label htmlFor="lastName">lastName</Label>
-            <Input
+          <RegisterField>
+            <RegisterLabel>Last Name</RegisterLabel>
+            <RegisterInput
               type="text"
               id="lastName"
               value={formData.lastName}
               onChange={handleChange}
             />
             {errors.lastName && (
-              <p style={{ color: "red", fontSize: "12px" }}>
-                {errors.lastName}
-              </p>
+              <RegisterError>{errors.lastName}</RegisterError>
             )}
-          </RegisterCredintials>
+          </RegisterField>
 
-          {/* USERNAME */}
-          <RegisterCredintials>
-            <Label htmlFor="username">UserName</Label>
-            <Input
+          <RegisterField>
+            <RegisterLabel>Username</RegisterLabel>
+            <RegisterInput
               type="text"
               id="username"
               value={formData.username}
               onChange={handleChange}
             />
             {errors.username && (
-              <p style={{ color: "red", fontSize: "12px" }}>
-                {errors.username}
-              </p>
+              <RegisterError>{errors.username}</RegisterError>
             )}
-          </RegisterCredintials>
+          </RegisterField>
 
-          {/* EMAIL */}
-          <RegisterCredintials>
-            <Label htmlFor="email">Email</Label>
-            <Input
+          <RegisterField>
+            <RegisterLabel>Email</RegisterLabel>
+            <RegisterInput
               type="email"
               id="email"
+              placeholder="example@gmail.com"
               value={formData.email}
               onChange={handleChange}
             />
             {errors.email && (
-              <p style={{ color: "red", fontSize: "12px" }}>{errors.email}</p>
+              <RegisterError>{errors.email}</RegisterError>
             )}
-          </RegisterCredintials>
+          </RegisterField>
 
-          {/* phNo */}
-          <RegisterCredintials>
-            <Label htmlFor="phNo">phNo Number</Label>
-            <Input
+          <RegisterField>
+            <RegisterLabel>Phone Number</RegisterLabel>
+            <RegisterInput
               type="text"
               id="phNo"
               value={formData.phNo}
               onChange={handleChange}
-              placeholder="Enter 10 digit number"
+              placeholder="9876543210"
             />
             {errors.phNo && (
-              <p style={{ color: "red", fontSize: "12px" }}>{errors.phNo}</p>
+              <RegisterError>{errors.phNo}</RegisterError>
             )}
-          </RegisterCredintials>
+          </RegisterField>
 
-          {/* PASSWORD */}
-          <RegisterCredintials>
-            <Label htmlFor="password">Password</Label>
-            <Input
+          <RegisterField>
+            <RegisterLabel>Password</RegisterLabel>
+            <RegisterInput
               type="password"
               id="password"
               value={formData.password}
               onChange={handleChange}
             />
             {errors.password && (
-              <p style={{ color: "red", fontSize: "12px" }}>
-                {errors.password}
-              </p>
+              <RegisterError>{errors.password}</RegisterError>
             )}
-          </RegisterCredintials>
+          </RegisterField>
 
-          {/* CONFIRM PASSWORD */}
-          <RegisterCredintials>
-            <Label htmlFor="confirmPassword">Confirm Password</Label>
-            <Input
+          <RegisterField>
+            <RegisterLabel>Confirm Password</RegisterLabel>
+            <RegisterInput
               type="password"
               id="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
             />
             {errors.confirmPassword && (
-              <p style={{ color: "red", fontSize: "12px" }}>
-                {errors.confirmPassword}
-              </p>
+              <RegisterError>{errors.confirmPassword}</RegisterError>
             )}
-          </RegisterCredintials>
+          </RegisterField>
 
-          <Button type="submit" disabled={loading}>
+          <RegisterButton type="submit" disabled={loading}>
             {loading ? "Signing up..." : "Signup"}
-          </Button>
+          </RegisterButton>
 
-          <RegisterCredintials>
-            <p style={{ textAlign: "center", fontSize: "13px" }}>
-              Already have an account? <NavLink to="/">Go to login</NavLink>
-            </p>
-          </RegisterCredintials>
-        </Form>
-      </Container>
-    </Layout>
+          <RegisterFooter>
+            Already have an account?{" "}
+            <NavLink to="/">Go to login</NavLink>
+          </RegisterFooter>
+        </RegisterForm>
+      </RegisterWrapper>
+    </RegisterContainer>
+    
   );
 };
 
