@@ -8,7 +8,7 @@ import { ApiError, RegisterButton, RegisterContainer, RegisterError, RegisterFie
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
 
-// 👇 phNo validation (10 digits, India style)
+// phNo validation (10 digits, India style)
 const phNoRegex = /^[6-9]\d{9}$/;
 
 const usernameRegex = /^[a-zA-Z0-9_]{3,15}$/;
