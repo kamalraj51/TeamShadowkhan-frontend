@@ -1,9 +1,14 @@
 import React from 'react'
 import Layout from '../component/Layout'
+import AddTopic from '../component/AddTopic'
+import AvailableExam from '../component/AvailableExam'
 
 const Home = () => {
   return (
-    <Layout></Layout>
+    <Layout>
+      <AddTopic></AddTopic>
+     
+    </Layout>
   )
 }
 
