@@ -29,6 +29,13 @@ export const Menu = styled.div`
     cursor: pointer;
     padding: 10px 0;
   }
+    a:hover {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+
+  a:active {
+    color: ${({ theme }) => theme.colors.primary};
+  }
 
   
   @media (max-width: 768px) {

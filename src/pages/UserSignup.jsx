@@ -121,7 +121,7 @@ const UserSignup = () => {
     
        <RegisterContainer>
       <RegisterWrapper>
-        {/* PROJECT NAME */}
+    
         <RegisterTitle>SPHINX</RegisterTitle>
         <RegisterSubtitle>Admin Registration</RegisterSubtitle>
 

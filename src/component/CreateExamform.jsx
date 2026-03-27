@@ -32,6 +32,7 @@ const CreateExamform = () => {
         })
         if(response.ok){
             console.log("hii fronytend")
+            navigate("/examtopic")
           
         }
 
@@ -53,17 +54,17 @@ const CreateExamform = () => {
                 <Input type="text" name="noofquestions" onChange={handleChange}/>
             </Field>
             <Field>
-                <Label>Duration</Label>
-                <Input type="text" name="duration" onChange={handleChange}/><span><b>Minutes</b></span>
+                <Label>Duration (<span><b>Minutes</b></span>)</Label>
+                <Input type="text" name="duration" onChange={handleChange}/>
             </Field>
              <Field>
-                <Label>Pass percentage</Label>
-                <Input type="text" name="passpercentage" onChange={handleChange}/><span><b>%</b></span>
+                <Label>Pass percentage <span><b>%</b></span></Label>
+                <Input type="text" name="passpercentage" onChange={handleChange}/>
             </Field>
             <Button type="submit">submit</Button>
 
         </Form>
-        <NavLink></NavLink>
+        
     </>
   )
 }

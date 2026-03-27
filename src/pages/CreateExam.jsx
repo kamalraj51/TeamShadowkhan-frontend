@@ -2,14 +2,17 @@ import React from 'react'
 import { Container } from '../styles/CreateExam.style'
 import CreateExamform from '../component/CreateExamform'
 import ExamTopic from '../component/ExamTopic'
+import Layout from '../component/Layout'
 
 const CreateExam = () => {
   return (
     <>
-        <Container>
+       <Layout>
+           <Container>
             <CreateExamform/>
-            <ExamTopic/>
+            {/* <ExamTopic/> */}
         </Container>
+       </Layout>
     </>
   )
 }
