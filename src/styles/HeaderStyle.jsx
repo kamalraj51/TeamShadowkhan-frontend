@@ -43,7 +43,7 @@ export const Menu = styled.div`
 
     background-color: ${({ theme }) => theme.colors.secondary};
 
-    max-height: ${({ isOpen }) => (isOpen ? "500px" : "0px")};
+    max-height: ${({ isopen }) => (isopen ? "500px" : "0px")};
     overflow: hidden;
 
     transition: max-height 0.3s ease-in-out;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TopicContainer ,FormContainer, H2, TopicField, TopicLabel, TopicButton, TopicInput, ApiError, TopicError} from '../styles/AddTopicSty;e'
+import { TopicContainer ,FormContainer, H2, TopicField, TopicLabel, TopicButton, TopicInput, ApiError, TopicError} from '../styles/AddTopicStyle'
 
 const AddTopic = () => {
     const [topicName,setTopicName]=useState("")

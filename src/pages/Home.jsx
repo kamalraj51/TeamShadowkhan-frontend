@@ -7,7 +7,8 @@ const Home = () => {
   return (
     <Layout>
       <AddTopic></AddTopic>
-     
+      <AvailableExam></AvailableExam>
+    
     </Layout>
   )
 }
