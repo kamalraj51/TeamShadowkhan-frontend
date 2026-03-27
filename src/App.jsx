@@ -9,21 +9,21 @@ import UserSignup from "./pages/UserSignup";
 import TestLogin from "./pages/TestLogin";
 import Header from "./component/Header";
 import Home from "./pages/Home";
+import CreateQuestion from "./pages/CreateQuestion";
 const App = () => {
   return (
     <>
-    <BrowserRouter>
-       <Routes>
-        <Route path="/" element={<UserSignin />} />
-        <Route path="/usersignup" element={<UserSignup />} />
-        <Route path="/adminsignin" element={<AdminSignin />} />
-        <Route path="/usersignin" element={<UserSignin />} />
-        <Route path="/test" element={<TestLogin />} />
-         <Route path="/home" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
-     
-   
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<UserSignin />} />
+          <Route path="/usersignup" element={<UserSignup />} />
+          <Route path="/adminsignin" element={<AdminSignin />} />
+          <Route path="/usersignin" element={<UserSignin />} />
+          <Route path="/test" element={<TestLogin />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/createquestion" element={<CreateQuestion />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 };
