@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Container,
-  Form,
-  Input,
-  Label,
-  RegisterCredintials,
-} from "../styles/Registerstyle";
+
 import { NavLink } from "react-router-dom";
 
 const AdminSignin = () => {

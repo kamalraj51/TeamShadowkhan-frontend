@@ -1,21 +1,26 @@
-import React from 'react'
-import { Navbar, Top } from '../styles/Header.style'
+import React, { useState } from 'react'
+import {  HeaderMain, Logo, Menu, MenuToggle } from '../styles/HeaderStyle'
 import { NavLink } from 'react-router-dom'
-
+import { FaBars, FaTimes } from "react-icons/fa";
 const Header = () => {
+    const [isOpen, setIsOpen] = useState(false);
   return (
-    <>
-        <Top>
-            <h1>user promote</h1>
-        </Top>
-        <Navbar>
-            <a href="">home</a>
-            <a href="">about</a>
-            <a href="">cotact</a>
-            <NavLink to="/userpromote">userpromote</NavLink>
-        </Navbar>
-    </>
+   <HeaderMain>
+       
+            <Logo>
+                <h2>sphinx</h2>
+            </Logo>
+            <MenuToggle onClick={()=>setIsOpen(!isOpen)}>
+            {isOpen?<FaTimes/>:<FaBars/>}
+            </MenuToggle>
+            <Menu isOpen={isOpen}>
+        <NavLink to="/home" onClick={() => setIsOpen(false)}>home</NavLink>
+        <NavLink to="/about" onClick={() => setIsOpen(false)}>about</NavLink>
+        <NavLink to="/contact" onClick={() => setIsOpen(false)}>contact</NavLink>
+      </Menu>
+       
+   </HeaderMain>
   )
 }
 
-export default Header
+export default Header;
