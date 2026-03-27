@@ -1,5 +1,5 @@
 import React from 'react'
-import { AvailableContainer, AvailableTable, H2, HeadingTable, Td, Th } from '../styles/AvailableExamStyle'
+import { AvailableContainer, AvailableTable, H2, HeadingTable, TableWrapper, Td, Th } from '../styles/AvailableExamStyle'
 
 const AvailableExam = () => {
     const examData = [
@@ -36,7 +36,8 @@ const AvailableExam = () => {
         <HeadingTable>
             <H2>Available Exam</H2>
         </HeadingTable>
-        <AvailableTable>
+        <TableWrapper>
+            <AvailableTable>
             <thead>
                 <tr>
                     <Th>S1.No</Th>
@@ -75,6 +76,8 @@ const AvailableExam = () => {
   ))}
 </tbody>
         </AvailableTable>
+        </TableWrapper>
+        
     </AvailableContainer>
   )
 }

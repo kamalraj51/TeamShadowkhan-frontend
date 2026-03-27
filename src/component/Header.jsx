@@ -17,11 +17,11 @@ const Header = () => {
       </MenuToggle>
 
       
-      <Menu $isOpen={isOpen}>
-        <NavLink to="/home" onClick={() => setIsOpen(false)}>home</NavLink>
-        <NavLink to="/contact" onClick={() => setIsOpen(false)}>Question Master</NavLink>
-        <NavLink to="/about" onClick={() => setIsOpen(false)}>Exam Master</NavLink>
-        <NavLink to="/contact" onClick={() => setIsOpen(false)}>Topic Master</NavLink>
+      <Menu isOpen={isOpen}>
+        <NavLink to="/adminhome" onClick={() => setIsOpen(false)}>home</NavLink>
+        <NavLink to="/createquestion" onClick={() => setIsOpen(false)}>Question Master</NavLink>
+        <NavLink to="/createxam" onClick={() => setIsOpen(false)}>Exam Master</NavLink>
+        <NavLink to="/topicmaster" onClick={() => setIsOpen(false)}>Topic Master</NavLink>
       </Menu>
     </HeaderMain>
   )

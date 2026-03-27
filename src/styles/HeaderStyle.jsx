@@ -29,6 +29,13 @@ export const Menu = styled.div`
     cursor: pointer;
     padding: 10px 0;
   }
+    a:hover {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+
+  a:active {
+    color: ${({ theme }) => theme.colors.primary};
+  }
 
   
   @media (max-width: 768px) {
@@ -43,7 +50,7 @@ export const Menu = styled.div`
 
     background-color: ${({ theme }) => theme.colors.secondary};
 
-    max-height: ${({ isopen }) => (isopen ? "500px" : "0px")};
+    max-height: ${({ isOpen }) => (isOpen ? "500px" : "0px")};
     overflow: hidden;
 
     transition: max-height 0.3s ease-in-out;

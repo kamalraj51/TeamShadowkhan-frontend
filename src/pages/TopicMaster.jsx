@@ -1,16 +1,13 @@
 import React from 'react'
 import Layout from '../component/Layout'
 import AddTopic from '../component/AddTopic'
-import AvailableExam from '../component/AvailableExam'
 
-const Home = () => {
+const TopicMaster = () => {
   return (
     <Layout>
-      
-      <AvailableExam></AvailableExam>
-    
+        <AddTopic></AddTopic>
     </Layout>
   )
 }
 
-export default Home
+export default TopicMaster

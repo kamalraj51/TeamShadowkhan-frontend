@@ -15,6 +15,7 @@ import {
   RegisterWrapper,
 } from "../styles/SignupStyle";
 import { useEffect, useState } from "react";
+import Layout from "../component/Layout";
 
 // VALIDATION
 const validate = () => {
@@ -89,29 +90,34 @@ const CreateQuestion = () => {
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [topics, setTopics] = useState([
-    { id: 1, topicName: "Java" },
-    { id: 2, topicName: "Python" },
-  ]);
+  const [topics, setTopics] = useState([]);
 
-  /*
+ 
   //api call
   useEffect(() => {
     const fetchTopics = async () => {
       try {
         const res = await fetch(
-          "http://localhost:8443/sphinx/api/topic/gettopic",
-        );
+          "https://localhost:8443/sphinx/api/topic/gettopics");
+        if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
         const data = await res.json();
-        setTopics(data); // assuming array response
+        console.log(data)
+        setTopics(data.topic || []); // assuming array response
       } catch (err) {
         console.error("Error fetching topics:", err);
+        console.log(err)
       }
     };
 
     fetchTopics();
   }, []);
-*/
+
+
+
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -127,7 +133,8 @@ const CreateQuestion = () => {
   };
 
   return (
-    <RegisterContainer>
+   <Layout>
+       <RegisterContainer>
       <RegisterWrapper>
         <RegisterTitle>Question Page</RegisterTitle>
         <RegisterSubtitle>Create Topic wise question</RegisterSubtitle>
@@ -137,19 +144,14 @@ const CreateQuestion = () => {
 
           <RegisterField>
             <RegisterLabel>Select Topic</RegisterLabel>
-            <select
-              id="topicId"
-              value={formData.topicId}
-              onChange={handleChange}
-            >
-              <option value="">-- Select Topic --</option>
-
-              {topics.map((topic) => (
-                <option key={topic.id} value={topic.id}>
-                  {topic.topicName}
-                </option>
-              ))}
-            </select>
+          <select id="topicId" value={formData.topicId} onChange={handleChange}>
+           <option value="">-- Select Topic --</option>
+             {topics.map((topic) => (
+            <option key={topic.topicId} value={topic.topicId}>
+            {topic.topicName}
+          </option>
+  ))}
+</select>
             <RegisterField>
               <RegisterLabel>Question</RegisterLabel>
               <RegisterInput
@@ -267,6 +269,7 @@ const CreateQuestion = () => {
         </RegisterForm>
       </RegisterWrapper>
     </RegisterContainer>
+   </Layout>
   );
 };
 
