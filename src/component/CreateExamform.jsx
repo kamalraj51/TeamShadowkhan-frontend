@@ -23,7 +23,7 @@ const CreateExamform = () => {
    
     let handleCreate=async (e)=>{
         e.preventDefault()
-        let response=await fetch("https://localhost:8443/sphinx/api/exam/createexam",{
+        let response=await fetch("https://localhost:8443/sphinx_team/api/exam/createexam",{
             method: "POST",
             headers: {
               "Content-Type": "application/json",
