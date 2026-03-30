@@ -70,7 +70,9 @@ let handledata=async (e)=>{
                         <h3>{data. examTopicName}</h3>
                         <h3>{data.percentage}</h3>
                         <p>{data.topicId}</p>
+                        
                    </Row>
+                   
                 )
             })
         }

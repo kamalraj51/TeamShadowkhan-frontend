@@ -19,9 +19,9 @@ const Header = () => {
       
       <Menu $isOpen={isOpen}>
         <NavLink to="/home" onClick={() => setIsOpen(false)}>home</NavLink>
-        <NavLink to="/contact" onClick={() => setIsOpen(false)}>Question Master</NavLink>
-        <NavLink to="/about" onClick={() => setIsOpen(false)}>Exam Master</NavLink>
-        <NavLink to="/contact" onClick={() => setIsOpen(false)}>Topic Master</NavLink>
+        <NavLink to="/createquestion" onClick={() => setIsOpen(false)}>Question Master</NavLink>
+        <NavLink to="/createxam" onClick={() => setIsOpen(false)}>Exam Master</NavLink>
+        <NavLink to="/createtopic" onClick={() => setIsOpen(false)}>Topic Master</NavLink>
       </Menu>
     </HeaderMain>
   )
