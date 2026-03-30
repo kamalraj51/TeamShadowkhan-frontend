@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { TopicContainer ,FormContainer, H2, TopicField, TopicLabel, TopicButton, TopicInput, ApiError, TopicError} from '../styles/AddTopicStyle'
+import Topics from './Topics';
 
 const AddTopic = () => {
     const [topicName,setTopicName]=useState("")
@@ -66,6 +67,7 @@ const AddTopic = () => {
     }
 
   return (
+    <>
    <TopicContainer>
         <H2>Add Topic</H2>
         {apiError && <ApiError>{apiError}</ApiError>}
@@ -79,6 +81,10 @@ const AddTopic = () => {
             {success && <p style={{color:"green"}}>{success}</p>}
         </FormContainer>
    </TopicContainer>
+
+   <Topics></Topics>
+   
+</>
   )
 }
 
