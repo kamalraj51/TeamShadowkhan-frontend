@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { HeaderMain, Logo, Menu, MenuToggle } from '../styles/HeaderStyle'
-import { NavLink } from 'react-router-dom'
+import React, { useState } from "react";
+import { HeaderMain, Logo, Menu, MenuToggle } from "../styles/HeaderStyle";
+import { NavLink } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const Header = () => {
@@ -16,15 +16,22 @@ const Header = () => {
         {isOpen ? <FaTimes /> : <FaBars />}
       </MenuToggle>
 
-      
-      <Menu $isOpen={isOpen}>
-        <NavLink to="/home" onClick={() => setIsOpen(false)}>home</NavLink>
-        <NavLink to="/createquestion" onClick={() => setIsOpen(false)}>Question Master</NavLink>
-        <NavLink to="/createxam" onClick={() => setIsOpen(false)}>Exam Master</NavLink>
-        <NavLink to="/createtopic" onClick={() => setIsOpen(false)}>Topic Master</NavLink>
+      <Menu isOpen={isOpen}>
+        <NavLink to="/adminhome" onClick={() => setIsOpen(false)}>
+          home
+        </NavLink>
+        <NavLink to="/createquestion" onClick={() => setIsOpen(false)}>
+          Question Master
+        </NavLink>
+        <NavLink to="/createxam" onClick={() => setIsOpen(false)}>
+          Exam Master
+        </NavLink>
+        <NavLink to="/topicmaster" onClick={() => setIsOpen(false)}>
+          Topic Master
+        </NavLink>
       </Menu>
     </HeaderMain>
-  )
-}
+  );
+};
 
 export default Header;
