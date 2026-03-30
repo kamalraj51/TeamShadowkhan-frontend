@@ -16,27 +16,25 @@ import ExamTopic from "./component/ExamTopic";
 const App = () => {
   return (
     <>
-    <BrowserRouter>
-       <Routes>
-        <Route path="/" element={<UserSignin />} />
-        {/* <Route path="/admin" element={<Admindashboard/>}/> */}
-        <Route path="/usersignup" element={<UserSignup />} />
-        
-        <Route path="/usersignin" element={<UserSignin />} />
-        <Route path="/test" element={<TestLogin />} />
-        <Route path="/userpromote" element={<UserPromote/>}/>
-        <Route path="/getalluser" element={<Getalluser/>}/>
-        <Route path="/createxam" element={<CreateExam/>}/>
-        <Route path="/examtopic" element={<ExamTopic/>}/>
-        <Route path="/createquestion" element={<CreateQuestion />} />
-         <Route path="/adminhome" element={<Home />} />
-         <Route path="/topicmaster" element={<TopicMaster/>}></Route>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<UserSignin />} />
+          {/* <Route path="/admin" element={<Admindashboard/>}/> */}
+          <Route path="/usersignup" element={<UserSignup />} />
 
-      </Routes>
-    </BrowserRouter>
+          <Route path="/usersignin" element={<UserSignin />} />
+          <Route path="/test" element={<TestLogin />} />
+          <Route path="/userpromote" element={<UserPromote />} />
+          <Route path="/getalluser" element={<Getalluser />} />
+          <Route path="/createxam" element={<CreateExam />} />
+          <Route path="/examtopic" element={<ExamTopic />} />
+          <Route path="/createquestion" element={<CreateQuestion />} />
+          <Route path="/adminhome" element={<Home />} />
+          <Route path="/topicmaster" element={<TopicMaster />}></Route>
+        </Routes>
+      </BrowserRouter>
     </>
-);
-}     
+  );
+};
 
 export default App;
-
