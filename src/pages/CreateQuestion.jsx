@@ -18,59 +18,8 @@ import { useEffect, useState } from "react";
 import Layout from "../component/Layout";
 
 // VALIDATION
-const validate = () => {
-  let newErrors = {};
-
-  if (!formData.username) {
-    newErrors.firstName = "must should be fill the firstName";
-  }
-
-  if (!formData.lastName) {
-    newErrors.lastName = "must should be fill the last";
-  }
-
-  setErrors(newErrors);
-
-  return Object.keys(newErrors).length === 0;
-};
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  if (!validate()) return;
-
-  setLoading(true);
-  setApiError("");
-
-  try {
-    const response = await fetch(
-      "https://localhost:8443/sphinx/api/user/signup",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      },
-    );
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      setApiError(data.message || "Signup failed!");
-      return;
-    }
-
-    navigate("/");
-  } catch (err) {
-    setApiError("Network error. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
-
 const CreateQuestion = () => {
-  //container to store the question
+  const [apiError, setApiError] = useState("");
   const [formData, setFormData] = useState({
     topicId: "",
     questionDetail: "",
@@ -80,43 +29,89 @@ const CreateQuestion = () => {
     optionD: "",
     optionE: "",
     answer: "",
-    numAnswers: "",
-    questionType: "",
-    difficultyLevel: "",
-    answerValue: "",
-    negativeMarkValue: "0",
+    numAnswers: 0,
+    questionType: 0,
+    difficultyLevel: 0,
+    answerValue: 0,
+    negativeMarkValue: 1,
   });
-
-  const [errors, setErrors] = useState({});
-  const [apiError, setApiError] = useState("");
-  const [loading, setLoading] = useState(false);
   const [topics, setTopics] = useState([]);
+  const [errors, setErrors] = useState();
+  const [loading,setLoading]=useState(false)
 
- 
+  const validate = () => {
+    let newErrors = {};
+
+    if (!formData.username) {
+      newErrors.firstName = "must should be fill the firstName";
+    }
+
+    if (!formData.lastName) {
+      newErrors.lastName = "must should be fill the last";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validate()) return;
+
+    setLoading(true);
+    try {
+      const response = await fetch(
+        "https://localhost:8443/sphinx/api/question/createQuestion",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setApiError(data.message || "Signup failed!");
+        return;
+      }
+
+      navigate("/");
+    } catch (err) {
+      setApiError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  //container to store the question
+
   //api call
   useEffect(() => {
     const fetchTopics = async () => {
       try {
         const res = await fetch(
-          "https://localhost:8443/sphinx/api/topic/gettopics");
+          "https://localhost:8443/sphinx/api/topic/gettopics",
+        ); //id, name
         if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
 
         const data = await res.json();
-        console.log(data)
+        console.log(data);
         setTopics(data.topic || []); // assuming array response
       } catch (err) {
         console.error("Error fetching topics:", err);
-        console.log(err)
+        console.log(err);
       }
     };
 
     fetchTopics();
   }, []);
-
-
-
 
   const handleChange = (e) => {
     setFormData({
@@ -133,143 +128,145 @@ const CreateQuestion = () => {
   };
 
   return (
-   <Layout>
-       <RegisterContainer>
-      <RegisterWrapper>
-        <RegisterTitle>Question Page</RegisterTitle>
-        <RegisterSubtitle>Create Topic wise question</RegisterSubtitle>
+    <Layout>
+      <RegisterContainer>
+        <RegisterWrapper>
+          <RegisterTitle>Question Page</RegisterTitle>
+          <RegisterSubtitle>Create Topic wise question</RegisterSubtitle>
 
-        <RegisterForm onSubmit={handleSubmit}>
-          {apiError && <ApiError>{apiError}</ApiError>}
+          <RegisterForm onSubmit={handleSubmit}>
+            {apiError && <ApiError>{apiError}</ApiError>}
 
-          <RegisterField>
-            <RegisterLabel>Select Topic</RegisterLabel>
-          <select id="topicId" value={formData.topicId} onChange={handleChange}>
-           <option value="">-- Select Topic --</option>
-             {topics.map((topic) => (
-            <option key={topic.topicId} value={topic.topicId}>
-            {topic.topicName}
-          </option>
-  ))}
-</select>
             <RegisterField>
-              <RegisterLabel>Question</RegisterLabel>
-              <RegisterInput
-                type="text"
-                id="questionDetail"
-                value={formData.questionDetail}
+              <RegisterLabel>Select Topic</RegisterLabel>
+              <select
+                id="topicId"
+                value={formData.topicId}
                 onChange={handleChange}
-              />
-            </RegisterField>
-
-            {["A", "B", "C", "D", "E"].map((opt) => (
-              <RegisterField key={opt}>
-                <RegisterLabel>Option {opt}</RegisterLabel>
+              >
+                <option value="">-- Select Topic --</option>
+                {topics.map((topic) => (
+                  <option key={topic.topicId} value={topic.topicId}>
+                    {topic.topicName}
+                  </option>
+                ))}
+              </select>
+              <RegisterField>
+                <RegisterLabel>Question</RegisterLabel>
                 <RegisterInput
                   type="text"
-                  id={`option${opt}`}
-                  value={formData[`option${opt}`]}
+                  id="questionDetail"
+                  value={formData.questionDetail}
                   onChange={handleChange}
                 />
               </RegisterField>
-            ))}
 
-            <RegisterField>
-              <RegisterLabel>Correct Answer</RegisterLabel>
+              {["A", "B", "C", "D", "E"].map((opt) => (
+                <RegisterField key={opt}>
+                  <RegisterLabel>Option {opt}</RegisterLabel>
+                  <RegisterInput
+                    type="text"
+                    id={`option${opt}`}
+                    value={formData[`option${opt}`]}
+                    onChange={handleChange}
+                  />
+                </RegisterField>
+              ))}
+
+              <RegisterField>
+                <RegisterLabel>Correct Answer</RegisterLabel>
+                <select
+                  id="answer"
+                  value={formData.answer}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Answer</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                  <option value="E">E</option>
+                </select>
+              </RegisterField>
+
+              <RegisterField>
+                <RegisterLabel>Number of Answers</RegisterLabel>
+                <RegisterInput
+                  type="number"
+                  id="numAnswers"
+                  value={formData.numAnswers}
+                  onChange={handleChange}
+                  min="1"
+                />
+              </RegisterField>
+
+              <RegisterField>
+                <RegisterLabel>Question Type</RegisterLabel>
+                <RegisterInput
+                  type="text"
+                  id="questionType"
+                  value={formData.questionType}
+                  onChange={handleChange}
+                />
+              </RegisterField>
+
               <select
-                id="answer"
-                value={formData.answer}
-                onChange={handleChange}
-              >
-                <option value="">Select Answer</option>
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-                <option value="E">E</option>
-              </select>
-            </RegisterField>
-
-            <RegisterField>
-              <RegisterLabel>Number of Answers</RegisterLabel>
-              <RegisterInput
-                type="number"
-                id="numAnswers"
-                value={formData.numAnswers}
-                onChange={handleChange}
-                min="1"
-              />
-            </RegisterField>
-
-            <RegisterField>
-              <RegisterLabel>Question Type</RegisterLabel>
-              <RegisterInput
-                type="text"
                 id="questionType"
                 value={formData.questionType}
                 onChange={handleChange}
-              />
-            </RegisterField>
-
-            <select
-              id="questionType"
-              value={formData.questionType}
-              onChange={handleChange}
-            >
-              <option value="">Select Type</option>
-              <option value="MCQ">MCQ</option>
-              <option value="MULTI">Multiple Answer</option>
-            </select>
-
-            <RegisterField>
-              <RegisterLabel>Difficulty Level</RegisterLabel>
-              <select
-                id="difficultyLevel"
-                value={formData.difficultyLevel}
-                onChange={handleChange}
               >
-                <option value="">Select Difficulty</option>
-                <option value="EASY">Easy</option>
-                <option value="MEDIUM">Medium</option>
-                <option value="HARD">Hard</option>
+                <option value="">Select Type</option>
+                <option value="MCQ">MCQ</option>
+                <option value="MULTI">Multiple Answer</option>
               </select>
+
+              <RegisterField>
+                <RegisterLabel>Difficulty Level</RegisterLabel>
+                <select
+                  id="difficultyLevel"
+                  value={formData.difficultyLevel}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Difficulty</option>
+                  <option value="EASY">Easy</option>
+                  <option value="MEDIUM">Medium</option>
+                  <option value="HARD">Hard</option>
+                </select>
+              </RegisterField>
+
+              <RegisterField>
+                <RegisterLabel>Answer Value</RegisterLabel>
+                <RegisterInput
+                  type="number"
+                  id="answerValue"
+                  value={formData.answerValue}
+                  onChange={handleChange}
+                />
+              </RegisterField>
+
+              <RegisterField>
+                <RegisterLabel>Negative Mark</RegisterLabel>
+                <RegisterInput
+                  type="number"
+                  id="negativeMarkValue"
+                  value={formData.negativeMarkValue}
+                  onChange={handleChange}
+                />
+              </RegisterField>
+             
             </RegisterField>
 
-            <RegisterField>
-              <RegisterLabel>Answer Value</RegisterLabel>
-              <RegisterInput
-                type="number"
-                id="answerValue"
-                value={formData.answerValue}
-                onChange={handleChange}
-              />
-            </RegisterField>
+            <RegisterButton type="submit" disabled={loading}>
+              {loading ? "Signing up..." : "Signup"}
+            </RegisterButton>
 
-            <RegisterField>
-              <RegisterLabel>Negative Mark</RegisterLabel>
-              <RegisterInput
-                type="number"
-                id="negativeMarkValue"
-                value={formData.negativeMarkValue}
-                onChange={handleChange}
-              />
-            </RegisterField>
-            {errors.confirmPassword && (
-              <RegisterError>{errors.confirmPassword}</RegisterError>
-            )}
-          </RegisterField>
-
-          <RegisterButton type="submit" disabled={loading}>
-            {loading ? "Signing up..." : "Signup"}
-          </RegisterButton>
-
-          <RegisterFooter>
-            Already have an account? <NavLink to="/">Go to login</NavLink>
-          </RegisterFooter>
-        </RegisterForm>
-      </RegisterWrapper>
-    </RegisterContainer>
-   </Layout>
+            <RegisterFooter>
+              Already have an account? <NavLink to="/">Go to login</NavLink>
+            </RegisterFooter>
+          </RegisterForm>
+        </RegisterWrapper>
+      </RegisterContainer>
+    </Layout>
   );
 };
 

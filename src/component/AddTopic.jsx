@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { TopicContainer ,FormContainer, H2, TopicField, TopicLabel, TopicButton, TopicInput, ApiError, TopicError} from '../styles/AddTopicStyle'
 
 const AddTopic = () => {
-    const [topicName,setTopicName]=useState("")
+    const [
+        ,setTopicName]=useState("")
     const [error,setError]=useState("");
     const [apiError,setApiError]=useState("")
     const [loading,setLoading]=useState(false)
