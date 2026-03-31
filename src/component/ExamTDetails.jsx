@@ -6,9 +6,19 @@ const ExamTDetails = () => {
     <ContainerExamTD>
         <H2>Exam Topics</H2>
         <ContentETD>
+            <P>SNO.</P>
+            <P>TopicName</P>
+            <P>Percentage</P>
+        </ContentETD>
+         <ContentETD>
             <P>1</P>
-            <P>E123</P>
-            <P>java SQl</P>
+            <P>java</P>
+            <P>50</P>
+        </ContentETD>
+         <ContentETD>
+            <P>2</P>
+            <P>python</P>
+            <P>32</P>
         </ContentETD>
     </ContainerExamTD>
   )

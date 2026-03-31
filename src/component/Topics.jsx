@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Button, Buttons, H1, TopicContainer, TopicContent, TopicHeading, TopicName } from '../styles/TopicsStyle'
+import { useNavigate } from 'react-router-dom';
 
 const Topics = () => {
     const [topics, setTopics] = useState([]);
-    const[loading,setLoading]=useState(false)
+    const[loading,setLoading]=useState(false);
+    const navigate=useNavigate();
     
    
     
@@ -56,13 +58,14 @@ const Topics = () => {
             console.log(data.message || "Failed to delete topic")
             return;
          }
-          setTopics(prev => prev.filter(t => t.topicId !== topicId));
+          
    
       }catch(err ){
         console.log("error" ,err )
       }finally{
         console.log("done m")
-        setLoading(false)
+        setLoading(false);
+        navigate(0)
       }
        }
       
