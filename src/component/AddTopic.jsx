@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TopicContainer,
   FormContainer,
@@ -11,6 +11,7 @@ import {
   TopicError,
 } from "../styles/AddTopicStyle";
 import Topics from "./Topics";
+import { useNavigate } from "react-router-dom";
 
 const AddTopic = () => {
   const [topicName, setTopicName] = useState("");
@@ -18,6 +19,8 @@ const AddTopic = () => {
   const [apiError, setApiError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSucess] = useState("");
+  const navigate=useNavigate()
+  
 
   const handleChange = (e) => {
     setTopicName(e.target.value);
@@ -41,7 +44,9 @@ const AddTopic = () => {
   };
 
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
+    
     setLoading(true);
 
     setSucess("");
@@ -70,6 +75,7 @@ const AddTopic = () => {
       setApiError("Network error . please try again. ");
     } finally {
       setLoading(false);
+      navigate(0)
     }
   };
 
@@ -96,7 +102,7 @@ const AddTopic = () => {
         </FormContainer>
       </TopicContainer>
 
-      <Topics></Topics>
+      <Topics ></Topics>
     </>
   );
 };

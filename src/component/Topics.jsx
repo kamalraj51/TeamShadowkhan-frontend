@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Button, Buttons, TopicContainer, TopicContent, TopicHeading, TopicName } from '../styles/TopicsStyle'
+import { Button, Buttons, H1, TopicContainer, TopicContent, TopicHeading, TopicName } from '../styles/TopicsStyle'
+import { useNavigate } from 'react-router-dom';
 
 const Topics = () => {
     const [topics, setTopics] = useState([]);
-    const[loading,setLoading]=useState(false)
+    const[loading,setLoading]=useState(false);
+    const navigate=useNavigate();
+    
    
     
       useEffect(() => {
@@ -40,6 +43,8 @@ const Topics = () => {
   
       const deleteTopic= async (topicId)=>{
         setLoading(true)
+        await new Promise(resolve => setTimeout(resolve, 500));
+
        
        try{
          const response=await fetch( `https://localhost:8443/sphinx/api/topic/deletetopic?topicId=${encodeURIComponent(topicId)}`,{
@@ -53,13 +58,14 @@ const Topics = () => {
             console.log(data.message || "Failed to delete topic")
             return;
          }
-          setTopics(prev => prev.filter(t => t.topicId !== topicId));
+          
    
       }catch(err ){
         console.log("error" ,err )
       }finally{
         console.log("done m")
-        setLoading(false)
+        setLoading(false);
+        navigate(0)
       }
        }
       
@@ -70,6 +76,7 @@ const Topics = () => {
           "topicName":topicName,
         }
         setLoading(true)
+       await new Promise(resolve => setTimeout(resolve, 500));
 
         try{
           const response=await fetch("https://localhost:8443/sphinx/api/topic/updatetopic",{
@@ -100,7 +107,7 @@ const Topics = () => {
    <TopicContainer>
         <TopicHeading>Topics</TopicHeading>
         
-        {topics.map((topic)=>{
+        {topics.length===0?<H1>No Topic Available</H1>:topics.map((topic)=>{
             
             return <TopicContent key={topic.topicId}>
                      <TopicName name='topicName' value={topic.topicName} onChange={(e)=>change(e,topic.topicId)}></TopicName>
@@ -110,6 +117,7 @@ const Topics = () => {
                       </Buttons>
                       
             </TopicContent>
+
         })}
         
    </TopicContainer>
