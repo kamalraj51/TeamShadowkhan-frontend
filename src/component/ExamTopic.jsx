@@ -26,8 +26,8 @@ const ExamTopic = ({ examid }) => {
     });
   };
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setData({
+      ...data,
       [e.target.id]: e.target.value,
     });
   };
@@ -72,12 +72,8 @@ const ExamTopic = ({ examid }) => {
 
   return (
     <>
-      
-
       <Form action={handledata}>
-        
         <Field>
-         
           <Label>Select Topic</Label>
           <Select id="topicId" value={data.topicId} onChange={handleChange}>
             <option value="">-- Select Topic --</option>
@@ -90,10 +86,10 @@ const ExamTopic = ({ examid }) => {
         </Field>
 
         <Field>
-          <Label for="percentage" >percentage</Label>
+          <Label for="percentage">percentage</Label>
           <Input typr="text" name=" percentage" onChange={handleinput}></Input>
         </Field>
-       
+
         <Button type="submit">add topic</Button>
       </Form>
     </>
