@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { Button, TopicContainer, TopicContent, TopicHeading, TopicName } from '../styles/TopicsStyle'
+import React, { useEffect, useRef, useState } from 'react'
+import { Button, Buttons, TopicContainer, TopicContent, TopicHeading, TopicName } from '../styles/TopicsStyle'
 
 const Topics = () => {
     const [topics, setTopics] = useState([]);
+    const[loading,setLoading]=useState(false)
+   
     
       useEffect(() => {
         const fetchTopics = async () => {
@@ -25,8 +27,19 @@ const Topics = () => {
         fetchTopics();
       }, []);
 
+       const change = (e, id) => {
+    const updatedTopics = topics.map((topic) =>
+      topic.topicId === id
+        ? { ...topic, topicName: e.target.value }
+        : topic
+    );
+
+    setTopics(updatedTopics);
+  };
+
   
       const deleteTopic= async (topicId)=>{
+        setLoading(true)
        
        try{
          const response=await fetch( `https://localhost:8443/sphinx/api/topic/deletetopic?topicId=${encodeURIComponent(topicId)}`,{
@@ -46,17 +59,56 @@ const Topics = () => {
         console.log("error" ,err )
       }finally{
         console.log("done m")
+        setLoading(false)
       }
        }
+      
 
+       const updateTopic=async (topicId,topicName)=>{
+        let topic={
+          "topicId":topicId,
+          "topicName":topicName,
+        }
+        setLoading(true)
+
+        try{
+          const response=await fetch("https://localhost:8443/sphinx/api/topic/updatetopic",{
+            method:"PUT",
+            headers:{
+              "content-Type":"application/json",
+            },
+            body:JSON.stringify(topic)
+          })
+          if(!response.ok){
+            console.log("not update")
+            return;
+          }
+          alert("update successfully")
+
+        }catch(err){
+          console.log(err||"failed to update")
+        }finally{
+          setLoading(false)
+        }
+
+       }
+
+
+
+      
   return (
    <TopicContainer>
         <TopicHeading>Topics</TopicHeading>
         
         {topics.map((topic)=>{
+            
             return <TopicContent key={topic.topicId}>
-                     <TopicName>{topic.topicName}</TopicName>
-                      <Button onClick={()=>deleteTopic(topic.topicId)}>Delete</Button>
+                     <TopicName name='topicName' value={topic.topicName} onChange={(e)=>change(e,topic.topicId)}></TopicName>
+                     <Buttons>
+                        <Button disabled={loading} onClick={()=>updateTopic(topic.topicId,topic.topicName)}>{loading?"loading..":"update"}</Button>
+                        <Button disabled={loading} onClick={()=>deleteTopic(topic.topicId)}>{loading?"loading":"delete"}</Button>
+                      </Buttons>
+                      
             </TopicContent>
         })}
         

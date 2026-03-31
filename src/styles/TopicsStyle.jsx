@@ -21,9 +21,16 @@ margin-bottom:5px;
 `
 
 
-export const TopicName=styled.h3`
-color:${({ theme }) => theme.colors.surface};
-padding:0px 10px; 
+export const TopicName=styled.input`
+font-size:16px;
+
+ border-top-left-radius: 10px;
+border-bottom-right-radius: 10px;
+
+color:${({ theme }) => theme.colors.textPrimary};
+padding:10px 10px; 
+ outline: none;
+
 
 `
 
@@ -47,4 +54,8 @@ export const Button=styled.button`
   }
 
 
+`
+export const Buttons=styled.div`
+display:flex;
+gap:10px;
 `

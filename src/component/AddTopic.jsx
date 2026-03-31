@@ -8,6 +8,7 @@ const AddTopic = () => {
     const [apiError,setApiError]=useState("")
     const [loading,setLoading]=useState(false)
     const [success,setSucess]=useState("")
+     
     const handleChange=(e)=>{
         setTopicName(e.target.value)
         if(error){
@@ -82,7 +83,7 @@ const AddTopic = () => {
         </FormContainer>
    </TopicContainer>
 
-   <Topics></Topics>
+   <Topics ></Topics>
    
 </>
   )
