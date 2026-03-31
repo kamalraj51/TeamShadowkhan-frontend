@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TopicContainer,
   FormContainer,
@@ -18,6 +18,7 @@ const AddTopic = () => {
   const [apiError, setApiError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSucess] = useState("");
+  
 
   const handleChange = (e) => {
     setTopicName(e.target.value);
@@ -41,7 +42,9 @@ const AddTopic = () => {
   };
 
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
+    
     setLoading(true);
 
     setSucess("");
@@ -96,7 +99,7 @@ const AddTopic = () => {
         </FormContainer>
       </TopicContainer>
 
-      <Topics></Topics>
+      <Topics ></Topics>
     </>
   );
 };

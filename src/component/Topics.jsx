@@ -4,6 +4,7 @@ import { Button, Buttons, H1, TopicContainer, TopicContent, TopicHeading, TopicN
 const Topics = () => {
     const [topics, setTopics] = useState([]);
     const[loading,setLoading]=useState(false)
+    
    
     
       useEffect(() => {
@@ -40,6 +41,8 @@ const Topics = () => {
   
       const deleteTopic= async (topicId)=>{
         setLoading(true)
+        await new Promise(resolve => setTimeout(resolve, 500));
+
        
        try{
          const response=await fetch( `https://localhost:8443/sphinx/api/topic/deletetopic?topicId=${encodeURIComponent(topicId)}`,{
@@ -70,6 +73,7 @@ const Topics = () => {
           "topicName":topicName,
         }
         setLoading(true)
+       await new Promise(resolve => setTimeout(resolve, 500));
 
         try{
           const response=await fetch("https://localhost:8443/sphinx/api/topic/updatetopic",{
