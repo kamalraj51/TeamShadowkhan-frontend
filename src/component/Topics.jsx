@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Button, Buttons, TopicContainer, TopicContent, TopicHeading, TopicName } from '../styles/TopicsStyle'
+import { Button, Buttons, H1, TopicContainer, TopicContent, TopicHeading, TopicName } from '../styles/TopicsStyle'
 
 const Topics = () => {
     const [topics, setTopics] = useState([]);
@@ -100,7 +100,7 @@ const Topics = () => {
    <TopicContainer>
         <TopicHeading>Topics</TopicHeading>
         
-        {topics.map((topic)=>{
+        {topics.length===0?<H1>No Topic Available</H1>:topics.map((topic)=>{
             
             return <TopicContent key={topic.topicId}>
                      <TopicName name='topicName' value={topic.topicName} onChange={(e)=>change(e,topic.topicId)}></TopicName>
@@ -110,6 +110,7 @@ const Topics = () => {
                       </Buttons>
                       
             </TopicContent>
+
         })}
         
    </TopicContainer>
