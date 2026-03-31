@@ -6,6 +6,7 @@ const AvailableExam = () => {
    
    
   const [examData,setExamData]=useState([])
+  const [id,setId]=useState()
    const getAllExam=async()=>{
       const response=await fetch("https://localhost:8443/sphinx/api/exam/getexam",{
         method:"GET",
@@ -14,6 +15,16 @@ const AvailableExam = () => {
         }
 
       })
+      const handleExamDelete=async ()=>{
+        const response=await fetch("https://localhost:8443/sphinx/api/exam/examDelete",{
+          method:"DELETE",
+          headers:{
+             "Content-Type": "application/json",
+          },
+        
+             body:JSON.stringify({id})
+        })
+      }
       const allData=await response.json()
       console.log(allData)
       setExamData(allData.data.data)
@@ -22,7 +33,7 @@ const AvailableExam = () => {
    }
    useEffect(()=>{
     getAllExam()
-   })
+   },[examData])
 
  
   return (
@@ -68,7 +79,10 @@ const AvailableExam = () => {
 
       <Td>Assign Users</Td>
       <Td>Setup</Td>
-      <Td><Button>Delete</Button></Td>
+      <Td><Button onClick={() => {setId(data.examId);handleExamDelete();}}>
+    Delete
+  </Button>
+</Td>
     </tr>
   ))}
 </tbody>

@@ -71,7 +71,7 @@ const ExamTopic = ({ examid }) => {
             
         </Form>
          {
-            data.map((e,i)=>{
+            topics.map((e,i)=>{
                 return(
                    <Row>
                         <h3>{data. examTopicName}</h3>

@@ -10,7 +10,7 @@ const CreateExam = () => {
        <Layout>
            <Container>
             <CreateExamform/>
-            <ExamTopic/>
+             <ExamTopic/>
         </Container>
        </Layout>
     </>
