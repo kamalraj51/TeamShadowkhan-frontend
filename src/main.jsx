@@ -11,9 +11,7 @@ import AppThemeProvider from './component/AppThemeProvider.jsx';
 
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
     <Provider store={store}>
       <AppThemeProvider></AppThemeProvider>
     </Provider>
-  </StrictMode>
 );

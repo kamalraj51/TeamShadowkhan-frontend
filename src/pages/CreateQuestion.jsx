@@ -22,7 +22,7 @@ import Layout from "../component/Layout";
 const CreateQuestion = () => {
   const [apiError, setApiError] = useState("");
   const [formData, setFormData] = useState({
-    topicId: "",
+    topicId: "Maths",
     questionDetail: "",
     optionA: "",
     optionB: "",
@@ -58,10 +58,7 @@ const CreateQuestion = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!validate()) return;
-
-    setLoading(true);
+   setLoading(true);
     try {
       const response = await fetch(
         "https://localhost:8443/sphinx/api/question/createQuestion",
@@ -76,12 +73,7 @@ const CreateQuestion = () => {
 
       const data = await response.json();
 
-      if (!response.ok) {
-        setApiError(data.message || "Signup failed!");
-        return;
-      }
-
-      navigate("/");
+      navigate("/createquestion");
     } catch (err) {
       setApiError("Network error. Please try again.");
     } finally {
@@ -204,8 +196,8 @@ const CreateQuestion = () => {
                 <QuestionLabel>Option B * </QuestionLabel>
                 <QuestionInput
                   type="text"
-                  id={`optionA`}
-                  value={formData[`optionA`]}
+                  id={`optionB`}
+                  value={formData[`optionB`]}
                   onChange={handleChange}
                 />
               </QuestionField>
@@ -214,8 +206,8 @@ const CreateQuestion = () => {
                 <QuestionLabel>Option C</QuestionLabel>
                 <QuestionInput
                   type="text"
-                  id={`optionA`}
-                  value={formData[`optionA`]}
+                  id={`optionC`}
+                  value={formData[`optionC`]}
                   onChange={handleChange}
                 />
               </QuestionField>
@@ -223,8 +215,8 @@ const CreateQuestion = () => {
                 <QuestionLabel>Option D</QuestionLabel>
                 <QuestionInput
                   type="text"
-                  id={`optionA`}
-                  value={formData[`optionA`]}
+                  id={`optionD`}
+                  value={formData[`optionD`]}
                   onChange={handleChange}
                 />
               </QuestionField>
@@ -232,8 +224,8 @@ const CreateQuestion = () => {
                 <QuestionLabel>Option E</QuestionLabel>
                 <QuestionInput
                   type="text"
-                  id={`optionA`}
-                  value={formData[`optionA`]}
+                  id={`optionE`}
+                  value={formData[`optionE`]}
                   onChange={handleChange}
                 />
               </QuestionField>
