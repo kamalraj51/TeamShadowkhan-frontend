@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 /* QUEATION CONTAINER */
 export const QuestionContainer = styled.div`
-  padding: 50px 0px;
-  min-height: 100vh;
+  padding: 50px 200px;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,7 +38,7 @@ export const QuestionSubtitle = styled.p`
 export const QuestionForm = styled.form`
   background: ${({ theme }) => theme.colors.surface};
   padding: 30px;
-  width: 980px;
+  width: 600px;
   border-radius: 12px;
 
   display: flex;
@@ -52,6 +52,9 @@ export const QuestionForm = styled.form`
     text-align: center;
     color: ${({ theme }) => theme.colors.textPrimary};
   }
+    @media(max-width:600px){
+    width:300px;
+    }
 `;
 
 /* FIELD */

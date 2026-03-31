@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   ApiError,
@@ -39,7 +39,7 @@ const CreateQuestion = () => {
   const [topics, setTopics] = useState([]);
   const [errors, setErrors] = useState();
   const [loading, setLoading] = useState(false);
-
+  const [toggle, setToggle] = useState(false);
   const validate = () => {
     let newErrors = {};
 
@@ -139,13 +139,41 @@ const CreateQuestion = () => {
             {apiError && <ApiError>{apiError}</ApiError>}
 
             <QuestionField>
+              <QuestionLabel>Question Type</QuestionLabel>
+
+              <select
+                id="questionType"
+                value={formData.questionType}
+                onChange={handleChange}
+              >
+                <option value="SINGLE_CHOICE" onClick={() => setToggle(false)}>
+                  SINGLE CHOICE
+                </option>
+                <option value="MULTI_CHOICE" onClick={() => setToggle(true)}>
+                  MULTI CHOICE
+                </option>
+                <option value="TRUE_FALSE" onClick={() => setToggle(false)}>
+                  TRUE/FALSE
+                </option>
+                <option value="FILL_BLANKS" onClick={() => setToggle(false)}>
+                  FILL BLANKS
+                </option>
+                <option
+                  value="DETAILED_ANSWER"
+                  onClick={() => setToggle(false)}
+                >
+                  DETAILED ANSWER
+                </option>
+              </select>
+            </QuestionField>
+
+            <QuestionField>
               <QuestionLabel>Select Topic</QuestionLabel>
               <select
                 id="topicId"
                 value={formData.topicId}
                 onChange={handleChange}
               >
-                <option value="">-- Select Topic --</option>
                 {topics.map((topic) => (
                   <option key={topic.topicId} value={topic.topicId}>
                     {topic.topicName}
@@ -217,7 +245,6 @@ const CreateQuestion = () => {
                   value={formData.answer}
                   onChange={handleChange}
                 >
-                  <option value="">Select Answer</option>
                   <option value="A">A</option>
                   <option value="B">B</option>
                   <option value="C">C</option>
@@ -225,37 +252,18 @@ const CreateQuestion = () => {
                   <option value="E">E</option>
                 </select>
               </QuestionField>
-
-              <QuestionField>
-                <QuestionLabel>Number of Answers</QuestionLabel>
-                <QuestionInput
-                  type="number"
-                  id="numAnswers"
-                  value={formData.numAnswers}
-                  onChange={handleChange}
-                  min="1"
-                />
-              </QuestionField>
-
-              <QuestionField>
-                <QuestionLabel>Question Type</QuestionLabel>
-                <QuestionInput
-                  type="text"
-                  id="questionType"
-                  value={formData.questionType}
-                  onChange={handleChange}
-                />
-              </QuestionField>
-
-              <select
-                id="questionType"
-                value={formData.questionType}
-                onChange={handleChange}
-              >
-                <option value="">Select Type</option>
-                <option value="MCQ">MCQ</option>
-                <option value="MULTI">Multiple Answer</option>
-              </select>
+              {toggle && (
+                <QuestionField>
+                  <QuestionLabel>Number of Answers</QuestionLabel>
+                  <QuestionInput
+                    type="number"
+                    id="numAnswers"
+                    value={formData.numAnswers}
+                    onChange={handleChange}
+                    min="1"
+                  />
+                </QuestionField>
+              )}
 
               <QuestionField>
                 <QuestionLabel>Difficulty Level</QuestionLabel>
@@ -264,7 +272,6 @@ const CreateQuestion = () => {
                   value={formData.difficultyLevel}
                   onChange={handleChange}
                 >
-                  <option value="">Select Difficulty</option>
                   <option value="1">Easy</option>
                   <option value="2">Medium</option>
                   <option value="3">Hard</option>
