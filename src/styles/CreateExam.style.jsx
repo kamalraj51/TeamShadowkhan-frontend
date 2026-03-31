@@ -1,19 +1,18 @@
-import styled from 'styled-components';
-
+import styled from "styled-components";
 
 export const Container = styled.div`
-  
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   padding: 16px;
   background-color: ${({ theme }) => theme.colors.background};
-  margin:10px 0px;
+  margin: 10px 0px;
 `;
 
-
 export const Form = styled.form`
+  margin-bottom: 100px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -36,6 +35,16 @@ export const Label = styled.label`
   font-weight: bold;
   margin-bottom: 4px;
   color: ${({ theme }) => theme.colors.text};
+`;
+
+//select
+export const Select = styled.select`
+  font-weight: bold;
+  margin-bottom: 4px;
+  padding: 20px 30px;
+  background-color: white;
+  color: ${({ theme }) => theme.colors.text};
+  border-radius: 6px;
 `;
 
 // Input styling
@@ -79,6 +88,4 @@ export const Unit = styled.span`
   color: ${({ theme }) => theme.colors.text};
 `;
 
-
-export const Row=styled.option`
-`
+export const Row = styled.option``;
