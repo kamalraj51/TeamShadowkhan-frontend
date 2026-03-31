@@ -1,36 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AvailableContainer, AvailableTable, H2, HeadingTable, TableWrapper, Td, Th } from '../styles/AvailableExamStyle'
+import { Button } from '../styles/CreateExam.style'
 
 const AvailableExam = () => {
-    const examData = [
-  {
-    id: 1,
-    examId: "EX101",
-    name: "Java Basics",
-    desc: "Java with SQL",
-    questions: 50,
-    duration: "1 hr",
-    pass: "35%"
-  },
-  {
-    id: 2,
-    examId: "EX102",
-    name: "React",
-    desc: "Frontend Development",
-    questions: 40,
-    duration: "45 mins",
-    pass: "40%"
-  },
-  {
-    id: 3,
-    examId: "EX103",
-    name: "Node.js",
-    desc: "Backend API",
-    questions: 30,
-    duration: "30 mins",
-    pass: "50%"
-  }
-];
+   
+   
+  const [examData,setExamData]=useState([])
+   const getAllExam=async()=>{
+      const response=await fetch("https://localhost:8443/sphinx/api/exam/getexam",{
+        method:"GET",
+        headers:{
+          "Content-Type": "application/json",
+        }
+
+      })
+      const allData=await response.json()
+      console.log(allData)
+      setExamData(allData.data.data)
+      console.log(examData)
+
+   }
+   useEffect(()=>{
+    getAllExam()
+   })
+
+ 
   return (
     <AvailableContainer>
         <HeadingTable>
@@ -51,18 +45,20 @@ const AvailableExam = () => {
                     
                     <Th>Assign User to this Exam</Th>
                     <Th>SetUp this Exam</Th>
+                    <th>Delete the Exam</th>
                 </tr>
             </thead>
           <tbody>
-  {examData.map((exam, index) => (
-    <tr key={exam.id}>
+  {examData.map((data, index) => (
+    
+    <tr key={data.id}>
       <Td>{index + 1}</Td>
-      <Td>{exam.examId}</Td>
-      <Td>{exam.name}</Td>
-      <Td>{exam.desc}</Td>
-      <Td>{exam.questions}</Td>
-      <Td>{exam.duration}</Td>
-      <Td>{exam.pass}</Td>
+      <Td>{data.examId}</Td>
+      <Td>{data.examName}</Td>
+      <Td>{data.description}</Td>
+      <Td>{data.noOfQuestions}</Td>
+      <Td>{data.duration}</Td>
+      <Td>{data.passPercentage}</Td>
 
       <Td>
         <button>Add</button>
@@ -72,6 +68,7 @@ const AvailableExam = () => {
 
       <Td>Assign Users</Td>
       <Td>Setup</Td>
+      <Td><Button>Delete</Button></Td>
     </tr>
   ))}
 </tbody>
