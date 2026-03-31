@@ -2,18 +2,19 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   ApiError,
-  RegisterButton,
-  RegisterContainer,
-  RegisterError,
-  RegisterField,
-  RegisterFooter,
-  RegisterForm,
-  RegisterInput,
-  RegisterLabel,
-  RegisterSubtitle,
-  RegisterTitle,
-  RegisterWrapper,
-} from "../styles/SignupStyle";
+  CreateQuesButton,
+  QuestionContainer,
+  CreateQuesError,
+  QuestionField,
+  QuestionFooter,
+  QuestionForm,
+  QuestionInput,
+  QuestionLabel,
+  QuestionSubtitle,
+  QuestionTitle,
+  QuestionWrapper,
+} from "../styles/CreateQuestion.styles";
+
 import { useEffect, useState } from "react";
 import Layout from "../component/Layout";
 
@@ -37,7 +38,7 @@ const CreateQuestion = () => {
   });
   const [topics, setTopics] = useState([]);
   const [errors, setErrors] = useState();
-  const [loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
 
   const validate = () => {
     let newErrors = {};
@@ -129,16 +130,16 @@ const CreateQuestion = () => {
 
   return (
     <Layout>
-      <RegisterContainer>
-        <RegisterWrapper>
-          <RegisterTitle>Question Page</RegisterTitle>
-          <RegisterSubtitle>Create Topic wise question</RegisterSubtitle>
+      <QuestionContainer>
+        <QuestionWrapper>
+          <QuestionTitle>Question Page</QuestionTitle>
+          <QuestionSubtitle>Create Topic wise question</QuestionSubtitle>
 
-          <RegisterForm onSubmit={handleSubmit}>
+          <QuestionForm onSubmit={handleSubmit}>
             {apiError && <ApiError>{apiError}</ApiError>}
 
-            <RegisterField>
-              <RegisterLabel>Select Topic</RegisterLabel>
+            <QuestionField>
+              <QuestionLabel>Select Topic</QuestionLabel>
               <select
                 id="topicId"
                 value={formData.topicId}
@@ -151,30 +152,66 @@ const CreateQuestion = () => {
                   </option>
                 ))}
               </select>
-              <RegisterField>
-                <RegisterLabel>Question</RegisterLabel>
-                <RegisterInput
+              <QuestionField>
+                <QuestionLabel>Question</QuestionLabel>
+                <QuestionInput
                   type="text"
                   id="questionDetail"
                   value={formData.questionDetail}
                   onChange={handleChange}
                 />
-              </RegisterField>
+              </QuestionField>
 
-              {["A", "B", "C", "D", "E"].map((opt) => (
-                <RegisterField key={opt}>
-                  <RegisterLabel>Option {opt}</RegisterLabel>
-                  <RegisterInput
-                    type="text"
-                    id={`option${opt}`}
-                    value={formData[`option${opt}`]}
-                    onChange={handleChange}
-                  />
-                </RegisterField>
-              ))}
+              <QuestionField>
+                <QuestionLabel>Option A *</QuestionLabel>
+                <QuestionInput
+                  type="text"
+                  id={`optionA`}
+                  value={formData[`optionA`]}
+                  onChange={handleChange}
+                />
+              </QuestionField>
 
-              <RegisterField>
-                <RegisterLabel>Correct Answer</RegisterLabel>
+              <QuestionField>
+                <QuestionLabel>Option B * </QuestionLabel>
+                <QuestionInput
+                  type="text"
+                  id={`optionA`}
+                  value={formData[`optionA`]}
+                  onChange={handleChange}
+                />
+              </QuestionField>
+
+              <QuestionField>
+                <QuestionLabel>Option C</QuestionLabel>
+                <QuestionInput
+                  type="text"
+                  id={`optionA`}
+                  value={formData[`optionA`]}
+                  onChange={handleChange}
+                />
+              </QuestionField>
+              <QuestionField>
+                <QuestionLabel>Option D</QuestionLabel>
+                <QuestionInput
+                  type="text"
+                  id={`optionA`}
+                  value={formData[`optionA`]}
+                  onChange={handleChange}
+                />
+              </QuestionField>
+              <QuestionField>
+                <QuestionLabel>Option E</QuestionLabel>
+                <QuestionInput
+                  type="text"
+                  id={`optionA`}
+                  value={formData[`optionA`]}
+                  onChange={handleChange}
+                />
+              </QuestionField>
+
+              <QuestionField>
+                <QuestionLabel>Correct Answer</QuestionLabel>
                 <select
                   id="answer"
                   value={formData.answer}
@@ -187,28 +224,28 @@ const CreateQuestion = () => {
                   <option value="D">D</option>
                   <option value="E">E</option>
                 </select>
-              </RegisterField>
+              </QuestionField>
 
-              <RegisterField>
-                <RegisterLabel>Number of Answers</RegisterLabel>
-                <RegisterInput
+              <QuestionField>
+                <QuestionLabel>Number of Answers</QuestionLabel>
+                <QuestionInput
                   type="number"
                   id="numAnswers"
                   value={formData.numAnswers}
                   onChange={handleChange}
                   min="1"
                 />
-              </RegisterField>
+              </QuestionField>
 
-              <RegisterField>
-                <RegisterLabel>Question Type</RegisterLabel>
-                <RegisterInput
+              <QuestionField>
+                <QuestionLabel>Question Type</QuestionLabel>
+                <QuestionInput
                   type="text"
                   id="questionType"
                   value={formData.questionType}
                   onChange={handleChange}
                 />
-              </RegisterField>
+              </QuestionField>
 
               <select
                 id="questionType"
@@ -220,52 +257,51 @@ const CreateQuestion = () => {
                 <option value="MULTI">Multiple Answer</option>
               </select>
 
-              <RegisterField>
-                <RegisterLabel>Difficulty Level</RegisterLabel>
+              <QuestionField>
+                <QuestionLabel>Difficulty Level</QuestionLabel>
                 <select
                   id="difficultyLevel"
                   value={formData.difficultyLevel}
                   onChange={handleChange}
                 >
                   <option value="">Select Difficulty</option>
-                  <option value="EASY">Easy</option>
-                  <option value="MEDIUM">Medium</option>
-                  <option value="HARD">Hard</option>
+                  <option value="1">Easy</option>
+                  <option value="2">Medium</option>
+                  <option value="3">Hard</option>
                 </select>
-              </RegisterField>
+              </QuestionField>
 
-              <RegisterField>
-                <RegisterLabel>Answer Value</RegisterLabel>
-                <RegisterInput
+              <QuestionField>
+                <QuestionLabel>Answer Value</QuestionLabel>
+                <QuestionInput
                   type="number"
                   id="answerValue"
                   value={formData.answerValue}
                   onChange={handleChange}
                 />
-              </RegisterField>
+              </QuestionField>
 
-              <RegisterField>
-                <RegisterLabel>Negative Mark</RegisterLabel>
-                <RegisterInput
+              <QuestionField>
+                <QuestionLabel>Negative Mark</QuestionLabel>
+                <QuestionInput
                   type="number"
                   id="negativeMarkValue"
                   value={formData.negativeMarkValue}
                   onChange={handleChange}
                 />
-              </RegisterField>
-             
-            </RegisterField>
+              </QuestionField>
+            </QuestionField>
 
-            <RegisterButton type="submit" disabled={loading}>
-              {loading ? "Signing up..." : "Signup"}
-            </RegisterButton>
+            <CreateQuesButton type="submit" disabled={loading}>
+              {loading ? "Creating ..." : "Create"}
+            </CreateQuesButton>
 
-            <RegisterFooter>
-              Already have an account? <NavLink to="/">Go to login</NavLink>
-            </RegisterFooter>
-          </RegisterForm>
-        </RegisterWrapper>
-      </RegisterContainer>
+            <QuestionFooter>
+              <NavLink to="/adminhome">Back to home</NavLink>
+            </QuestionFooter>
+          </QuestionForm>
+        </QuestionWrapper>
+      </QuestionContainer>
     </Layout>
   );
 };
