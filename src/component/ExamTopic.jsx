@@ -1,90 +1,103 @@
-import React, { useState } from 'react'
-import { Button, Field, Form, Input, Label, Row } from '../styles/CreateExam.style'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import {
+  Button,
+  Field,
+  Form,
+  Input,
+  Label,
+  Row,
+  Select,
+} from "../styles/CreateExam.style";
+import { useNavigate } from "react-router-dom";
 
 const ExamTopic = ({ examid }) => {
-  let navigate = useNavigate()
-
-  let [formData, setFormData] = useState({
+  const [topics, setTopics] = useState([]);
+  let navigate = useNavigate();
+  let [data, setData] = useState({
     examTopicName: "",
     topicId: "",
     examId: examid,
-    percentage: ""
-  })
-
-  let [topics, setTopics] = useState([])
-
+    percentage: "",
+  });
   let handleinput = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
-
+      [e.target.id]: e.target.value,
+    });
+  };
   let handledata = async (e) => {
-    e.preventDefault()
-
-    let response = await fetch("https://localhost:8443/sphinx/api/exam/addtopic", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    let response = await fetch(
+      "https://localhost:8443/sphinx/api/exam/addtopic",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       },
-      body: JSON.stringify(formData)
-    })
-
+    );
     if (response.ok) {
-      setTopics([...topics, formData]) // add to list
-      setFormData({
-        examTopicName: "",
-        topicId: "",
-        examId: examid,
-        percentage: ""
-      })
+      navigate("/");
     }
-  }
+  };
+
+  //api call
+  useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        const res = await fetch(
+          "https://localhost:8443/sphinx/api/topic/gettopics",
+        ); //id, name
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        console.log(data);
+        setTopics(data.topic || []); // assuming array response
+      } catch (err) {
+        console.error("Error fetching topics:", err);
+        console.log(err);
+      }
+    };
+
+    fetchTopics();
+  }, []);
 
   return (
     <>
+      
 
-        <Row>
-            <h3>TopicId</h3>
-            <h3>TopicName</h3>
-            <h3>percentage</h3>
-        </Row>
+      <Form action={handledata}>
+        
+        <Field>
+         
+          <Label>Select Topic</Label>
+          <Select id="topicId" value={data.topicId} onChange={handleChange}>
+            <option value="">-- Select Topic --</option>
+            {topics.map((topic) => (
+              <option key={topic.topicId} value={topic.topicId}>
+                {topic.topicName}
+              </option>
+            ))}
+          </Select>
+        </Field>
+
+        <Field>
+          <Label for="percentage" >percentage</Label>
+          <Input typr="text" name=" percentage" onChange={handleinput}></Input>
+        </Field>
        
-        <Form action={handledata}>
-            
-                 <Field>
-                     <Label for="exam topic"/>
-                    <Input typr="text" name=" examTopicName" onChange={handleinput}></Input>
-                 </Field>
-                
-                 <Field>
-                    <Label for="percentage"/>
-                    <Input typr="text" name=" percentage" onChange={handleinput}></Input>
-                 </Field>
-                 <Field>
-                    <Label for="topicId"/>
-                    <Input typr="text" name=" topicId" onChange={handleinput}></Input>
-                 </Field>
-                 <Button type="submit">add topic</Button>
-            
-        </Form>
-         {
-            topics.map((e,i)=>{
-                return(
-                   <Row>
-                        <h3>{data. examTopicName}</h3>
-                        <h3>{data.percentage}</h3>
-                        <p>{data.topicId}</p>
-                        
-                   </Row>
-                   
-                )
-            })
-        }
+        <Button type="submit">add topic</Button>
+      </Form>
     </>
-  )
-}
+  );
+};
 
-export default ExamTopic
+export default ExamTopic;

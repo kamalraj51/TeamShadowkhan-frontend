@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { AvailableContainer, AvailableTable, H2, HeadingTable, TableWrapper, Td, Th } from '../styles/AvailableExamStyle'
 import { Button } from '../styles/CreateExam.style'
 
@@ -6,7 +6,7 @@ const AvailableExam = () => {
    
    
   const [examData,setExamData]=useState([])
-  const [id,setId]=useState()
+  
    const getAllExam=async()=>{
       const response=await fetch("https://localhost:8443/sphinx/api/exam/getexam",{
         method:"GET",
@@ -15,27 +15,35 @@ const AvailableExam = () => {
         }
 
       })
-      const handleExamDelete=async ()=>{
+       const allData=await response.json()
+      console.log(allData)
+      setExamData(allData.data.data)
+      console.log(examData)
+    }
+    const handleExamDelete=async (examId)=>{
+      console.log(examId)
         const response=await fetch("https://localhost:8443/sphinx/api/exam/examDelete",{
           method:"DELETE",
           headers:{
              "Content-Type": "application/json",
           },
-        
-             body:JSON.stringify({id})
+         
+             body:JSON.stringify({"examId":examId})
+            
         })
+      
+     
       }
-      const allData=await response.json()
-      console.log(allData)
-      setExamData(allData.data.data)
-      console.log(examData)
 
-   }
-   useEffect(()=>{
+   
+  useEffect(()=>{
     getAllExam()
-   },[examData])
+   },[])
 
- 
+  let submitHandle=(examId)=>{
+    setId(examId)
+    handleExamDelete();
+  }
   return (
     <AvailableContainer>
         <HeadingTable>
@@ -56,7 +64,7 @@ const AvailableExam = () => {
                     
                     <Th>Assign User to this Exam</Th>
                     <Th>SetUp this Exam</Th>
-                    <th>Delete the Exam</th>
+                    <Th>Delete the Exam</Th>
                 </tr>
             </thead>
           <tbody>
@@ -79,7 +87,7 @@ const AvailableExam = () => {
 
       <Td>Assign Users</Td>
       <Td>Setup</Td>
-      <Td><Button onClick={() => {setId(data.examId);handleExamDelete();}}>
+      <Td><Button onClick={()=>handleExamDelete(data.examId)}>
     Delete
   </Button>
 </Td>
