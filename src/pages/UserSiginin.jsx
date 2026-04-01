@@ -57,7 +57,7 @@ const handleSubmit=async (e)=>{
   setApiError("")
 
   try{
-    const response=await fetch("http://localhost:5000/api/signup",{
+    const response=await fetch("https://localhost:8443/sphinx/api/user/signin",{
       method:"POST",
       headers:{
         "content-Type":"application/json",
@@ -70,7 +70,7 @@ const handleSubmit=async (e)=>{
     }
 
     //sucess =>redirect
-    Navigate("/")
+    navigate("/adminhome")
 
   }catch(err){
     setApiError("Network error. Please try again.")
