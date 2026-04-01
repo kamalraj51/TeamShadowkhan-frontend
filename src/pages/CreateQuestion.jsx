@@ -21,17 +21,19 @@ import Layout from "../component/Layout";
 // VALIDATION
 const CreateQuestion = () => {
   const [apiError, setApiError] = useState("");
+  const[questionType,setQuestionType]=useState('SINGLE_CHOICE');
+  const[option,setOption]=useState('A');
   const [formData, setFormData] = useState({
-    topicId: "",
+    topicId: "T002",
     questionDetail: "",
     optionA: "",
     optionB: "",
     optionC: "",
     optionD: "",
     optionE: "",
-    answer: "",
+    answer: option,
     numAnswers: 0,
-    questionType: 0,
+    questionTypeId: questionType,
     difficultyLevel: 0,
     answerValue: 0,
     negativeMarkValue: 1,
@@ -40,6 +42,9 @@ const CreateQuestion = () => {
   const [errors, setErrors] = useState();
   const [loading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(false);
+  console.log(formData);
+  console.log(errors);
+  
   const validate = () => {
     let newErrors = {};
 
@@ -58,13 +63,10 @@ const CreateQuestion = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!validate()) return;
-
     setLoading(true);
     try {
       const response = await fetch(
-        "https://localhost:8443/sphinx/api/question/createQuestion",
+        "https://localhost:8443/sphinx/api/question/createquestion",
         {
           method: "POST",
           headers: {
@@ -76,12 +78,7 @@ const CreateQuestion = () => {
 
       const data = await response.json();
 
-      if (!response.ok) {
-        setApiError(data.message || "Signup failed!");
-        return;
-      }
-
-      navigate("/");
+      navigate("/createquestion");
     } catch (err) {
       setApiError("Network error. Please try again.");
     } finally {
@@ -118,6 +115,8 @@ const CreateQuestion = () => {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
+      questionType:questionType,
+      answer:option,
     });
 
     setErrors({
@@ -143,8 +142,8 @@ const CreateQuestion = () => {
 
               <select
                 id="questionType"
-                value={formData.questionType}
-                onChange={handleChange}
+                value={questionType}
+                onChange={(e)=>{setQuestionType(e.target.value)}}
               >
                 <option value="SINGLE_CHOICE" onClick={() => setToggle(false)}>
                   SINGLE CHOICE
@@ -204,8 +203,8 @@ const CreateQuestion = () => {
                 <QuestionLabel>Option B * </QuestionLabel>
                 <QuestionInput
                   type="text"
-                  id={`optionA`}
-                  value={formData[`optionA`]}
+                  id={`optionB`}
+                  value={formData[`optionB`]}
                   onChange={handleChange}
                 />
               </QuestionField>
@@ -214,8 +213,8 @@ const CreateQuestion = () => {
                 <QuestionLabel>Option C</QuestionLabel>
                 <QuestionInput
                   type="text"
-                  id={`optionA`}
-                  value={formData[`optionA`]}
+                  id={`optionC`}
+                  value={formData[`optionC`]}
                   onChange={handleChange}
                 />
               </QuestionField>
@@ -223,8 +222,8 @@ const CreateQuestion = () => {
                 <QuestionLabel>Option D</QuestionLabel>
                 <QuestionInput
                   type="text"
-                  id={`optionA`}
-                  value={formData[`optionA`]}
+                  id={`optionD`}
+                  value={formData[`optionD`]}
                   onChange={handleChange}
                 />
               </QuestionField>
@@ -232,8 +231,8 @@ const CreateQuestion = () => {
                 <QuestionLabel>Option E</QuestionLabel>
                 <QuestionInput
                   type="text"
-                  id={`optionA`}
-                  value={formData[`optionA`]}
+                  id={`optionE`}
+                  value={formData[`optionE`]}
                   onChange={handleChange}
                 />
               </QuestionField>
@@ -241,9 +240,8 @@ const CreateQuestion = () => {
               <QuestionField>
                 <QuestionLabel>Correct Answer</QuestionLabel>
                 <select
-                  id="answer"
-                  value={formData.answer}
-                  onChange={handleChange}
+                  value={option}
+                  onChange={(e)=>{setOption(e.target.value)}}
                 >
                   <option value="A">A</option>
                   <option value="B">B</option>

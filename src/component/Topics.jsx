@@ -1,12 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Button, Buttons, TopicContainer, TopicContent, TopicHeading, TopicName } from '../styles/TopicsStyle'
+import { Button, Buttons, H1, TopicContainer, TopicContent, TopicHeading, TopicName } from '../styles/TopicsStyle'
+
+import { useDispatch, useSelector } from 'react-redux';
+import { toggle } from '../reducer/apiReduce';
 
 const Topics = () => {
     const [topics, setTopics] = useState([]);
-    const[loading,setLoading]=useState(false)
+    const[loading,setLoading]=useState(false);
+
+    const dispatch=useDispatch()
+    const apiRefresh=useSelector((state) => state.api.value);
+    
    
     
       useEffect(() => {
+        console.log("refresh api ",apiRefresh)
         const fetchTopics = async () => {
           try {
             const res = await fetch(
@@ -25,7 +33,7 @@ const Topics = () => {
         };
     
         fetchTopics();
-      }, []);
+      }, [apiRefresh]);
 
        const change = (e, id) => {
     const updatedTopics = topics.map((topic) =>
@@ -40,6 +48,8 @@ const Topics = () => {
   
       const deleteTopic= async (topicId)=>{
         setLoading(true)
+        await new Promise(resolve => setTimeout(resolve, 500));
+
        
        try{
          const response=await fetch( `https://localhost:8443/sphinx/api/topic/deletetopic?topicId=${encodeURIComponent(topicId)}`,{
@@ -53,13 +63,14 @@ const Topics = () => {
             console.log(data.message || "Failed to delete topic")
             return;
          }
-          setTopics(prev => prev.filter(t => t.topicId !== topicId));
+          
    
       }catch(err ){
         console.log("error" ,err )
       }finally{
         console.log("done m")
-        setLoading(false)
+        setLoading(false);
+        dispatch(toggle())
       }
        }
       
@@ -70,6 +81,7 @@ const Topics = () => {
           "topicName":topicName,
         }
         setLoading(true)
+       await new Promise(resolve => setTimeout(resolve, 500));
 
         try{
           const response=await fetch("https://localhost:8443/sphinx/api/topic/updatetopic",{
@@ -88,7 +100,9 @@ const Topics = () => {
         }catch(err){
           console.log(err||"failed to update")
         }finally{
+          dispatch(toggle())
           setLoading(false)
+
         }
 
        }
@@ -100,7 +114,7 @@ const Topics = () => {
    <TopicContainer>
         <TopicHeading>Topics</TopicHeading>
         
-        {topics.map((topic)=>{
+        {topics.length===0?<H1>No Topic Available</H1>:topics.map((topic)=>{
             
             return <TopicContent key={topic.topicId}>
                      <TopicName name='topicName' value={topic.topicName} onChange={(e)=>change(e,topic.topicId)}></TopicName>
@@ -110,6 +124,7 @@ const Topics = () => {
                       </Buttons>
                       
             </TopicContent>
+
         })}
         
    </TopicContainer>

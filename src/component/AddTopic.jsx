@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TopicContainer,
   FormContainer,
@@ -11,6 +11,9 @@ import {
   TopicError,
 } from "../styles/AddTopicStyle";
 import Topics from "./Topics";
+import { useDispatch } from "react-redux";
+import { toggle } from "../reducer/apiReduce";
+
 
 const AddTopic = () => {
   const [topicName, setTopicName] = useState("");
@@ -18,7 +21,8 @@ const AddTopic = () => {
   const [apiError, setApiError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSucess] = useState("");
-
+  
+  const dispatch=useDispatch()
   const handleChange = (e) => {
     setTopicName(e.target.value);
     if (error) {
@@ -41,7 +45,9 @@ const AddTopic = () => {
   };
 
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
+    
     setLoading(true);
 
     setSucess("");
@@ -69,7 +75,9 @@ const AddTopic = () => {
     } catch (err) {
       setApiError("Network error . please try again. ");
     } finally {
+      dispatch(toggle())
       setLoading(false);
+      
     }
   };
 
@@ -96,7 +104,7 @@ const AddTopic = () => {
         </FormContainer>
       </TopicContainer>
 
-      <Topics></Topics>
+      <Topics ></Topics>
     </>
   );
 };

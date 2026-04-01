@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const TopicContainer=styled.div`
+padding:10px;
 
 `
 
@@ -14,10 +15,16 @@ export const TopicContent=styled.div`
 display:flex;
 justify-content:space-between;
 padding:15px 5px;
-background-color:${({ theme }) => theme.colors.secondary};
+background-color:${({ theme }) => theme.colors.primary};
 
-border-radius:10px;
+
 margin-bottom:5px;
+ border-top-right-radius: 10px;
+border-bottom-left-radius: 10px;
+@media(max-width:500px){
+flex-direction:column;
+gap:10px;
+}
 `
 
 
@@ -35,17 +42,18 @@ padding:10px 10px;
 `
 
 export const Button=styled.button`
-  background: ${({ theme }) => theme.colors.primary};
+  background: ${({ theme }) => theme.colors.secondary};
   padding:5px;
   color: white;
   border: none;
   border-radius: 6px;
   font-size: 1rem;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: 1s ease;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.secondary};
+    background: ${({ theme }) => theme.colors.primary};
+    box-shadow: 10px 10px 5px ${({ theme }) => theme.colors.secondary};
   }
 
   &:disabled {
@@ -58,4 +66,9 @@ export const Button=styled.button`
 export const Buttons=styled.div`
 display:flex;
 gap:10px;
+`
+export const H1=styled.h1`
+  text-align:center;
+  margin-top:10px;
+  color:${({ theme }) => theme.colors.error}
 `

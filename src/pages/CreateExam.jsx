@@ -3,6 +3,7 @@ import { Container } from "../styles/CreateExam.style";
 import CreateExamform from "../component/CreateExamform";
 import ExamTopic from "../component/ExamTopic";
 import Layout from "../component/Layout";
+import ExamTDetails from "../component/ExamTDetails";
 
 const CreateExam = () => {
   return (
@@ -12,6 +13,7 @@ const CreateExam = () => {
           <CreateExamform />
           <ExamTopic />
         </Container>
+        <ExamTDetails></ExamTDetails>
       </Layout>
     </>
   );
