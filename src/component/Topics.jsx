@@ -1,15 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Button, Buttons, H1, TopicContainer, TopicContent, TopicHeading, TopicName } from '../styles/TopicsStyle'
-import { useNavigate } from 'react-router-dom';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { toggle } from '../reducer/apiReduce';
 
 const Topics = () => {
     const [topics, setTopics] = useState([]);
     const[loading,setLoading]=useState(false);
-    const navigate=useNavigate();
+
+    const dispatch=useDispatch()
+    const apiRefresh=useSelector((state) => state.api.value);
     
    
     
       useEffect(() => {
+        console.log("refresh api ",apiRefresh)
         const fetchTopics = async () => {
           try {
             const res = await fetch(
@@ -28,7 +33,7 @@ const Topics = () => {
         };
     
         fetchTopics();
-      }, []);
+      }, [apiRefresh]);
 
        const change = (e, id) => {
     const updatedTopics = topics.map((topic) =>
@@ -65,7 +70,7 @@ const Topics = () => {
       }finally{
         console.log("done m")
         setLoading(false);
-        navigate(0)
+        dispatch(toggle())
       }
        }
       
@@ -95,7 +100,9 @@ const Topics = () => {
         }catch(err){
           console.log(err||"failed to update")
         }finally{
+          dispatch(toggle())
           setLoading(false)
+
         }
 
        }

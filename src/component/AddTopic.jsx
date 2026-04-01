@@ -11,7 +11,9 @@ import {
   TopicError,
 } from "../styles/AddTopicStyle";
 import Topics from "./Topics";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { toggle } from "../reducer/apiReduce";
+
 
 const AddTopic = () => {
   const [topicName, setTopicName] = useState("");
@@ -19,9 +21,8 @@ const AddTopic = () => {
   const [apiError, setApiError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSucess] = useState("");
-  const navigate=useNavigate()
   
-
+  const dispatch=useDispatch()
   const handleChange = (e) => {
     setTopicName(e.target.value);
     if (error) {
@@ -74,8 +75,9 @@ const AddTopic = () => {
     } catch (err) {
       setApiError("Network error . please try again. ");
     } finally {
+      dispatch(toggle())
       setLoading(false);
-      navigate(0)
+      
     }
   };
 

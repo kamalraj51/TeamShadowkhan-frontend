@@ -59,22 +59,24 @@ const CreateQuestion = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
    setLoading(true);
-    try {
-      const response = await fetch(
-        "https://localhost:8443/sphinx/api/question/createQuestion",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+   try {
+     const response = await fetch(
+       "https://localhost:8443/sphinx/api/question/createquestion",
+       {
+         method: "POST",
+         headers: {
+           "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
         },
       );
-
+      
+      console.log("inside  function")
       const data = await response.json();
 
       navigate("/createquestion");
     } catch (err) {
+      console.log("error   ")
       setApiError("Network error. Please try again.");
     } finally {
       setLoading(false);

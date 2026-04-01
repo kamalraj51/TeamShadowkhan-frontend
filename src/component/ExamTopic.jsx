@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { toggle } from "../reducer/apiReduce";
 import {
   Button,
   Field,
@@ -9,31 +10,34 @@ import {
   Select,
 } from "../styles/CreateExam.style";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const ExamTopic = ({ examid }) => {
   const [topics, setTopics] = useState([]);
-  let navigate = useNavigate();
+ 
+  const dispatch=useDispatch()
   let [data, setData] = useState({
     examTopicName: "",
     topicId: "",
-    examId: examid,
-    percentage: "",
+    examId: examid||"ex213",
+   
+    topicPassPercentage: "",
   });
+
+
   let handleinput = (e) => {
     setData({
       ...data,
       [e.target.name]: e.target.value,
     });
   };
-  const handleChange = (e) => {
-    setData({
-      ...data,
-      [e.target.id]: e.target.value,
-    });
-  };
+
+
   let handledata = async (e) => {
+   e.preventDefault();
+   console.log(data)
     let response = await fetch(
-      "https://localhost:8443/sphinx/api/exam/addtopic",
+      "https://localhost:8443/sphinx/api/exam/examtopicdetails",
       {
         method: "POST",
         headers: {
@@ -43,13 +47,16 @@ const ExamTopic = ({ examid }) => {
       },
     );
     if (response.ok) {
-      navigate("/");
+
+      console.log("done poat ")
+      dispatch(toggle())
     }
   };
 
   //api call
   useEffect(() => {
     const fetchTopics = async () => {
+      console.log(data.topicId)
       try {
         const res = await fetch(
           "https://localhost:8443/sphinx/api/topic/gettopics",
@@ -60,7 +67,7 @@ const ExamTopic = ({ examid }) => {
 
         const data = await res.json();
         console.log(data);
-        setTopics(data.topic || []); // assuming array response
+        setTopics(data.topic || []); 
       } catch (err) {
         console.error("Error fetching topics:", err);
         console.log(err);
@@ -72,10 +79,10 @@ const ExamTopic = ({ examid }) => {
 
   return (
     <>
-      <Form action={handledata}>
+      <Form onSubmit={handledata}>
         <Field>
           <Label>Select Topic</Label>
-          <Select id="topicId" value={data.topicId} onChange={handleChange}>
+          <Select  name="topicId" value={data.topicId} onChange={handleinput}>
             <option value="">-- Select Topic --</option>
             {topics.map((topic) => (
               <option key={topic.topicId} value={topic.topicId}>
@@ -86,8 +93,8 @@ const ExamTopic = ({ examid }) => {
         </Field>
 
         <Field>
-          <Label for="percentage">percentage</Label>
-          <Input typr="text" name=" percentage" onChange={handleinput}></Input>
+          <Label for="topicPassPercentage">percentage</Label>
+          <Input type="text" name="topicPassPercentage" value={data.topicPassPercentage} onChange={handleinput}></Input>
         </Field>
 
         <Button type="submit">add topic</Button>
