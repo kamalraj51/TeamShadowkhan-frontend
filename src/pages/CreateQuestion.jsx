@@ -21,17 +21,19 @@ import Layout from "../component/Layout";
 // VALIDATION
 const CreateQuestion = () => {
   const [apiError, setApiError] = useState("");
+  const[questionType,setQuestionType]=useState('SINGLE_CHOICE');
+  const[option,setOption]=useState('A');
   const [formData, setFormData] = useState({
-    topicId: "Maths",
+    topicId: "T002",
     questionDetail: "",
     optionA: "",
     optionB: "",
     optionC: "",
     optionD: "",
     optionE: "",
-    answer: "",
+    answer: option,
     numAnswers: 0,
-    questionType: 0,
+    questionTypeId: questionType,
     difficultyLevel: 0,
     answerValue: 0,
     negativeMarkValue: 1,
@@ -40,6 +42,9 @@ const CreateQuestion = () => {
   const [errors, setErrors] = useState();
   const [loading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(false);
+  console.log(formData);
+  console.log(errors);
+  
   const validate = () => {
     let newErrors = {};
 
@@ -58,25 +63,23 @@ const CreateQuestion = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   setLoading(true);
-   try {
-     const response = await fetch(
-       "https://localhost:8443/sphinx/api/question/createquestion",
-       {
-         method: "POST",
-         headers: {
-           "Content-Type": "application/json",
+    setLoading(true);
+    try {
+      const response = await fetch(
+        "https://localhost:8443/sphinx/api/question/createquestion",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
         },
       );
-      
-      console.log("inside  function")
+
       const data = await response.json();
 
       navigate("/createquestion");
     } catch (err) {
-      console.log("error   ")
       setApiError("Network error. Please try again.");
     } finally {
       setLoading(false);
@@ -112,6 +115,8 @@ const CreateQuestion = () => {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
+      questionType:questionType,
+      answer:option,
     });
 
     setErrors({
@@ -137,8 +142,8 @@ const CreateQuestion = () => {
 
               <select
                 id="questionType"
-                value={formData.questionType}
-                onChange={handleChange}
+                value={questionType}
+                onChange={(e)=>{setQuestionType(e.target.value)}}
               >
                 <option value="SINGLE_CHOICE" onClick={() => setToggle(false)}>
                   SINGLE CHOICE
@@ -235,9 +240,8 @@ const CreateQuestion = () => {
               <QuestionField>
                 <QuestionLabel>Correct Answer</QuestionLabel>
                 <select
-                  id="answer"
-                  value={formData.answer}
-                  onChange={handleChange}
+                  value={option}
+                  onChange={(e)=>{setOption(e.target.value)}}
                 >
                   <option value="A">A</option>
                   <option value="B">B</option>
