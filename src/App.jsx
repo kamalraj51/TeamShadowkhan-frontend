@@ -13,6 +13,7 @@ import CreateExam from "./pages/CreateExam";
 import Home from "./pages/Home";
 import TopicMaster from "./pages/TopicMaster";
 import ExamTopic from "./component/ExamTopic";
+import CreateExamTopics from "./pages/CreateExamTopics";
 const App = () => {
   return (
     <>
@@ -21,7 +22,7 @@ const App = () => {
           <Route path="/" element={<UserSignin />} />
           {/* <Route path="/admin" element={<Admindashboard/>}/> */}
           <Route path="/usersignup" element={<UserSignup />} />
-
+          <Route path="/examcreatetopic/:examId" element={<CreateExamTopics/>} />
           <Route path="/usersignin" element={<UserSignin />} />
           <Route path="/test" element={<TestLogin />} />
           <Route path="/userpromote" element={<UserPromote />} />

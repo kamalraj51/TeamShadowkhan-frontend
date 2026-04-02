@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { ContainerExamTD, ContentETD, H2, P } from '../styles/ExamTDetails.style'
 import { useSelector } from 'react-redux';
 
 const ExamTDetails = () => {
  const [examTopics, setExamTopics] = useState([]);
+ 
 
- const refreshapi=useSelector((state)=>state.api.value)
+ const apiRefresh=useSelector((state)=>state.api.value)
+  
 
   useEffect(()=>{
     const fetchTopics=async()=>{
@@ -28,7 +30,11 @@ const ExamTDetails = () => {
     
     }
      fetchTopics()
-  },[refreshapi])
+  },[apiRefresh])
+
+   
+
+
 
   return (
     <ContainerExamTD>
@@ -43,7 +49,7 @@ const ExamTDetails = () => {
         {examTopics.length ===0 ? "no topic available" : examTopics.map((topic,i)=>{
          return(<ContentETD key={i}>
             <P>{i+1}</P>
-            <P>{topic.topicId}</P>
+            <P>{topic.topicName}</P>
             <P>{topic.topicPassPercentage}</P>
           </ContentETD>)
           

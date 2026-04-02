@@ -9,17 +9,18 @@ import {
   Row,
   Select,
 } from "../styles/CreateExam.style";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-const ExamTopic = ({ examid }) => {
+const ExamTopic = () => {
   const [topics, setTopics] = useState([]);
+   const { examId } = useParams();
  
   const dispatch=useDispatch()
   let [data, setData] = useState({
     examTopicName: "",
     topicId: "",
-    examId: examid||"ex213",
+    examId: examId||"ex",
    
     topicPassPercentage: "",
   });
