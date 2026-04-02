@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import TopicMaster from "./pages/TopicMaster";
 import ExamTopic from "./component/ExamTopic";
 import CreateExamTopics from "./pages/CreateExamTopics";
+import EditExam from "./component/EditExam";
 const App = () => {
   return (
     <>
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/examtopic" element={<ExamTopic />} />
           <Route path="/createquestion" element={<CreateQuestion />} />
           <Route path="/adminhome" element={<Home />} />
+          <Route path="/editexam" element={<EditExam />} />
           <Route path="/topicmaster" element={<TopicMaster />}></Route>
         </Routes>
       </BrowserRouter>
