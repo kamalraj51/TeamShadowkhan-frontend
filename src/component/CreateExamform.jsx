@@ -30,9 +30,11 @@ const CreateExamform = () => {
             },
             body:JSON.stringify(formData)
         })
+       
         if(response.ok){
             console.log("hii fronytend")
-            navigate("/examtopic")
+            
+            navigate(`/examcreatetopic/${examId}`)
           
         }
 

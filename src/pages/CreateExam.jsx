@@ -14,9 +14,9 @@ const CreateExam = () => {
 
          
 
-          <ExamTopic />
+          
         </Container>
-        <ExamTDetails></ExamTDetails>
+       
       </Layout>
     </>
   );
