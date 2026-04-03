@@ -2,14 +2,16 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { AvailableContainer, AvailableTable, H2, HeadingTable, TableWrapper, Td, Th } from '../styles/AvailableExamStyle'
 import { Button } from '../styles/CreateExam.style'
 import UsersList from '../pages/UsersList'
-import { NavLink } from 'react-router-dom'
 import { NavLink2 } from '../styles/ExamTDetails.style'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { toggle } from '../reducer/apiReduce'
+import { useDispatch, useSelector } from 'react-redux'
 
 const AvailableExam = () => {
-   
-  
+   const dispatch=useDispatch()
+   const navigate=useNavigate()
   const [examData,setExamData]=useState([])
-  
+   const apiRefresh=useSelector((state)=>state.api.value)
    const getAllExam=async()=>{
       const response=await fetch("https://localhost:8443/sphinx/api/exam/getexam",{
         method:"GET",
@@ -25,15 +27,27 @@ const AvailableExam = () => {
     }
     const handleExamDelete=async (examId)=>{
       console.log(examId)
-        const response=await fetch("https://localhost:8443/sphinx/api/exam/examDelete",{
+        try{
+          const response=await fetch("https://localhost:8443/sphinx/api/exam/examDelete",{
           method:"DELETE",
           headers:{
              "Content-Type": "application/json",
           },
          
              body:JSON.stringify({"examId":examId})
+
             
         })
+        if(!response.ok){
+          console.log("not deleted from response")
+        }
+        alert("exam deleted successfully")
+        dispatch(toggle())
+        
+        }catch(err){
+          console.log(err ,'not deleted')
+        }
+        
       
      
       }
@@ -41,7 +55,7 @@ const AvailableExam = () => {
    
   useEffect(()=>{
     getAllExam()
-   },[])
+   },[apiRefresh])
 
   let submitHandle=(examId)=>{
     setId(examId)
@@ -68,11 +82,14 @@ const AvailableExam = () => {
                     <Th>Assign User to this Exam</Th>
                     <Th>SetUp this Exam</Th>
                     <Th>Delete the Exam</Th>
-                    <Th>Assign The Exam</Th>
+
+                    <Th>Assign user</Th>
                 </tr>
             </thead>
           <tbody>
   {examData.map((data, index) => (
+
+   
     
     <tr key={index}>
       <Td>{index + 1}</Td>
@@ -84,15 +101,25 @@ const AvailableExam = () => {
       <Td>{data.passPercentage}</Td>
 
       <Td>
-        <button>Add</button>
-        <button>Edit</button>
+        <button onClick={() =>{
+               let examId=data.examId
+           navigate(`/examcreatetopic/${examId}`)}}>Add</button>
+        <button onClick={() =>{
+               let examId=data.examId
+           navigate(`/editexam/${examId}`)}}>Edit</button>
         <button>Upload</button>
       </Td>
 
       <Td>Assign Users</Td>
       <Td>Setup</Td>
-      <Td><Button onClick={()=>handleExamDelete(data.examId)}> Delete </Button></Td>
-      <Td><NavLink2 to="/getuser" state={{"examId":data.examId}}>Assign</NavLink2></Td>
+
+      <Td><Button onClick={()=>handleExamDelete(data.examId)}>
+    Delete
+  </Button>
+</Td>
+<Td><NavLink to="/getuser" state={{"examId":data.examId}}>Assign</NavLink></Td>
+ 
+
     </tr>
   ))}
 </tbody>

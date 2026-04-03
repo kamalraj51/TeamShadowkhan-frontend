@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-
+ 
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
-
+ 
 import { LoginButton, LoginContainer, LoginError, LoginField, LoginFooter, LoginForm, LoginInput, LoginLabel, LoginTitle, LoginWrapper } from "../styles/LoginStyle";
 //riswan
 const UserSignin = () => {
@@ -10,29 +10,29 @@ const UserSignin = () => {
     password:"",
   })
  
-
+ 
 const navigate = useNavigate();
   const [errors, setErrors] = useState({});
-
-
+ 
+ 
  const [apiError,setApiError]=useState("")
  
  const [loading,setLoading]=useState(false)
-
+ 
  const handleForm=(e)=>{
   setFormData({
     ...formData,
     [e.target.id]:e.target.value,
   } )
-
+ 
   setErrors({
     ...errors,
     [e.target.id]:"",
   });
-
+ 
   setApiError("")
  }
-
+ 
  //regex validate
  const validate=()=>{
   let newErrors={}
@@ -42,20 +42,20 @@ const navigate = useNavigate();
     if(!formData.password){
       newErrors.password="password should not be blank"
     }
-
+ 
    
      setErrors(newErrors);
-
+ 
     return Object.keys(newErrors).length === 0;
  }
-
-
+ 
+ 
 const handleSubmit=async (e)=>{
   e.preventDefault();
   if(!validate()) return;
   setLoading(true);
   setApiError("")
-
+ 
   try{
     const response=await fetch("https://localhost:8443/sphinx/api/user/signIn",{
       method:"POST",
@@ -68,28 +68,28 @@ const handleSubmit=async (e)=>{
       setApiError(data.message || "invalid credinatilas ");
       return;
     }
-
+ 
     //sucess =>redirect
-    navigate("/adminhome")
-
+    navigate(`/adminhome/${userLoginId}`)
+ 
   }catch(err){
     setApiError("Network error. Please try again.")
   }finally{
     setLoading(false)
   }
-} 
-
+}
+ 
   return (
     <>
      
       <LoginContainer>
   <LoginWrapper>
     <LoginTitle>SPHINX</LoginTitle>
-    
-
+   
+ 
     <LoginForm onSubmit={handleSubmit}>
       <h2>Login</h2>
-
+ 
       <LoginField>
         <LoginLabel htmlFor="userLoginId">Username</LoginLabel>
         <LoginInput
@@ -100,7 +100,7 @@ const handleSubmit=async (e)=>{
         />
         {errors.userLoginId && <LoginError>{errors.userLoginId}</LoginError>}
       </LoginField>
-
+ 
       <LoginField>
         <LoginLabel htmlFor="password">Password</LoginLabel>
         <LoginInput
@@ -112,14 +112,14 @@ const handleSubmit=async (e)=>{
         <i class="fa-regular fa-eye"></i>
         {errors.password && <LoginError>{errors.password}</LoginError>}
       </LoginField>
-
+ 
       <LoginButton type="submit" disabled={loading}>
         {loading ? "Signing in..." : "Login"}
       </LoginButton>
-
+ 
       <LoginFooter>
        
-        
+
       </LoginFooter>
     </LoginForm>
   </LoginWrapper>
@@ -127,5 +127,5 @@ const handleSubmit=async (e)=>{
     </>
   );
 };
-
+ 
 export default UserSignin;

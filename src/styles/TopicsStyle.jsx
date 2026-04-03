@@ -72,3 +72,8 @@ export const H1=styled.h1`
   margin-top:10px;
   color:${({ theme }) => theme.colors.error}
 `
+export const QuesButtons=styled.div`
+display:flex;
+gap:10px;
+margin-left:0;
+`

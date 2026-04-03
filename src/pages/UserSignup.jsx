@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { ApiError, RegisterButton, RegisterContainer, RegisterError, RegisterField, RegisterFooter, RegisterForm, RegisterInput, RegisterLabel, RegisterSubtitle, RegisterTitle, RegisterWrapper } from "../styles/SignupStyle";
 
 
+
 // REGEX
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
@@ -174,7 +175,7 @@ const UserSignup = () => {
             <RegisterInput
               type="email"
               id="email"
-              placeholder="example@gmail.com"
+              placeholder=""
               value={formData.email}
               onChange={handleChange}
             />
@@ -190,7 +191,7 @@ const UserSignup = () => {
               id="phNo"
               value={formData.phNo}
               onChange={handleChange}
-              placeholder="9876543210"
+              placeholder=""
             />
             {errors.phNo && (
               <RegisterError>{errors.phNo}</RegisterError>

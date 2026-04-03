@@ -4,66 +4,65 @@ import {
   ApiError,
   CreateQuesButton,
   QuestionContainer,
-  CreateQuesError,
   QuestionField,
   QuestionFooter,
   QuestionForm,
   QuestionInput,
-  QuestionLabel,
+  SectionTitle,
   QuestionSubtitle,
   QuestionTitle,
   QuestionWrapper,
+  Select,
+  OptionsGrid,
 } from "../styles/CreateQuestion.styles";
 
 import { useEffect, useState } from "react";
 import Layout from "../component/Layout";
 
-// VALIDATION
 const CreateQuestion = () => {
   const [apiError, setApiError] = useState("");
-  const[questionType,setQuestionType]=useState('SINGLE_CHOICE');
-  const[option,setOption]=useState('A');
+  const [questionType, setQuestionType] = useState("SINGLE_CHOICE");
+
+  const [selectedAnswers, setSelectedAnswers] = useState([]);
+  const [singleAnswer, setSingleAnswer] = useState("A");
+  const [textAnswer, setTextAnswer] = useState("");
+
   const [formData, setFormData] = useState({
-    topicId: "T002",
+    topicId: "",
     questionDetail: "",
     optionA: "",
     optionB: "",
     optionC: "",
     optionD: "",
-    optionE: "",
-    answer: option,
-    numAnswers: 0,
+    answer: "",
+    numAnswers: 1,
     questionTypeId: questionType,
     difficultyLevel: 0,
     answerValue: 0,
     negativeMarkValue: 1,
   });
+
   const [topics, setTopics] = useState([]);
   const [errors, setErrors] = useState();
   const [loading, setLoading] = useState(false);
-  const [toggle, setToggle] = useState(false);
-  console.log(formData);
-  console.log(errors);
-  
-  const validate = () => {
-    let newErrors = {};
 
-    if (!formData.username) {
-      newErrors.firstName = "must should be fill the firstName";
-    }
-
-    if (!formData.lastName) {
-      newErrors.lastName = "must should be fill the last";
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-  };
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    const finalData = {
+      ...formData ,
+      questionTypeId: questionType,
+      answer:
+        questionType === "MULTI_CHOICE"
+          ? selectedAnswers.join(",")
+          : questionType === "FILL_BLANKS" || questionType === "DETAILED_ANSWER"
+            ? textAnswer
+            : singleAnswer,
+    };
+
     try {
       const response = await fetch(
         "https://localhost:8443/sphinx/api/question/createquestion",
@@ -72,13 +71,13 @@ const CreateQuestion = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(finalData),
         },
       );
 
-      const data = await response.json();
-
-      navigate("/createquestion");
+      await response.json();
+      alert("Question Created Successfully")
+      navigate("/addquestion");
     } catch (err) {
       setApiError("Network error. Please try again.");
     } finally {
@@ -86,24 +85,15 @@ const CreateQuestion = () => {
     }
   };
 
-  //container to store the question
-
-  //api call
   useEffect(() => {
     const fetchTopics = async () => {
       try {
         const res = await fetch(
           "https://localhost:8443/sphinx/api/topic/gettopics",
-        ); //id, name
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-
+        );
         const data = await res.json();
-        console.log(data);
-        setTopics(data.topic || []); // assuming array response
+        setTopics(data.topic || []);
       } catch (err) {
-        console.error("Error fetching topics:", err);
         console.log(err);
       }
     };
@@ -115,17 +105,44 @@ const CreateQuestion = () => {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
-      questionType:questionType,
-      answer:option,
+      questionTypeId: questionType,
     });
-
-    setErrors({
-      ...errors,
-      [e.target.id]: "",
-    });
-
-    setApiError("");
   };
+
+  const handleCheckboxChange = (value) => {
+    if (selectedAnswers.includes(value)) {
+      setSelectedAnswers(selectedAnswers.filter((v) => v !== value));
+    } else {
+      setSelectedAnswers([...selectedAnswers, value]);
+    }
+  };
+
+  useEffect(() => {
+    setSelectedAnswers([]);
+    setSingleAnswer("A");
+    setTextAnswer("");
+
+    setFormData((prev) => ({
+      ...prev,
+      optionA: "",
+      optionB: "",
+      optionC: "",
+      optionD: "",
+      numAnswers: 1,
+    }));
+  }, [questionType]);
+
+  useEffect(() => {
+    if (questionType === "TRUE_FALSE") {
+      setFormData((prev) => ({
+        ...prev,
+        optionA: "True",
+        optionB: "False",
+        optionC: "",
+        optionD: "",
+      }));
+    }
+  }, [questionType]);
 
   return (
     <Layout>
@@ -138,49 +155,37 @@ const CreateQuestion = () => {
             {apiError && <ApiError>{apiError}</ApiError>}
 
             <QuestionField>
-              <QuestionLabel>Question Type</QuestionLabel>
+              <SectionTitle>Question Type</SectionTitle>
 
-              <select
-                id="questionType"
+              <Select
                 value={questionType}
-                onChange={(e)=>{setQuestionType(e.target.value)}}
+                onChange={(e) => setQuestionType(e.target.value)}
               >
-                <option value="SINGLE_CHOICE" onClick={() => setToggle(false)}>
-                  SINGLE CHOICE
-                </option>
-                <option value="MULTI_CHOICE" onClick={() => setToggle(true)}>
-                  MULTI CHOICE
-                </option>
-                <option value="TRUE_FALSE" onClick={() => setToggle(false)}>
-                  TRUE/FALSE
-                </option>
-                <option value="FILL_BLANKS" onClick={() => setToggle(false)}>
-                  FILL BLANKS
-                </option>
-                <option
-                  value="DETAILED_ANSWER"
-                  onClick={() => setToggle(false)}
-                >
-                  DETAILED ANSWER
-                </option>
-              </select>
+                <option value="SINGLE_CHOICE">SINGLE CHOICE</option>
+                <option value="MULTI_CHOICE">MULTI CHOICE</option>
+                <option value="TRUE_FALSE">TRUE/FALSE</option>
+                <option value="FILL_BLANKS">FILL BLANKS</option>
+                <option value="DETAILED_ANSWER">DETAILED ANSWER</option>
+              </Select>
             </QuestionField>
 
             <QuestionField>
-              <QuestionLabel>Select Topic</QuestionLabel>
-              <select
+              <SectionTitle>Select Topic</SectionTitle>
+              <Select
                 id="topicId"
-                value={formData.topicId}
+                value={formData.topicID}
                 onChange={handleChange}
               >
+                <option value="">--Select Topic--</option>
                 {topics.map((topic) => (
                   <option key={topic.topicId} value={topic.topicId}>
                     {topic.topicName}
                   </option>
                 ))}
-              </select>
+              </Select>
+
               <QuestionField>
-                <QuestionLabel>Question</QuestionLabel>
+                <SectionTitle>Question</SectionTitle>
                 <QuestionInput
                   type="text"
                   id="questionDetail"
@@ -189,83 +194,123 @@ const CreateQuestion = () => {
                 />
               </QuestionField>
 
-              <QuestionField>
-                <QuestionLabel>Option A *</QuestionLabel>
-                <QuestionInput
-                  type="text"
-                  id={`optionA`}
-                  value={formData[`optionA`]}
-                  onChange={handleChange}
-                />
-              </QuestionField>
+              {questionType !== "FILL_BLANKS" &&
+                questionType !== "DETAILED_ANSWER" && (
+                  <>
+                    <SectionTitle>Options</SectionTitle>
 
-              <QuestionField>
-                <QuestionLabel>Option B * </QuestionLabel>
-                <QuestionInput
-                  type="text"
-                  id={`optionB`}
-                  value={formData[`optionB`]}
-                  onChange={handleChange}
-                />
-              </QuestionField>
+                    <OptionsGrid>
+                      {[
+                        "A",
+                        "B",
+                        ...(questionType !== "TRUE_FALSE" ? ["C", "D"] : []),
+                      ].map((opt) => (
+                        <QuestionField key={opt}>
+                          <SectionTitle>Option {opt}</SectionTitle>
 
-              <QuestionField>
-                <QuestionLabel>Option C</QuestionLabel>
-                <QuestionInput
-                  type="text"
-                  id={`optionC`}
-                  value={formData[`optionC`]}
-                  onChange={handleChange}
-                />
-              </QuestionField>
-              <QuestionField>
-                <QuestionLabel>Option D</QuestionLabel>
-                <QuestionInput
-                  type="text"
-                  id={`optionD`}
-                  value={formData[`optionD`]}
-                  onChange={handleChange}
-                />
-              </QuestionField>
-              <QuestionField>
-                <QuestionLabel>Option E</QuestionLabel>
-                <QuestionInput
-                  type="text"
-                  id={`optionE`}
-                  value={formData[`optionE`]}
-                  onChange={handleChange}
-                />
-              </QuestionField>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "10px",
+                            }}
+                          >
+                            {questionType === "MULTI_CHOICE" && (
+                              <input
+                                type="checkbox"
+                                onChange={() => handleCheckboxChange(opt)}
+                              />
+                            )}
 
-              <QuestionField>
-                <QuestionLabel>Correct Answer</QuestionLabel>
-                <select
-                  value={option}
-                  onChange={(e)=>{setOption(e.target.value)}}
-                >
-                  <option value="A">A</option>
-                  <option value="B">B</option>
-                  <option value="C">C</option>
-                  <option value="D">D</option>
-                  <option value="E">E</option>
-                </select>
-              </QuestionField>
-              {toggle && (
+                            <QuestionInput
+                              type="text"
+                              id={`option${opt}`}
+                              value={formData[`option${opt}`]}
+                              onChange={handleChange}
+                            />
+                          </div>
+                        </QuestionField>
+                      ))}
+                    </OptionsGrid>
+                  </>
+                )}
+              {questionType === "SINGLE_CHOICE" && (
                 <QuestionField>
-                  <QuestionLabel>Number of Answers</QuestionLabel>
+                  <SectionTitle>Correct Answer</SectionTitle>
+                  <Select
+                    value={singleAnswer}
+                    onChange={(e) => setSingleAnswer(e.target.value)}
+                  >
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                  </Select>
+                </QuestionField>
+              )}
+
+              {questionType === "TRUE_FALSE" && (
+                <QuestionField>
+                  <SectionTitle>Correct Answer</SectionTitle>
+                  <Select
+                    value={singleAnswer}
+                    onChange={(e) => setSingleAnswer(e.target.value)}
+                  >
+                    <option value="A">True</option>
+                    <option value="B">False</option>
+                  </Select>
+                </QuestionField>
+              )}
+
+              {questionType === "MULTI_CHOICE" && (
+                <>
+                  <QuestionField>
+                    <SectionTitle>Selected Answers</SectionTitle>
+                    <p>{selectedAnswers.join(", ")}</p>
+                  </QuestionField>
+
+                  <QuestionField>
+                    <SectionTitle>Number of Answers</SectionTitle>
+                    <QuestionInput
+                      type="number"
+                      id="numAnswers"
+                      value={formData.numAnswers}
+                      onChange={handleChange}
+                    />
+                  </QuestionField>
+                </>
+              )}
+
+              {questionType === "FILL_BLANKS" && (
+                <QuestionField>
+                  <SectionTitle>Correct Answer</SectionTitle>
                   <QuestionInput
-                    type="number"
-                    id="numAnswers"
-                    value={formData.numAnswers}
-                    onChange={handleChange}
-                    min="1"
+                    type="text"
+                    value={textAnswer}
+                    onChange={(e) => setTextAnswer(e.target.value)}
+                  />
+                </QuestionField>
+              )}
+
+              {questionType === "DETAILED_ANSWER" && (
+                <QuestionField>
+                  <SectionTitle>Answer</SectionTitle>
+                  <textarea
+                    rows="4"
+                    value={textAnswer}
+                    onChange={(e) => setTextAnswer(e.target.value)}
+                    style={{
+                      padding: "10px",
+                      borderRadius: "8px",
+                      border: "1px solid #ddd",
+                    }}
                   />
                 </QuestionField>
               )}
 
               <QuestionField>
-                <QuestionLabel>Difficulty Level</QuestionLabel>
-                <select
+                <SectionTitle>Difficulty Level</SectionTitle>
+                <Select
                   id="difficultyLevel"
                   value={formData.difficultyLevel}
                   onChange={handleChange}
@@ -273,11 +318,11 @@ const CreateQuestion = () => {
                   <option value="1">Easy</option>
                   <option value="2">Medium</option>
                   <option value="3">Hard</option>
-                </select>
+                </Select>
               </QuestionField>
 
               <QuestionField>
-                <QuestionLabel>Answer Value</QuestionLabel>
+                <SectionTitle>Answer Value</SectionTitle>
                 <QuestionInput
                   type="number"
                   id="answerValue"
@@ -287,7 +332,7 @@ const CreateQuestion = () => {
               </QuestionField>
 
               <QuestionField>
-                <QuestionLabel>Negative Mark</QuestionLabel>
+                <SectionTitle>Negative Mark</SectionTitle>
                 <QuestionInput
                   type="number"
                   id="negativeMarkValue"

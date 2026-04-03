@@ -11,16 +11,18 @@ import {
 } from "../styles/CreateExam.style";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import ExamTDetails from "./ExamTDetails";
 
 const ExamTopic = () => {
   const [topics, setTopics] = useState([]);
    const { examId } = useParams();
- 
+   console.log(examId)
+ const [loading,setLoading]=useState(false)
   const dispatch=useDispatch()
   let [data, setData] = useState({
     examTopicName: "",
     topicId: "",
-    examId: examId||"ex",
+    examId: examId,
    
     topicPassPercentage: "",
   });
@@ -36,8 +38,12 @@ const ExamTopic = () => {
 
   let handledata = async (e) => {
    e.preventDefault();
-   console.log(data)
-    let response = await fetch(
+   console.log(examId+ 'inside api call')
+   setLoading(true)
+    await new Promise(resolve => setTimeout(resolve, 500));
+   
+   try{
+     let response = await fetch(
       "https://localhost:8443/sphinx/api/exam/examtopicdetails",
       {
         method: "POST",
@@ -52,6 +58,11 @@ const ExamTopic = () => {
       console.log("done poat ")
       dispatch(toggle())
     }
+   }catch(err){
+    console.log("catch :topic add ", err )
+   }finally{
+    setLoading(false)
+   }
   };
 
   //api call
@@ -98,8 +109,9 @@ const ExamTopic = () => {
           <Input type="text" name="topicPassPercentage" value={data.topicPassPercentage} onChange={handleinput}></Input>
         </Field>
 
-        <Button type="submit">add topic</Button>
+        <Button type="submit" disabled={loading}>{loading?"submitting":"add topic"}</Button>
       </Form>
+      <ExamTDetails examId={examId}></ExamTDetails>
     </>
   );
 };
