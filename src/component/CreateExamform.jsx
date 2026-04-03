@@ -6,11 +6,11 @@ const CreateExamform = () => {
     const navigate=useNavigate()
 
     let [formData,setFormData]=useState({
-        examname:"",
+        examName:"",
         description:"",
-        noofquestions:"",
+        noOfQuestions:"",
         duration:"",
-        passpercentage:""
+        passPercentage:""
     })
 
        
@@ -33,9 +33,11 @@ const CreateExamform = () => {
        
         if(response.ok){
             console.log("hii fronytend")
+            const data = await response.json();
+            const examId = data.examId;
+            console.log("1",data.examId);
             
             navigate(`/examcreatetopic/${examId}`)
-          
         }
 
     }
@@ -45,7 +47,7 @@ const CreateExamform = () => {
              
             <Field>
                 <Label>Exam.Name</Label>
-                <Input type="text" name="examname" onChange={handleChange}/>
+                <Input type="text" name="examName" onChange={handleChange}/>
             </Field>
             <Field>
                 <Label>Description</Label>
@@ -53,7 +55,7 @@ const CreateExamform = () => {
             </Field>
             <Field>
                 <Label>No.Of.Questions</Label>
-                <Input type="text" name="noofquestions" onChange={handleChange}/>
+                <Input type="text" name="noOfQuestions" onChange={handleChange}/>
             </Field>
             <Field>
                 <Label>Duration (<span><b>Minutes</b></span>)</Label>
@@ -61,7 +63,7 @@ const CreateExamform = () => {
             </Field>
              <Field>
                 <Label>Pass percentage <span><b>%</b></span></Label>
-                <Input type="text" name="passpercentage" onChange={handleChange}/>
+                <Input type="text" name="passPercentage" onChange={handleChange}/>
             </Field>
             <Button type="submit">submit</Button>
 

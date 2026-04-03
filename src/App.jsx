@@ -31,8 +31,10 @@ const App = () => {
           <Route path="/createxam" element={<CreateExam />} />
           <Route path="/examtopic" element={<ExamTopic />} />
           <Route path="/createquestion" element={<CreateQuestion />} />
+          
           <Route path="/adminhome" element={<Home />} />
-          <Route path="/editexam" element={<EditExam />} />
+          <Route path="/editexam/:examId" element={<EditExam />} />
+          <Route path="/adminhome" element={<Home/>} />
           <Route path="/topicmaster" element={<TopicMaster />}></Route>
         </Routes>
       </BrowserRouter>

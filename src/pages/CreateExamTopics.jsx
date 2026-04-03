@@ -7,7 +7,7 @@ const CreateExamTopics = () => {
   return (
     <Layout>
         <ExamTopic />
-         <ExamTDetails></ExamTDetails>
+         
     </Layout>
   )
 }

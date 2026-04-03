@@ -11,10 +11,6 @@ const CreateExam = () => {
       <Layout>
         <Container>
           <CreateExamform />
-
-         
-
-          
         </Container>
        
       </Layout>

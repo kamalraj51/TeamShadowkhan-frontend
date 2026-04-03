@@ -19,6 +19,7 @@ padding:10px 15px;
 border-top-right-radius: 10px;
 border-bottom-left-radius: 10px;
 background-color:${({ theme }) => theme.colors.primary};
+margin-bottom:10px;
 
 `
 
