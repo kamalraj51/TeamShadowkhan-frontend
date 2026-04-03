@@ -19,6 +19,7 @@ import ShowQuestion from "./component/ShowQuestion";
 import NoPage from "./pages/NoPage";
 import CreateExamTopics from "./pages/CreateExamTopics";
 import EditExam from "./component/EditExam";
+import TopicsShow from "./component/TopicsShow";
 
 const App = () => {
   return (
@@ -38,18 +39,25 @@ const App = () => {
           <Route path="/getalluser" element={<Getalluser />} />
           <Route path="/createxam" element={<CreateExam />} />
           <Route path="/examtopic" element={<ExamTopic />} />
-          <Route path="/createquestion" element={<CreateQuestion />} />
+          <Route path="/showalltopic" element={<TopicsShow/>} />
           <Route path="/updatequestion/:quesId" element={<UpdateQuestion />} />
 
-          <Route path="/adminhome" element={<Home />} />
+          <Route path="/adminhome/:userLoginId" element={<Home />} />
+           <Route path="/adminhome" element={<Home />} />
           <Route path="/editexam/:examId" element={<EditExam />} />
           <Route path="/topicmaster" element={<TopicMaster />}></Route>
           <Route path="/upload" element={<QuestionUpload />}></Route>
+          <Route path="/getuser" element={<UsersList/>}></Route>
 
           <Route
             path="/showquestion/:topicID"
             element={<ShowQuestion />}
           ></Route>
+          <Route
+            path="/addquestion"
+            element={<CreateQuestion/>}
+          ></Route>
+          
 
           <Route path="/*" element={<NoPage />} />
         </Routes>

@@ -20,7 +20,7 @@ const Header = () => {
         <NavLink to="/adminhome" onClick={() => setIsOpen(false)}>
           home
         </NavLink>
-        <NavLink to="/createquestion" onClick={() => setIsOpen(false)}>
+        <NavLink to="/showalltopic" onClick={() => setIsOpen(false)}>
           Question Master
         </NavLink>
         <NavLink to="/createxam" onClick={() => setIsOpen(false)}>
@@ -29,6 +29,10 @@ const Header = () => {
         <NavLink to="/topicmaster" onClick={() => setIsOpen(false)}>
           Topic Master
         </NavLink>
+         <NavLink to="/" onClick={() => setIsOpen(false)}>
+          Logout
+        </NavLink>
+        <NavLink to="/usersignup">Register</NavLink>
       </Menu>
     </HeaderMain>
   );
