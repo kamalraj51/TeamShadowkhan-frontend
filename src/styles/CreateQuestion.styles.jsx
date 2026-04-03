@@ -1,141 +1,133 @@
 import styled from "styled-components";
 
-/* QUEATION CONTAINER */
 export const QuestionContainer = styled.div`
-  padding: 50px 200px;
-
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 `;
 
-/* QUESTION WRAPPER */
 export const QuestionWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
-`;
-
-/* TITLE */
-export const QuestionTitle = styled.h1`
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  margin-bottom: 6px;
-
-  color: ${({ theme }) => theme.colors.primary};
-`;
-
-/* SUBTITLE */
-export const QuestionSubtitle = styled.p`
-  font-size: 13px;
-  color: ${({ theme }) => theme.colors.textSecondary};
-  margin-bottom: 20px;
-`;
-
-/* FORM */
-export const QuestionForm = styled.form`
-  background: ${({ theme }) => theme.colors.surface};
+  width: 100%;
+  max-width: 800px;
+  background: #ffffff;
+  border-radius: 16px;
   padding: 30px;
-  width: 600px;
-  border-radius: 12px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-
-  h2 {
-    text-align: center;
-    color: ${({ theme }) => theme.colors.textPrimary};
-  }
-    @media(max-width:600px){
-    width:300px;
-    }
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 `;
 
-/* FIELD */
+export const QuestionTitle = styled.h1`
+  text-align: center;
+  color: #333;
+  margin-bottom: 5px;
+`;
+
+export const QuestionSubtitle = styled.p`
+  text-align: center;
+  color: #777;
+  margin-bottom: 25px;
+`;
+
+export const QuestionForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+`;
+
 export const QuestionField = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
 `;
 
-/* LABEL */
 export const QuestionLabel = styled.label`
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.textSecondary};
+  margin-bottom: 6px;
+  color: #444;
 `;
 
-/* INPUT */
 export const QuestionInput = styled.input`
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid ${({ theme }) => theme.colors.border};
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
   font-size: 14px;
-
-  outline: none;
-  transition: border 0.2s ease;
+  transition: 0.2s;
 
   &:focus {
-    border-color: ${({ theme }) => theme.colors.primary};
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 5px rgba(102, 126, 234, 0.4);
   }
 `;
 
-/* ERROR */
-export const CreateQuesError = styled.p`
-  color: ${({ theme }) => theme.colors.error};
-  font-size: 12px;
+export const Select = styled.select`
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  background: white;
+
+  &:focus {
+    outline: none;
+    border-color: #667eea;
+  }
 `;
 
-/* API ERROR */
-export const ApiError = styled.p`
-  color: ${({ theme }) => theme.colors.error};
-  text-align: center;
-  font-size: 13px;
-`;
-
-/* BUTTON */
 export const CreateQuesButton = styled.button`
   margin-top: 10px;
-  padding: 10px;
+  padding: 12px;
   border: none;
-  border-radius: 6px;
-
-  background: ${({ theme }) => theme.colors.primary};
+  border-radius: 10px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
-
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-
-  transition: background 0.2s ease;
+  transition: 0.3s;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.secondary};
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   }
 
   &:disabled {
-    background: ${({ theme }) => theme.colors.border};
+    background: #ccc;
     cursor: not-allowed;
   }
 `;
 
-/* FOOTER */
-export const QuestionFooter = styled.p`
+export const QuestionFooter = styled.div`
   text-align: center;
-  font-size: 13px;
-  color: ${({ theme }) => theme.colors.textSecondary};
+  margin-top: 15px;
 
   a {
-    color: ${({ theme }) => theme.colors.primary};
     text-decoration: none;
-  }
+    color: #667eea;
+    font-weight: 500;
 
-  a:hover {
-    text-decoration: underline;
+    &:hover {
+      text-decoration: underline;
+    }
   }
+`;
+
+export const ApiError = styled.div`
+  background: #ffe5e5;
+  color: #d8000c;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+`;
+
+export const OptionsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+`;
+
+export const SectionTitle = styled.h3`
+  margin-top: 15px;
+  margin-bottom: 5px;
+  color: #555;
 `;

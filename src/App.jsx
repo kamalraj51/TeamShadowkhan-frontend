@@ -13,6 +13,10 @@ import CreateExam from "./pages/CreateExam";
 import Home from "./pages/Home";
 import TopicMaster from "./pages/TopicMaster";
 import ExamTopic from "./component/ExamTopic";
+import UpdateQuestion from "./pages/UpdateQuestion";
+import QuestionUpload from "./component/QuestionUpload";
+import ShowQuestion from "./component/ShowQuestion";
+import NoPage from "./pages/NoPage";
 const App = () => {
   return (
     <>
@@ -29,8 +33,17 @@ const App = () => {
           <Route path="/createxam" element={<CreateExam />} />
           <Route path="/examtopic" element={<ExamTopic />} />
           <Route path="/createquestion" element={<CreateQuestion />} />
+          <Route path="/updatequestion/:quesId" element={<UpdateQuestion />} />
           <Route path="/adminhome" element={<Home />} />
           <Route path="/topicmaster" element={<TopicMaster />}></Route>
+          <Route path="/upload" element={<QuestionUpload />}></Route>
+
+          <Route
+            path="/showquestion/:topicID"
+            element={<ShowQuestion />}
+          ></Route>
+
+          <Route path="/*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>
     </>
