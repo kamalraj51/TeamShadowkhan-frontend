@@ -19,7 +19,7 @@ const UserSignup = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    username: "",
+    userName: "",
     email: "",
     phNo: "",
     password: "",
@@ -48,7 +48,7 @@ const UserSignup = () => {
   const validate = () => {
     let newErrors = {};
 
-    if (!formData.username) {
+    if (!formData.userName) {
       newErrors.firstName = "must should be fill the firstName";
     }
 
@@ -92,7 +92,7 @@ const UserSignup = () => {
 
     try {
       const response = await fetch(
-        "https://localhost:8443/sphinx/api/user/signup",
+        "https://localhost:8443/sphinx/api/user/signUp",
         {
           method: "POST",
           headers: {
@@ -160,12 +160,12 @@ const UserSignup = () => {
             <RegisterLabel>Username</RegisterLabel>
             <RegisterInput
               type="text"
-              id="username"
-              value={formData.username}
+              id="userName"
+              value={formData.userName}
               onChange={handleChange}
             />
             {errors.username && (
-              <RegisterError>{errors.username}</RegisterError>
+              <RegisterError>{errors.userName}</RegisterError>
             )}
           </RegisterField>
 

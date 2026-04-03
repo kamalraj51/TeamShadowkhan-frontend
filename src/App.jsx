@@ -17,6 +17,9 @@ import UpdateQuestion from "./pages/UpdateQuestion";
 import QuestionUpload from "./component/QuestionUpload";
 import ShowQuestion from "./component/ShowQuestion";
 import NoPage from "./pages/NoPage";
+import CreateExamTopics from "./pages/CreateExamTopics";
+import EditExam from "./component/EditExam";
+
 const App = () => {
   return (
     <>
@@ -25,7 +28,10 @@ const App = () => {
           <Route path="/" element={<UserSignin />} />
           {/* <Route path="/admin" element={<Admindashboard/>}/> */}
           <Route path="/usersignup" element={<UserSignup />} />
-
+          <Route
+            path="/examcreatetopic/:examId"
+            element={<CreateExamTopics />}
+          />
           <Route path="/usersignin" element={<UserSignin />} />
           <Route path="/test" element={<TestLogin />} />
           <Route path="/userpromote" element={<UserPromote />} />
@@ -34,7 +40,9 @@ const App = () => {
           <Route path="/examtopic" element={<ExamTopic />} />
           <Route path="/createquestion" element={<CreateQuestion />} />
           <Route path="/updatequestion/:quesId" element={<UpdateQuestion />} />
+
           <Route path="/adminhome" element={<Home />} />
+          <Route path="/editexam/:examId" element={<EditExam />} />
           <Route path="/topicmaster" element={<TopicMaster />}></Route>
           <Route path="/upload" element={<QuestionUpload />}></Route>
 

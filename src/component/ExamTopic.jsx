@@ -9,17 +9,20 @@ import {
   Row,
   Select,
 } from "../styles/CreateExam.style";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import ExamTDetails from "./ExamTDetails";
 
-const ExamTopic = ({ examid }) => {
+const ExamTopic = () => {
   const [topics, setTopics] = useState([]);
+   const { examId } = useParams();
+   console.log(examId)
  
   const dispatch=useDispatch()
   let [data, setData] = useState({
     examTopicName: "",
     topicId: "",
-    examId: examid||"ex213",
+    examId: examId,
    
     topicPassPercentage: "",
   });
@@ -35,7 +38,8 @@ const ExamTopic = ({ examid }) => {
 
   let handledata = async (e) => {
    e.preventDefault();
-   console.log(data)
+   console.log(examId+ 'inside api call')
+   
     let response = await fetch(
       "https://localhost:8443/sphinx/api/exam/examtopicdetails",
       {
@@ -99,6 +103,7 @@ const ExamTopic = ({ examid }) => {
 
         <Button type="submit">add topic</Button>
       </Form>
+      <ExamTDetails examId={examId}></ExamTDetails>
     </>
   );
 };
