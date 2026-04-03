@@ -6,7 +6,7 @@ import { LoginButton, LoginContainer, LoginError, LoginField, LoginFooter, Login
 //riswan
 const UserSignin = () => {
   const[formData,setFormData]=useState({
-    username:"",
+    userLoginId:"",
     password:"",
   })
  
@@ -36,8 +36,8 @@ const navigate = useNavigate();
  //regex validate
  const validate=()=>{
   let newErrors={}
-   if (!formData.username) {
-      newErrors.username = "userName should not be blank";
+   if (!formData.userLoginId) {
+      newErrors.userLoginId = "userName should not be blank";
     }
     if(!formData.password){
       newErrors.password="password should not be blank"
@@ -57,7 +57,7 @@ const handleSubmit=async (e)=>{
   setApiError("")
 
   try{
-    const response=await fetch("https://localhost:8443/sphinx/api/user/signin",{
+    const response=await fetch("https://localhost:8443/sphinx/api/user/signIn",{
       method:"POST",
       headers:{
         "content-Type":"application/json",
@@ -91,14 +91,14 @@ const handleSubmit=async (e)=>{
       <h2>Login</h2>
 
       <LoginField>
-        <LoginLabel htmlFor="username">Username</LoginLabel>
+        <LoginLabel htmlFor="userLoginId">Username</LoginLabel>
         <LoginInput
           type="text"
-          id="username"
-          value={formData.username}
+          id="userLoginId"
+          value={formData.userLoginId}
           onChange={handleForm}
         />
-        {errors.username && <LoginError>{errors.username}</LoginError>}
+        {errors.userLoginId && <LoginError>{errors.userLoginId}</LoginError>}
       </LoginField>
 
       <LoginField>
@@ -109,6 +109,7 @@ const handleSubmit=async (e)=>{
           value={formData.password}
           onChange={handleForm}
         />
+        <i class="fa-regular fa-eye"></i>
         {errors.password && <LoginError>{errors.password}</LoginError>}
       </LoginField>
 
@@ -117,8 +118,8 @@ const handleSubmit=async (e)=>{
       </LoginButton>
 
       <LoginFooter>
-        Don’t have an account?{" "}
-        <NavLink to="/usersignup">Register</NavLink>
+       
+        
       </LoginFooter>
     </LoginForm>
   </LoginWrapper>

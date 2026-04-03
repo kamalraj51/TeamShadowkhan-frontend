@@ -1,10 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { AvailableContainer, AvailableTable, H2, HeadingTable, TableWrapper, Td, Th } from '../styles/AvailableExamStyle'
 import { Button } from '../styles/CreateExam.style'
+import UsersList from '../pages/UsersList'
+import { NavLink } from 'react-router-dom'
+import { NavLink2 } from '../styles/ExamTDetails.style'
 
 const AvailableExam = () => {
    
-   
+  
   const [examData,setExamData]=useState([])
   
    const getAllExam=async()=>{
@@ -65,12 +68,13 @@ const AvailableExam = () => {
                     <Th>Assign User to this Exam</Th>
                     <Th>SetUp this Exam</Th>
                     <Th>Delete the Exam</Th>
+                    <Th>Assign The Exam</Th>
                 </tr>
             </thead>
           <tbody>
   {examData.map((data, index) => (
     
-    <tr key={data.id}>
+    <tr key={index}>
       <Td>{index + 1}</Td>
       <Td>{data.examId}</Td>
       <Td>{data.examName}</Td>
@@ -87,10 +91,8 @@ const AvailableExam = () => {
 
       <Td>Assign Users</Td>
       <Td>Setup</Td>
-      <Td><Button onClick={()=>handleExamDelete(data.examId)}>
-    Delete
-  </Button>
-</Td>
+      <Td><Button onClick={()=>handleExamDelete(data.examId)}> Delete </Button></Td>
+      <Td><NavLink2 to="/getuser" state={{"examId":data.examId}}>Assign</NavLink2></Td>
     </tr>
   ))}
 </tbody>

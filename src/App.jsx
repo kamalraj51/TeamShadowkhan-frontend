@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import TopicMaster from "./pages/TopicMaster";
 import ExamTopic from "./component/ExamTopic";
 import CreateExamTopics from "./pages/CreateExamTopics";
+import UsersList from "./pages/UsersList";
 const App = () => {
   return (
     <>
@@ -25,13 +26,14 @@ const App = () => {
           <Route path="/examcreatetopic/:examId" element={<CreateExamTopics/>} />
           <Route path="/usersignin" element={<UserSignin />} />
           <Route path="/test" element={<TestLogin />} />
-          <Route path="/userpromote" element={<UserPromote />} />
+          <Route path="/userpromote" element={<UserPromote />}/>
           <Route path="/getalluser" element={<Getalluser />} />
           <Route path="/createxam" element={<CreateExam />} />
           <Route path="/examtopic" element={<ExamTopic />} />
           <Route path="/createquestion" element={<CreateQuestion />} />
           <Route path="/adminhome" element={<Home/>} />
           <Route path="/topicmaster" element={<TopicMaster />}></Route>
+          <Route path="/getuser" element={<UsersList/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

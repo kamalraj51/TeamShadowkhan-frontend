@@ -30,3 +30,10 @@ font-size:16px;
 }
 
 `
+export const NavLink2=styled.a`
+    text-decoration:none;
+    &:hover{
+        color:grey;
+        cursor:pointer;
+    }
+`
