@@ -2,12 +2,14 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { AvailableContainer, AvailableTable, H2, HeadingTable, TableWrapper, Td, Th } from '../styles/AvailableExamStyle'
 import { Button } from '../styles/CreateExam.style'
 import { useNavigate } from 'react-router-dom'
+import { toggle } from '../reducer/apiReduce'
+import { useDispatch, useSelector } from 'react-redux'
 
 const AvailableExam = () => {
-   
+   const dispatch=useDispatch()
    const navigate=useNavigate()
   const [examData,setExamData]=useState([])
-  
+   const apiRefresh=useSelector((state)=>state.api.value)
    const getAllExam=async()=>{
       const response=await fetch("https://localhost:8443/sphinx/api/exam/getexam",{
         method:"GET",
@@ -23,15 +25,27 @@ const AvailableExam = () => {
     }
     const handleExamDelete=async (examId)=>{
       console.log(examId)
-        const response=await fetch("https://localhost:8443/sphinx/api/exam/examDelete",{
+        try{
+          const response=await fetch("https://localhost:8443/sphinx/api/exam/examDelete",{
           method:"DELETE",
           headers:{
              "Content-Type": "application/json",
           },
          
              body:JSON.stringify({"examId":examId})
+
             
         })
+        if(!response.ok){
+          console.log("not deleted from response")
+        }
+        alert("exam deleted successfully")
+        dispatch(toggle())
+        
+        }catch(err){
+          console.log(err ,'not deleted')
+        }
+        
       
      
       }
@@ -39,7 +53,7 @@ const AvailableExam = () => {
    
   useEffect(()=>{
     getAllExam()
-   },[])
+   },[apiRefresh])
 
   let submitHandle=(examId)=>{
     setId(examId)
