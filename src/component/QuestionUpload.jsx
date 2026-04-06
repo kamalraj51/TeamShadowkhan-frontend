@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import * as XLSX from "xlsx";
 
 const QuestionUpload = () => {
   const [file, setFile] = useState(null);
@@ -6,15 +7,20 @@ const QuestionUpload = () => {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
+  const API_URL = "https://localhost:8443/sphinx/api/question/upload";
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
+
     if (selectedFile) {
       const fileName = selectedFile.name.toLowerCase();
+
       if (!fileName.endsWith(".xlsx") && !fileName.endsWith(".xls")) {
         setError("Please select an Excel file (.xlsx or .xls)");
         setFile(null);
         return;
       }
+
       setFile(selectedFile);
       setError(null);
       setResult(null);
@@ -35,13 +41,23 @@ const QuestionUpload = () => {
     formData.append("file", file);
 
     try {
-      const response = await fetch("/rest/question/upload", {
+      console.log("Uploading file:", file);
+
+      const response = await fetch(API_URL, {
         method: "POST",
         body: formData,
-        // Don't set Content-Type header - browser sets it automatically with boundary
+        credentials: "include", // remove if not using cookies/session
       });
 
-      const data = await response.json();
+      let data;
+
+      try {
+        data = await response.json();
+      } catch {
+        throw new Error("Invalid JSON response from server");
+      }
+
+      console.log("Response:", data);
 
       if (response.ok) {
         setResult(data);
@@ -49,6 +65,7 @@ const QuestionUpload = () => {
         setError(data.message || "Upload failed");
       }
     } catch (err) {
+      console.error(err);
       setError("Network error: " + err.message);
     } finally {
       setLoading(false);
@@ -56,54 +73,71 @@ const QuestionUpload = () => {
   };
 
   const downloadTemplate = () => {
-    // Create a sample CSV template (or you can provide an actual Excel file)
-    const headers = [
-      "topicId",
-      "questionDetail",
-      "optionA",
-      "optionB",
-      "optionC",
-      "optionD",
-      "optionE",
-      "answer",
-      "numAnswers",
-      "questionTypeId",
-      "difficultyLevel",
-      "answerValue",
-      "negativeMarkValue",
+    const data = [
+      [
+        "topicId",
+        "questionDetail",
+        "optionA",
+        "optionB",
+        "optionC",
+        "optionD",
+        "optionE",
+        "answer",
+        "numAnswers",
+        "questionTypeId",
+        "difficultyLevel",
+        "answerValue",
+        "negativeMarkValue",
+      ],
+      [
+        "T001",
+        "What does SQL stand for?",
+        "Structed query Language",
+        "Structured Query Language",
+        "SQL",
+        "None of the above",
+        "",
+        "B",
+        "1",
+        "SINGLE_CHOICE",
+        "2",
+        "1",
+        "2",
+      ],
     ];
 
-    const sampleRow = [
-      "T001",
-      "What does SQL stand for?",
-      "Structed query Language",
-      "Structured Query Language",
-      "SQL",
-      "None of the above",
-      "",
-      "B",
-      "1",
-      "SINGLE_CHOICE",
-      "2",
-      "1",
-      "2",
+    const worksheet = XLSX.utils.aoa_to_sheet(data);
+
+    worksheet["!cols"] = [
+      { wch: 10 },
+      { wch: 30 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 20 },
+      { wch: 10 },
+      { wch: 12 },
+      { wch: 20 },
+      { wch: 15 },
+      { wch: 15 },
+      { wch: 20 },
     ];
 
-    const csvContent = [headers.join(","), sampleRow.join(",")].join("\n");
-    const blob = new Blob([csvContent], { type: "text/csv" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "question_template.csv";
-    a.click();
-    window.URL.revokeObjectURL(url);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Questions");
+
+    XLSX.writeFile(workbook, "question_template.xlsx");
   };
 
   return (
-    <div className="question-upload">
+    <div
+      className="question-upload"
+      style={{ maxWidth: "600px", margin: "auto" }}
+    >
       <h2>Upload Questions from Excel</h2>
 
-      <div className="upload-section">
+      <div className="upload-section" style={{ marginBottom: "15px" }}>
         <input
           type="file"
           accept=".xlsx,.xls"
@@ -111,36 +145,42 @@ const QuestionUpload = () => {
           disabled={loading}
         />
 
-        <button onClick={handleUpload} disabled={!file || loading}>
-          {loading ? "Uploading..." : "Upload"}
-        </button>
+        <div style={{ marginTop: "10px" }}>
+          <button onClick={handleUpload} disabled={!file || loading}>
+            {loading ? "Uploading..." : "Upload"}
+          </button>
 
-        <button onClick={downloadTemplate} type="button">
-          Download Template
-        </button>
+          <button
+            onClick={downloadTemplate}
+            type="button"
+            style={{ marginLeft: "10px" }}
+          >
+            Download Template
+          </button>
+        </div>
       </div>
 
       {error && (
-        <div
-          className="error-message"
-          style={{ color: "red", marginTop: "10px" }}
-        >
-          {error}
+        <div style={{ color: "red", marginTop: "10px" }}>
+          <strong>Error:</strong> {error}
         </div>
       )}
 
       {result && (
-        <div className="result-section" style={{ marginTop: "20px" }}>
+        <div style={{ marginTop: "20px", color: "green" }}>
           <h3>Upload Result</h3>
           <p>
-            Status: <strong>{result.status}</strong>
+            Status: <strong>{result.status || "Success"}</strong>
           </p>
-          <p>Message: {result.message}</p>
-          <p>Successfully uploaded: {result.successCount} questions</p>
+          <p>Message: {result.message || result.successMessage}</p>
+          <p>
+            Successfully uploaded: <strong>{result.successCount || 0}</strong>{" "}
+            questions
+          </p>
 
           {result.errors && result.errors.length > 0 && (
-            <div className="errors">
-              <h4>Errors ({result.errorCount}):</h4>
+            <div style={{ color: "red" }}>
+              <h4>Errors ({result.errorCount || result.errors.length}):</h4>
               <ul>
                 {result.errors.map((err, index) => (
                   <li key={index}>
@@ -154,17 +194,20 @@ const QuestionUpload = () => {
       )}
 
       <div
-        className="instructions"
-        style={{ marginTop: "20px", padding: "10px", background: "#f5f5f5" }}
+        style={{
+          marginTop: "20px",
+          padding: "10px",
+          background: "#f5f5f5",
+        }}
       >
         <h4>Excel File Format:</h4>
         <p>Your Excel file should have these columns in order:</p>
         <ol>
           <li>
-            <strong>topicId</strong> (required) - e.g., T001
+            <strong>topicId</strong> (required)
           </li>
           <li>
-            <strong>questionDetail</strong> (required) - The question text
+            <strong>questionDetail</strong> (required)
           </li>
           <li>
             <strong>optionA</strong> (required)
@@ -182,23 +225,22 @@ const QuestionUpload = () => {
             <strong>optionE</strong> (optional)
           </li>
           <li>
-            <strong>answer</strong> (required) - e.g., A, B, C, D
+            <strong>answer</strong> (required)
           </li>
           <li>
-            <strong>numAnswers</strong> (required) - Number of correct answers
+            <strong>numAnswers</strong> (required)
           </li>
           <li>
-            <strong>questionTypeId</strong> (required) - e.g., SINGLE_CHOICE
+            <strong>questionTypeId</strong> (required)
           </li>
           <li>
-            <strong>difficultyLevel</strong> (optional) - e.g., 1, 2, 3
+            <strong>difficultyLevel</strong> (optional)
           </li>
           <li>
-            <strong>answerValue</strong> (optional) - Points for correct answer
+            <strong>answerValue</strong> (optional)
           </li>
           <li>
-            <strong>negativeMarkValue</strong> (optional) - Negative marking
-            value
+            <strong>negativeMarkValue</strong> (optional)
           </li>
         </ol>
       </div>
