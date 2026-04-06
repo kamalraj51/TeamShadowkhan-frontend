@@ -1,7 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { AvailableContainer, AvailableTable, H2, HeadingTable, TableWrapper, Td, Th } from '../styles/AvailableExamStyle'
 import { Button } from '../styles/CreateExam.style'
-import { useNavigate } from 'react-router-dom'
+import UsersList from '../pages/UsersList'
+import { NavLink2 } from '../styles/ExamTDetails.style'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { toggle } from '../reducer/apiReduce'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -80,6 +82,8 @@ const AvailableExam = () => {
                     <Th>Assign User to this Exam</Th>
                     <Th>SetUp this Exam</Th>
                     <Th>Delete the Exam</Th>
+
+                    <Th>Assign user</Th>
                 </tr>
             </thead>
           <tbody>
@@ -87,7 +91,7 @@ const AvailableExam = () => {
 
    
     
-    <tr key={data.id}>
+    <tr key={index}>
       <Td>{index + 1}</Td>
       <Td>{data.examId}</Td>
       <Td>{data.examName}</Td>
@@ -108,10 +112,14 @@ const AvailableExam = () => {
 
       <Td>Assign Users</Td>
       <Td>Setup</Td>
+
       <Td><Button onClick={()=>handleExamDelete(data.examId)}>
     Delete
   </Button>
 </Td>
+<Td><NavLink to="/getuser" state={{"examId":data.examId}}>Assign</NavLink></Td>
+ 
+
     </tr>
   ))}
 </tbody>

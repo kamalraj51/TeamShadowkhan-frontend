@@ -53,7 +53,7 @@ const CreateQuestion = () => {
     setLoading(true);
 
     const finalData = {
-      ...formData,
+      ...formData ,
       questionTypeId: questionType,
       answer:
         questionType === "MULTI_CHOICE"
@@ -76,7 +76,8 @@ const CreateQuestion = () => {
       );
 
       await response.json();
-      navigate("/createquestion");
+      alert("Question Created Successfully")
+      navigate("/addquestion");
     } catch (err) {
       setApiError("Network error. Please try again.");
     } finally {
@@ -172,9 +173,10 @@ const CreateQuestion = () => {
               <SectionTitle>Select Topic</SectionTitle>
               <Select
                 id="topicId"
-                value={formData.topicId}
+                value={formData.topicID}
                 onChange={handleChange}
               >
+                <option value="">--Select Topic--</option>
                 {topics.map((topic) => (
                   <option key={topic.topicId} value={topic.topicId}>
                     {topic.topicName}

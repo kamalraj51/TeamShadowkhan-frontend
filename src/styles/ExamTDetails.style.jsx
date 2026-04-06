@@ -31,6 +31,14 @@ font-size:16px;
 
 `
 
+export const NavLink2=styled.a`
+    text-decoration:none;
+    &:hover{
+        color:grey;
+        cursor:pointer;
+    }
+`
+
 export const ContentQuesHead = styled.div`
   display: flex;
   padding: 15px 10px;
@@ -93,3 +101,4 @@ export const Para = styled.p`
     }
   }
 `;
+

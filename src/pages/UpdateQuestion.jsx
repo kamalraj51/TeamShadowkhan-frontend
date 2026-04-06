@@ -289,7 +289,7 @@ const UpdateQuestion = () => {
                 </QuestionField>
     
                 <CreateQuesButton type="submit" disabled={loading}>
-                  {loading ? "Creating ..." : "Create"}
+                  {loading ? "Updating ..." : "Update"}
                 </CreateQuesButton>
     
                 <QuestionFooter>
