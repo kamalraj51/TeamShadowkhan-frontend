@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { toggle } from "../reducer/apiReduce";
 import {
   Button,
+  Container,
   Field,
   Form,
   Input,
@@ -91,7 +92,8 @@ const ExamTopic = () => {
 
   return (
     <>
-      <Form onSubmit={handledata}>
+    <Container>
+       <Form onSubmit={handledata}>
         <Field>
           <Label>Select Topic</Label>
           <Select  name="topicId" value={data.topicId} onChange={handleinput}>
@@ -111,7 +113,10 @@ const ExamTopic = () => {
 
         <Button type="submit" disabled={loading}>{loading?"submitting":"add topic"}</Button>
       </Form>
-      <ExamTDetails examId={examId}></ExamTDetails>
+     
+    </Container>
+     <ExamTDetails examId={examId}></ExamTDetails>
+     
     </>
   );
 };

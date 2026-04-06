@@ -38,7 +38,12 @@ const TopicsShow = () => {
   <Layout>
      <TopicContainer>
            <TopicHeading>Topics</TopicHeading>
+          <Buttons>\
            <Button style={{marginBottom:'10px'}} onClick={()=>{navigate('/addquestion')}}>Create Question</Button>
+            <Button style={{marginBottom:'10px'}} onClick={()=>{navigate('/addquestion')}}>Upload Question</Button>
+
+          </Buttons>
+
            
            {topics.length===0?<H1>No Topic Available</H1>:topics.map((topic)=>{
                

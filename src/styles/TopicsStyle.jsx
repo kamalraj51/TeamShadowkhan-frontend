@@ -6,6 +6,7 @@ padding:10px;
 `
 
 
+
 export const TopicHeading=styled.h2`
 text-align:center;
 margin-bottom:10px;
