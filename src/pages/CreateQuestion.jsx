@@ -28,7 +28,7 @@ const CreateQuestion = () => {
   const [textAnswer, setTextAnswer] = useState("");
 
   const [formData, setFormData] = useState({
-    topicId: "T002",
+    topicId: "",
     questionDetail: "",
     optionA: "",
     optionB: "",
