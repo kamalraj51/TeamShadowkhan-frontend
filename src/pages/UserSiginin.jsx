@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
  
 import { LoginButton, LoginContainer, LoginError, LoginField, LoginFooter, LoginForm, LoginInput, LoginLabel, LoginTitle, LoginWrapper } from "../styles/LoginStyle";
+import { ApiError } from "../styles/SignupStyle";
+import { useDispatch } from "react-redux";
+
+import { login } from "../reducer/authSlice";
 //riswan
 const UserSignin = () => {
   const[formData,setFormData]=useState({
@@ -10,7 +14,7 @@ const UserSignin = () => {
     password:"",
   })
  
- 
+ const dispatch=useDispatch()
 const navigate = useNavigate();
   const [errors, setErrors] = useState({});
  
@@ -65,12 +69,17 @@ const handleSubmit=async (e)=>{
       body:JSON.stringify(formData),
     });
     if(!response.ok){
-      setApiError(data.message || "invalid credinatilas ");
+      console.log("not login...")
+    
+      setApiError("invalid credinatilas ");
       return;
     }
  
     //sucess =>redirect
-    navigate(`/adminhome/${userLoginId}`)
+    dispatch(login({ userLoginId: formData.userLoginId }));
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+      navigate("/adminhome");
  
   }catch(err){
     setApiError("Network error. Please try again.")
@@ -85,11 +94,11 @@ const handleSubmit=async (e)=>{
       <LoginContainer>
   <LoginWrapper>
     <LoginTitle>SPHINX</LoginTitle>
-   
+  
  
     <LoginForm onSubmit={handleSubmit}>
       <h2>Login</h2>
- 
+       {apiError && <ApiError>{apiError}</ApiError>}
       <LoginField>
         <LoginLabel htmlFor="userLoginId">Username</LoginLabel>
         <LoginInput

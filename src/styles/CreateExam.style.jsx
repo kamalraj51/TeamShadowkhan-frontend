@@ -5,14 +5,14 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+ 
   padding: 16px;
   background-color: ${({ theme }) => theme.colors.background};
   margin: 10px 0px;
 `;
 
 export const Form = styled.form`
-  margin-bottom: 100px;
+  margin-bottom: 0px;
   display: flex;
   flex-direction: column;
   gap: 16px;
