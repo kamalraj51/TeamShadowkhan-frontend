@@ -24,6 +24,10 @@ const Header = () => {
         <NavLink to="/showalltopic" onClick={() => setIsOpen(false)}>
           Question Master
         </NavLink>
+         <NavLink to="/usersignup2" onClick={() => setIsOpen(false)}>
+          User Master
+        </NavLink>
+        
         <NavLink to="/createxam" onClick={() => setIsOpen(false)}>
           Exam Master
         </NavLink>

@@ -4,7 +4,7 @@ export const MainContainer = styled.div`
   margin: 0;
  
   color: black;
-  background-color:  #F8F9FC;
+  background-color: ${({ theme }) => theme.colors.background};
 `;
 
 export const LayoutContainer = styled.div`

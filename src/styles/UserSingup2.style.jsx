@@ -1,0 +1,62 @@
+import styled from "styled-components";
+
+export const Container = styled.div`
+  width: 100%;
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+`;
+
+export const Title = styled.h2`
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333;
+`;
+
+export const FormGroup = styled.div`
+  margin-bottom: 18px;
+`;
+
+export const Label = styled.label`
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+  color: #444;
+`;
+
+export const Input = styled.input`
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+
+  &::placeholder {
+    color: #aaa;
+  }
+
+  &:focus {
+    border-color: #4f7cff;
+    box-shadow: 0 0 0 2px rgba(79, 124, 255, 0.15);
+  }
+`;
+
+export const Button = styled.button`
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #4f7cff, #6a8dff);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+`;

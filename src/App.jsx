@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AdminSignin from "./pages/AdminSignin";
-import UserSignin from "./pages/UserSiginin";
+
+
 import UserSignup from "./pages/UserSignup";
 import TestLogin from "./pages/TestLogin";
 import UserPromote from "./pages/UserPromote";
@@ -21,20 +21,22 @@ import CreateExamTopics from "./pages/CreateExamTopics";
 import UsersList from "./pages/UsersList";
 import EditExam from "./component/EditExam";
 import TopicsShow from "./component/TopicsShow";
+import UserSignUp2 from "./pages/UserSignUp2";
+import UserSignin from "./pages/UserSiginin";
 
 const App = () => {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<UserSignin />} />
+          <Route path="/" element={<UserSignin/>} />
           {/* <Route path="/admin" element={<Admindashboard/>}/> */}
-          <Route path="/usersignup" element={<UserSignup />} />
+          <Route path="/usersignup" element={<UserSignup/>} />
           <Route
             path="/examcreatetopic/:examId"
             element={<CreateExamTopics />}
           />
-          <Route path="/usersignin" element={<UserSignin />} />
+          <Route path="/usersignin" element={<UserSignin/>} />
           <Route path="/test" element={<TestLogin />} />
           <Route path="/userpromote" element={<UserPromote />}/>
           <Route path="/getalluser" element={<Getalluser />} />
@@ -52,7 +54,7 @@ const App = () => {
 
           <Route path="/upload" element={<QuestionUpload />}></Route>
           <Route path="/getuser" element={<UsersList/>}></Route>
-
+    <Route path="/usersignup2" element={<UserSignUp2/>}></Route>
           <Route
             path="/showquestion/:topicID"
             element={<ShowQuestion />}

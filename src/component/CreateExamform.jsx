@@ -4,7 +4,7 @@ import {  NavLink, useNavigate } from 'react-router-dom'
 
 const CreateExamform = () => {
     const navigate=useNavigate()
-
+    const [msg,setMsg]=useState("")
     let [formData,setFormData]=useState({
         examName:"",
         description:"",
@@ -24,11 +24,13 @@ const CreateExamform = () => {
     let handleCreate=async (e)=>{
         e.preventDefault()
         let response=await fetch("https://localhost:8443/sphinx/api/exam/createexam",{
+           
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body:JSON.stringify(formData)
+            body:JSON.stringify(formData),
+            
         })
        
         if(response.ok){
@@ -38,11 +40,16 @@ const CreateExamform = () => {
             console.log("1",data.examId);
             
             navigate(`/examcreatetopic/${examId}`)
+        }else if(!response.ok){
+             const data = await response.json();
+             setMsg(data.error)
+
         }
 
     }
   return (
     <>
+    <p>{msg}</p>
         <Form onSubmit={handleCreate}>
              
             <Field>
