@@ -18,7 +18,7 @@ const UserSignin = () => {
 const navigate = useNavigate();
   const [errors, setErrors] = useState({});
  
- 
+ const [show, setShow] = useState(false);
  const [apiError,setApiError]=useState("")
  
  const [loading,setLoading]=useState(false)
@@ -112,12 +112,25 @@ const handleSubmit=async (e)=>{
       <LoginField>
         <LoginLabel htmlFor="password">Password</LoginLabel>
         <LoginInput
-          type="password"
+         type={show ? "text" : "password"}
           id="password"
           value={formData.password}
           onChange={handleForm}
         />
-        <i class="fa-regular fa-eye"></i>
+        {show ? (
+              <i
+                className="fa-regular fa-eye"
+                onClick={() => setShow(false)}
+                style={{ cursor: "pointer" }}
+              ></i>
+            ) : (
+              <i
+                className="fa-solid fa-eye-slash"
+                onClick={() => setShow(true)}
+                style={{ cursor: "pointer" }}
+              ></i>
+            )}
+
         {errors.password && <LoginError>{errors.password}</LoginError>}
       </LoginField>
  

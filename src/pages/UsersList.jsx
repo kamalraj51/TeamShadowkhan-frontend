@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
 import { NavLink, useLocation } from 'react-router-dom'
-import { Container, Form, Name, Option, Row, Select } from '../styles/UserList.style'
-import { Input } from '../styles/CreateExam.style'
-import { Button } from '../styles/TopicsStyle'
+import { Container } from '../styles/UserList.style'
+import { Button, ButtonSecondary, Form, Input, Option, Select } from '../styles/AvailableExamStyle'
+
 
 const UsersList = () => {
     let location =useLocation()
@@ -74,12 +74,13 @@ const UsersList = () => {
                 })
             }
         </Select>
-        <Input type="text" name="allowedAttempts" onChange={(e)=>handleform(e)}/>
-         <Input type="text" name="noOfAttempts" onChange={(e)=>handleform(e)}/>
-         <Input type="text" name="timeoutDays" onChange={(e)=>handleform(e)}/>
+        <Input type="text" name="allowedAttempts" onChange={(e)=>handleform(e)} placeholder='allowedattempts'/>
+         <Input type="text" name="noOfAttempts" onChange={(e)=>handleform(e)} placeholder='noofattempts'/>
+         <Input type="text" name="timeoutDays" onChange={(e)=>handleform(e)} placeholder='timeoutdays'/>
          <Button type="submit">assign</Button>
         </Form>
-         <Button onClick={lastSubmit}>submit all</Button>
+c
+         <ButtonSecondary onClick={lastSubmit}>submit all</ButtonSecondary>
     </>
        
     )

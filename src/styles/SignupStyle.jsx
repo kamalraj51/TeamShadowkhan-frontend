@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-/* CONTAINER */
+
 export const RegisterContainer = styled.div`
 padding:50px 0px;
   min-height: 100vh;
@@ -10,14 +10,14 @@ padding:50px 0px;
   background: ${({ theme }) => theme.colors.background};
 `;
 
-/* WRAPPER */
+
 export const RegisterWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-/* TITLE */
+
 export const RegisterTitle = styled.h1`
   font-size: 28px;
   font-weight: 700;
@@ -27,14 +27,14 @@ export const RegisterTitle = styled.h1`
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-/* SUBTITLE */
+
 export const RegisterSubtitle = styled.p`
   font-size: 13px;
   color: ${({ theme }) => theme.colors.textSecondary};
   margin-bottom: 20px;
 `;
 
-/* FORM */
+
 export const RegisterForm = styled.form`
   background: ${({ theme }) => theme.colors.surface};
   padding: 30px;
@@ -54,21 +54,21 @@ export const RegisterForm = styled.form`
   }
 `;
 
-/* FIELD */
+
 export const RegisterField = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
 `;
 
-/* LABEL */
+
 export const RegisterLabel = styled.label`
   font-size: 12px;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.textSecondary};
 `;
 
-/* INPUT */
+
 export const RegisterInput = styled.input`
   padding: 10px;
   border-radius: 6px;
@@ -96,7 +96,7 @@ export const ApiError = styled.p`
   font-size: 13px;
 `;
 
-/* BUTTON */
+
 export const RegisterButton = styled.button`
   margin-top: 10px;
   padding: 10px;

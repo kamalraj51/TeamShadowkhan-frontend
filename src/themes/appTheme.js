@@ -4,7 +4,7 @@ export const appTheme = {
     secondary: "#3B4252",     // deep charcoal (strong UI elements)
     accent: "#88C0D0",        // soft cyan highlight
 
-    background: "#F8F9FC",    // clean off-white (less yellow)
+    background: "#F9FAFB",    // clean off-white (less yellow)
     surface: "#FFFFFF",       // pure cards for contrast
 
     textPrimary: "#2E3440",   // strong readable dark text
@@ -29,8 +29,8 @@ export const darkTheme = {
     background: "#1E1E1E",    // deep charcoal black
     surface: "#2C2C2C",       // dark gray cards
 
-    textPrimary: "#FFFFE3",   // ivory text
-    textSecondary: "#CBCBCB",  // soft gray text
+    textPrimary: "#111827",   // ivory text
+    textSecondary: "#3B4252",  // soft gray text
 
     border: "#4A4A4A",
 

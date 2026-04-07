@@ -1,4 +1,5 @@
 import React from "react";
+
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -20,6 +21,8 @@ import CreateExamTopics from "./pages/CreateExamTopics";
 import UsersList from "./pages/UsersList";
 import EditExam from "./component/EditExam";
 import TopicsShow from "./component/TopicsShow";
+import CreateUser from "./pages/CreateUser";
+// import UserSignin from "./pages/UserSiginin";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -33,12 +36,12 @@ const App = () => {
       <BrowserRouter>
         <Routes>
 
-          
-          <Route path="/"          element={<UserSignin />} />
-          <Route path="/usersignin" element={<UserSignin />} />
-          <Route path="/usersignup" element={<UserSignup />} />
 
-          
+          <Route path="/" element={<UserSignin/>} />
+          <Route path="/usersignin" element={<UserSignin/>} />
+          <Route path="/createadmin" element={<UserSignup />} />
+
+          <Route path="/CreateUser" element={<CreateUser/>} />
           <Route path="/adminhome" element={
             <ProtectedRoute><Home /></ProtectedRoute>
           } />
