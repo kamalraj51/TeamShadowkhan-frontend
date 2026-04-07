@@ -1,6 +1,6 @@
 export const appTheme = {
   colors: {
-    primary: "#2563EB",       // refined soft blue (main action)
+    primary: "#5E81AC",       // refined soft blue (main action)
     secondary: "#3B4252",     // deep charcoal (strong UI elements)
     accent: "#88C0D0",        // soft cyan highlight
 

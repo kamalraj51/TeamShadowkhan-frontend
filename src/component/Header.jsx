@@ -3,9 +3,13 @@ import { HeaderMain, Logo, Menu, MenuToggle } from "../styles/HeaderStyle";
 import { NavLink } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { RegisterButton } from "../styles/SignupStyle";
+import {logout} from "../reducer/authSlice"
+import { useDispatch } from "react-redux";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [loading,setLoading]=useState(false);
+  const dispatch=useDispatch()
 
   return (
     <HeaderMain>
@@ -24,7 +28,7 @@ const Header = () => {
         <NavLink to="/showalltopic" onClick={() => setIsOpen(false)}>
           Question Master
         </NavLink>
-         <NavLink to="/usersignup2" onClick={() => setIsOpen(false)}>
+         <NavLink to="/createuser" onClick={() => setIsOpen(false)}>
           User Master
         </NavLink>
         
@@ -34,11 +38,18 @@ const Header = () => {
         <NavLink to="/topicmaster" onClick={() => setIsOpen(false)}>
           Topic Master
         </NavLink>
+         <NavLink to="/createadmin">Register</NavLink>
+         <NavLink to="/" onClick={async(e) => {setIsOpen(false)
+         e.preventDefault();
+         setLoading(true);
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          setLoading(false);
+          dispatch(logout());
 
-         <NavLink to="/" onClick={() => setIsOpen(false)}>
-          Logout
+         }}>
+          {loading ? "Signing out..." : "Sign Out"}
         </NavLink>
-        <NavLink to="/usersignup">Register</NavLink>
+       
 
       </Menu>
     </HeaderMain>

@@ -42,7 +42,7 @@ border: 1px solid #333;
   
 `
 export const Add=styled.button`
-  background-color:#28a745;
+  background-color:;
    padding: 10px 18px;
   border: none;
   border-radius: 6px;

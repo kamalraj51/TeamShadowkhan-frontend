@@ -71,16 +71,16 @@ const AvailableExam = () => {
             <thead>
                 <tr>
                     <Th>S1.No</Th>
-                    <Th>Exam Id</Th>
+                   
                     <Th>Exam Name</Th>
                     <Th>Description</Th>
                     <Th>No of Question</Th>
                     <Th>Duration</Th>
                     <Th>Pass %</Th>
-                    <Th>Questions</Th>
+                    <Th>Edit Exam</Th>
                     
-                    <Th>Assign User to this Exam</Th>
-                    <Th>SetUp this Exam</Th>
+                   
+                   
                     <Th>Delete the Exam</Th>
 
                     <Th>Assign user</Th>
@@ -93,7 +93,7 @@ const AvailableExam = () => {
     
     <tr key={index}>
       <Td>{index + 1}</Td>
-      <Td>{data.examId}</Td>
+      
       <Td>{data.examName}</Td>
       <Td>{data.description}</Td>
       <Td>{data.noOfQuestions}</Td>
@@ -106,18 +106,26 @@ const AvailableExam = () => {
            navigate(`/examcreatetopic/${examId}`)}}>Add</Add>
         <Edit onClick={() =>{
                let examId=data.examId
+
            navigate(`/editexam/${examId}`)}}>Edit</Edit>
         <Upload>Upload</Upload>
+
       </Td>
 
-      <Td>Assign Users</Td>
-      <Td>Setup</Td>
+      
+      
 
       <Td><Delete onClick={()=>handleExamDelete(data.examId)}>
     Delete
   </Delete>
 </Td>
-<Td><NavLink to="/getuser" state={{"examId":data.examId}}>Assign</NavLink></Td>
+<Td>
+  <Button onClick={() =>{
+               let examId=data.examId
+           navigate(`/getuser/${examId}`)}}>
+    Assign
+  </Button>
+  </Td>
  
 
     </tr>

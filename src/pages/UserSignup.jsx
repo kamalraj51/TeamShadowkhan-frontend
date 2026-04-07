@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { NavLink, useNavigate } from "react-router-dom";
 import { ApiError, RegisterButton, RegisterContainer, RegisterError, RegisterField, RegisterFooter, RegisterForm, RegisterInput, RegisterLabel, RegisterSubtitle, RegisterTitle, RegisterWrapper } from "../styles/SignupStyle";
+import Layout from "../component/Layout";
 
 
 
@@ -120,7 +121,8 @@ const UserSignup = () => {
 
   return (
     
-       <RegisterContainer>
+      <Layout>
+         <RegisterContainer>
       <RegisterWrapper>
     
         <RegisterTitle>SPHINX</RegisterTitle>
@@ -235,6 +237,7 @@ const UserSignup = () => {
         </RegisterForm>
       </RegisterWrapper>
     </RegisterContainer>
+      </Layout>
     
   );
 };

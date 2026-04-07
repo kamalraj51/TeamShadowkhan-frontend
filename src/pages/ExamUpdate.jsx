@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Update = ({exam}) => {
+const ExamUpdate = ({exam}) => {
   let [data,setData]=useState(exam)
   let handleSubmit= async()=>{
     let response=await fetch("https://localhost:8443/sphinx/api/exam/updateExam",{
@@ -41,4 +41,4 @@ const Update = ({exam}) => {
   )
 }
 
-export default Update
+export default ExamUpdate

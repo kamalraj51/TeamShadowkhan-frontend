@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, Container, FormGroup, Input, Label, Title } from "../styles/UserSingup2.style";
+import { Button, Container, FormGroup, Input, Label, Title } from "../styles/CreateUser.style";
 
 
 
-const UserSignup2=()=> {
+const CreateUser=()=> {
   return (
     <Container>
       <Title>Add User</Title>
@@ -38,4 +38,4 @@ const UserSignup2=()=> {
     </Container>
   );
 }
-export default UserSignup2
+export default CreateUser
