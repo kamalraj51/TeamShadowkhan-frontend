@@ -20,11 +20,12 @@ import CreateExamTopics from "./pages/CreateExamTopics";
 import UsersList from "./pages/UsersList";
 import EditExam from "./component/EditExam";
 import TopicsShow from "./component/TopicsShow";
+import TestLoader from "./pages/TestLoader";
 
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  return isAuthenticated ? children : <Navigate to="/" replace />;
+  return isAuthenticated ? children : <Navigate to="/"  />;
 };
 
 const App = () => {
@@ -90,6 +91,7 @@ const App = () => {
 
           <Route path="/*" element={<NoPage />} />
 
+<Route path="/load" element={<TestLoader/>}></Route>
         </Routes>
       </BrowserRouter>
     </>
