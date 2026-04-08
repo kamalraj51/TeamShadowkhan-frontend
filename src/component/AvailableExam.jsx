@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { AvailableContainer, AvailableTable, H2, HeadingTable, TableWrapper, Td, Th } from '../styles/AvailableExamStyle'
+import { Add,AvailableContainer, AvailableTable, Delete, Edit, H2, HeadingTable, TableWrapper, Td, Th, Upload } from '../styles/AvailableExamStyle'
 import { Button } from '../styles/CreateExam.style'
 import UsersList from '../pages/UsersList'
 import { NavLink2 } from '../styles/ExamTDetails.style'
@@ -101,21 +101,23 @@ const AvailableExam = () => {
       <Td>{data.passPercentage}</Td>
 
       <Td>
-        <button onClick={() =>{
+        <Add onClick={() =>{
                let examId=data.examId
-           navigate(`/examcreatetopic/${examId}`)}}>Add</button>
-        <button onClick={() =>{
+           navigate(`/examcreatetopic/${examId}`)}}>Add</Add>
+        <Edit onClick={() =>{
                let examId=data.examId
-           navigate(`/editexam/${examId}`)}}>Edit</button>
-     
+
+           navigate(`/editexam/${examId}`)}}>Edit</Edit>
+        <Upload>Upload</Upload>
+
       </Td>
 
       
       
 
-      <Td><Button onClick={()=>handleExamDelete(data.examId)}>
+      <Td><Delete onClick={()=>handleExamDelete(data.examId)}>
     Delete
-  </Button>
+  </Delete>
 </Td>
 <Td>
   <Button onClick={() =>{

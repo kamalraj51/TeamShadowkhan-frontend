@@ -28,13 +28,17 @@ const Header = () => {
         <NavLink to="/showalltopic" onClick={() => setIsOpen(false)}>
           Question Master
         </NavLink>
+         <NavLink to="/createuser" onClick={() => setIsOpen(false)}>
+          User Master
+        </NavLink>
+        
         <NavLink to="/createxam" onClick={() => setIsOpen(false)}>
           Exam Master
         </NavLink>
         <NavLink to="/topicmaster" onClick={() => setIsOpen(false)}>
           Topic Master
         </NavLink>
-         <NavLink to="/usersignup">Register</NavLink>
+         <NavLink to="/createadmin">Register</NavLink>
          <NavLink to="/" onClick={async(e) => {setIsOpen(false)
          e.preventDefault();
          setLoading(true);

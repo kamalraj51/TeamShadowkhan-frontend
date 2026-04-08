@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
 
 import {
+  InputWrapper,
   LoginButton,
   LoginContainer,
   LoginError,
@@ -10,6 +11,7 @@ import {
   LoginFooter,
   LoginForm,
   LoginInput,
+  LoginInputPass,
   LoginLabel,
   LoginTitle,
   LoginWrapper,
@@ -29,6 +31,7 @@ const UserSignin = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
 
+  const [show, setShow] = useState(false);
   const [apiError, setApiError] = useState("");
 
   const [loading, setLoading] = useState(false);
@@ -121,13 +124,29 @@ const UserSignin = () => {
 
             <LoginField>
               <LoginLabel htmlFor="password">Password</LoginLabel>
-              <LoginInput
-                type="password"
-                id="password"
-                value={formData.password}
-                onChange={handleForm}
-              />
-              <i class="fa-regular fa-eye"></i>
+
+              <InputWrapper>
+                <LoginInputPass
+                  type={show ? "text" : "password"}
+                  id="password"
+                  value={formData.password}
+                  onChange={handleForm}
+                />
+                {show ? (
+                  <i
+                    className="fa-regular fa-eye"
+                    onClick={() => setShow(false)}
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                ) : (
+                  <i
+                    className="fa-solid fa-eye-slash"
+                    onClick={() => setShow(true)}
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                )}
+              </InputWrapper>
+
               {errors.password && <LoginError>{errors.password}</LoginError>}
             </LoginField>
 
