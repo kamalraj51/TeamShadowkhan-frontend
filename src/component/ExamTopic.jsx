@@ -24,7 +24,6 @@ const ExamTopic = () => {
     examTopicName: "",
     topicId: "",
     examId: examId,
-   
     topicPassPercentage: "",
   });
 

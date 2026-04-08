@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Field, Form, Input, Label } from '../styles/CreateExam.style'
+import { ApiError, Button, Container, Field, Form, Heading, Input, Label } from '../styles/CreateExam.style'
 import {  NavLink, useNavigate } from 'react-router-dom'
 
 const CreateExamform = () => {
@@ -49,7 +49,10 @@ const CreateExamform = () => {
     }
   return (
     <>
-    <p>{msg}</p>
+    <Container>
+        <Heading>Create Exam</Heading>
+        
+         <ApiError>{msg}</ApiError>
         <Form onSubmit={handleCreate}>
              
             <Field>
@@ -75,6 +78,8 @@ const CreateExamform = () => {
             <Button type="submit">submit</Button>
 
         </Form>
+    </Container>
+   
         
     </>
   )

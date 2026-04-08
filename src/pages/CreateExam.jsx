@@ -9,9 +9,9 @@ const CreateExam = () => {
   return (
     <>
       <Layout>
-        <Container>
+          
           <CreateExamform />
-        </Container>
+        
        
       </Layout>
     </>

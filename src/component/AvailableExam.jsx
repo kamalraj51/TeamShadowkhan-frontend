@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Add,AvailableContainer, AvailableTable, Delete, Edit, H2, HeadingTable, TableWrapper, Td, Th, Upload } from '../styles/AvailableExamStyle'
+import { Add,AvailableContainer, AvailableTable, ButtonDiv, Delete, Edit, H2, HeadingTable, TableWrapper, Td, Th, Upload } from '../styles/AvailableExamStyle'
 import { Button } from '../styles/CreateExam.style'
 import UsersList from '../pages/UsersList'
 import { NavLink2 } from '../styles/ExamTDetails.style'
@@ -101,14 +101,16 @@ const AvailableExam = () => {
       <Td>{data.passPercentage}</Td>
 
       <Td>
-        <Add onClick={() =>{
+       <ButtonDiv>
+           <Add onClick={() =>{
                let examId=data.examId
            navigate(`/examcreatetopic/${examId}`)}}>Add</Add>
         <Edit onClick={() =>{
                let examId=data.examId
 
            navigate(`/editexam/${examId}`)}}>Edit</Edit>
-        <Upload>Upload</Upload>
+       
+       </ButtonDiv>
 
       </Td>
 
