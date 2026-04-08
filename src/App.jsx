@@ -22,6 +22,7 @@ import UsersList from "./pages/UsersList";
 import EditExam from "./component/EditExam";
 import TopicsShow from "./component/TopicsShow";
 import CreateUser from "./pages/CreateUser";
+import ExamUpdate from "./pages/ExamUpdate";
 // import UserSignin from "./pages/UserSiginin";
 
 
@@ -89,6 +90,10 @@ const App = () => {
           } />
           <Route path="/examcreatetopic/:examId" element={
             <ProtectedRoute><CreateExamTopics /></ProtectedRoute>
+          } />
+
+          <Route path="/examupdate" element={
+            <ProtectedRoute><ExamUpdate/></ProtectedRoute>
           } />
 
           <Route path="/*" element={<NoPage />} />

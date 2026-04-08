@@ -60,3 +60,5 @@ export const Button = styled.button`
     opacity: 0.9;
   }
 `;
+export const Form=styled.form`
+`

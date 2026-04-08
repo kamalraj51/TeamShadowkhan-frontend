@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Add,AvailableContainer, AvailableTable, Delete, Edit, H2, HeadingTable, TableWrapper, Td, Th, Upload } from '../styles/AvailableExamStyle'
+import { Add,AvailableContainer, AvailableTable, Delete, Edit,ExamUpdate,H2, HeadingTable, TableWrapper, Td, Th, Upload } from '../styles/AvailableExamStyle'
 import { Button } from '../styles/CreateExam.style'
 import UsersList from '../pages/UsersList'
 import { NavLink2 } from '../styles/ExamTDetails.style'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { toggle } from '../reducer/apiReduce'
 import { useDispatch, useSelector } from 'react-redux'
+
 
 const AvailableExam = () => {
    const dispatch=useDispatch()
@@ -101,6 +102,9 @@ const AvailableExam = () => {
       <Td>{data.passPercentage}</Td>
 
       <Td>
+        {
+          console.log(data)
+        }
         <Add onClick={() =>{
                let examId=data.examId
            navigate(`/examcreatetopic/${examId}`)}}>Add</Add>
@@ -109,6 +113,7 @@ const AvailableExam = () => {
 
            navigate(`/editexam/${examId}`)}}>Edit</Edit>
         <Upload>Upload</Upload>
+        <ExamUpdate onClick={() =>navigate("/examupdate", { state: { examData: data  } })}>updateExam</ExamUpdate>
 
       </Td>
 

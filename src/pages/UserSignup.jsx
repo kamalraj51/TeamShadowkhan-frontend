@@ -26,6 +26,7 @@ const UserSignup = () => {
     phNo: "",
     password: "",
     confirmPassword: "",
+    role:"SPX_ADMIN"
   });
 
   const [errors, setErrors] = useState({});

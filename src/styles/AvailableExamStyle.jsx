@@ -126,3 +126,6 @@ export const ButtonSecondary = styled(Button)`
     background-color: #1e7e34;
   }
 `;
+export const ExamUpdate=styled.a`
+
+`
