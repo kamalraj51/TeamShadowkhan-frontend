@@ -94,6 +94,7 @@ const UserSignin = () => {
 
       navigate("/adminhome");
     } catch (err) {
+      setLoading(false);
       setApiError("Network error. Please try again.");
     } finally {
       setLoading(false);

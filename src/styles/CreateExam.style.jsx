@@ -11,6 +11,16 @@ export const Container = styled.div`
   margin: 10px 0px;
 `;
 
+export const ApiError=styled.h3`
+font-size:14px;
+margin-bottom:10px;
+color:${({ theme }) => theme.colors.error};
+@media(max-width:)
+`
+
+export const Heading=styled.h2`
+margin-bottom:20px;
+`
 export const Form = styled.form`
   margin-bottom: 0px;
   display: flex;
@@ -49,15 +59,19 @@ export const Select = styled.select`
 
 // Input styling
 export const Input = styled.input`
-  padding: 10px 12px;
+  padding: 10px 200px 10px 10px;
   border: 1px solid ${({ theme }) => theme.colors.text};
   border-radius: 6px;
   font-size: 16px;
+  text-align:left;
 
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.colors.primary};
   }
+    @media(max-width:500px){
+       padding: 10px 100px 10px 10px;
+    }
 `;
 
 // Button styling

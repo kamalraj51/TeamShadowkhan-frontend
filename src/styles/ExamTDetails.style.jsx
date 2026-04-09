@@ -102,3 +102,19 @@ export const Para = styled.p`
   }
 `;
 
+export const  Button=styled.button`
+display: block;
+  margin-left: auto;
+  padding:10px 10px;
+  background-color:${({ theme }) => theme.colors.success};
+  border-radius:10px;
+  color:${({ theme }) => theme.colors.surface};
+  font-size:18px;
+  border:none;
+  transition:0.5s linear;
+   &:hover{
+        background:grey;
+        cursor:pointer;
+    }
+`
+

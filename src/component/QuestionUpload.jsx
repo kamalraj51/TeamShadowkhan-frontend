@@ -27,7 +27,7 @@ const QuestionUpload = ({ handlePop }) => {
       const fileName = selectedFile.name.toLowerCase();
 
       if (!fileName.endsWith(".xlsx")) {
-        setError("Please select an Excel file \".xlsx\"");
+        setError('Please select an Excel file ".xlsx"');
         setFile(null);
         return;
       }
@@ -93,13 +93,13 @@ const QuestionUpload = ({ handlePop }) => {
           >
             X
           </CancelButton>
-           {error && (
+          {error && (
             <div style={{ color: "red", marginTop: "10px" }}>
               <strong>Error :</strong> {error}
             </div>
-          ) }
+          )}
           <h2>Upload Questions from Excel</h2>
-          
+
           <InputContainer>
             <Input
               type="file"
@@ -122,19 +122,11 @@ const QuestionUpload = ({ handlePop }) => {
             </Button>
           </div>
 
-         
-
           {result && (
             <div style={{ marginTop: "20px", color: "green" }}>
               <h3>Upload Result</h3>
-              <p>
-                Status: <strong>{result.status || "Success"}</strong>
-              </p>
-              <p>Message: {result.message || result.successMessage}</p>
-              <p>
-                Successfully uploaded:{" "}
-                <strong>{result.successCount || 0}</strong> questions
-              </p>
+
+              <p>Message: question uploaded success</p>
 
               {result.errors && result.errors.length > 0 && (
                 <div style={{}}>

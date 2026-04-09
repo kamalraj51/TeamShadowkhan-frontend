@@ -71,6 +71,7 @@ const TopicsShow = () => {
         </Buttons>
         {popup && <QuestionUpload handlePop={handlePop} />}
 
+
         {topics.length === 0 ? (
           <H1>No Topic Available</H1>
         ) : (
@@ -96,6 +97,7 @@ const TopicsShow = () => {
             );
           })
         )}
+
       </TopicContainer>
     </Layout>
   );

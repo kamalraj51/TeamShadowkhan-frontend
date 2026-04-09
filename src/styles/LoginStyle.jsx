@@ -130,3 +130,45 @@ export const LoginFooter = styled.p`
     text-decoration: underline;
   }
 `;
+
+export const InputWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  /* Make the wrapper look like the input box */
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: 6px;
+  padding: 0 10px;
+  transition: border 0.2s ease;
+
+  &:focus-within {
+    border-color: ${({ theme }) => theme.colors.primary};
+  }
+
+  i {
+    color: ${({ theme }) => theme.colors.textSecondary};
+    font-size: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.primary};
+    }
+  }
+`;
+
+export const LoginInputPass = styled.input`
+  flex: 1;
+  padding: 10px 8px;
+  font-size: 14px;
+  border: none;         /* Remove border from input */
+  outline: none;        /* Remove focus ring from input */  
+  background: transparent;
+  color: ${({ theme }) => theme.colors.textPrimary};
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.textSecondary};
+  }
+`;
