@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { toast } from "sonner";
+import Layout from "../component/Layout";
 
 const TestLogin = () => {
   const [formData, setFormData] = useState({
@@ -56,46 +58,9 @@ const TestLogin = () => {
   };
 
   return (
-    <div className="login-container">
-      <form onSubmit={handleSubmit} className="login-form">
-        <h2>Student Login</h2>
-
-        {error && <div className="error-message">{error}</div>}
-        {success && <div className="success-message">{success}</div>}
-
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-            placeholder="Enter your username"
-            disabled={loading}
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            placeholder="Enter your password"
-            disabled={loading}
-          />
-        </div>
-
-        <button type="submit" disabled={loading} className="submit-btn">
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
-    </div>
+    <Layout>
+  <button onClick={()=>toast.info("Event has been created.")}>click me</button>
+    </Layout>
   );
 };
 

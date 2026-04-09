@@ -102,6 +102,7 @@ const App = () => {
             <ProtectedRoute><ExamUpdate/></ProtectedRoute>
           } />
 
+
           <Route path="/*" element={<NoPage />} />
 
         </Routes>

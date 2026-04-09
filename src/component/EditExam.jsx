@@ -36,7 +36,7 @@ const ContentEdit=(props)=>{
             
             <Buttons>
                 
-                <Button onClick={()=>deleteTopic(props.topic.topicId,props.topic.examId)}><FaTrash/> <p>delete</p></Button>
+                {/* <Button onClick={()=>deleteTopic(props.topic.topicId,props.topic.examId)}><FaTrash/> <p>delete</p></Button> */}
             </Buttons>
         </TopicContaienEx>
     )
