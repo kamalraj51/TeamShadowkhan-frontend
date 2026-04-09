@@ -15,9 +15,7 @@ const AvailableExam = () => {
    const getAllExam=async()=>{
       const response=await fetch("https://localhost:8443/sphinx/api/exam/getexam",{
         method:"GET",
-        headers:{
-          "Content-Type": "application/json",
-        }
+        
 
       })
        const allData=await response.json()

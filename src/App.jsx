@@ -91,7 +91,7 @@ const App = () => {
           <Route path="/examcreatetopic/:examId" element={
             <ProtectedRoute><CreateExamTopics /></ProtectedRoute>
           } />
-
+          <Route path="/test" element={<TestLogin/>}/>
           <Route path="/*" element={<NoPage />} />
 
         </Routes>

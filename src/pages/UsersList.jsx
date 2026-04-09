@@ -75,12 +75,12 @@ const UsersList = () => {
             }
         </Select>
         <Input type="text" name="allowedAttempts" onChange={(e)=>handleform(e)} placeholder='allowedattempts'/>
-         <Input type="text" name="noOfAttempts" onChange={(e)=>handleform(e)} placeholder='noofattempts'/>
+         {/* <Input type="text" name="noOfAttempts" onChange={(e)=>handleform(e)} placeholder='noofattempts'/> */}
          <Input type="text" name="timeoutDays" onChange={(e)=>handleform(e)} placeholder='timeoutdays'/>
          <Button type="submit">assign</Button>
         </Form>
-c
-         <ButtonSecondary onClick={lastSubmit}>submit all</ButtonSecondary>
+     <ButtonSecondary onClick={lastSubmit}>submit all</ButtonSecondary>
+
     </>
        
     )

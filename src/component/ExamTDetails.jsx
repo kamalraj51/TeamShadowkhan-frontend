@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 
 const ExamTDetails = (props) => {
  const [examTopics, setExamTopics] = useState([]);
- const { examId } = useParams();
+ let { examId } = useParams();
  const [sumbit,setSubmit]=useState(false)
  
   if(!examId){
