@@ -2,7 +2,7 @@ import React, { useState } from "react";
  
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
  
-import { LoginButton, LoginContainer, LoginError, LoginField, LoginFooter, LoginForm, LoginInput, LoginLabel, LoginTitle, LoginWrapper } from "../styles/LoginStyle";
+import { InputWrapper, LoginButton, LoginContainer, LoginError, LoginField, LoginFooter, LoginForm, LoginInput, LoginInputPass, LoginLabel, LoginTitle, LoginWrapper } from "../styles/LoginStyle";
 import { ApiError } from "../styles/SignupStyle";
 import { useDispatch } from "react-redux";
 
@@ -77,8 +77,13 @@ const handleSubmit=async (e)=>{
     //sucess =>redirect
     dispatch(login({ userLoginId: formData.userLoginId }));
     await new Promise(resolve => setTimeout(resolve, 1000));
-
-      navigate("/adminhome");
+      const data=await response.json()
+      if(data.role=="admin"){
+         navigate("/adminhome");
+      }else if(data.role=="user"){
+         navigate("/userdashboard");
+      }
+     
  
   }catch(err){
     setApiError("Network error. Please try again.")
@@ -111,7 +116,9 @@ const handleSubmit=async (e)=>{
  
       <LoginField>
         <LoginLabel htmlFor="password">Password</LoginLabel>
-        <LoginInput
+       
+       <InputWrapper>
+           <LoginInputPass
          type={show ? "text" : "password"}
           id="password"
           value={formData.password}
@@ -130,6 +137,8 @@ const handleSubmit=async (e)=>{
                 style={{ cursor: "pointer" }}
               ></i>
             )}
+       </InputWrapper>
+       
 
         {errors.password && <LoginError>{errors.password}</LoginError>}
       </LoginField>

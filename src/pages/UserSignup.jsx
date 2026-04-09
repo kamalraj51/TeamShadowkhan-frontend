@@ -59,7 +59,7 @@ const UserSignup = () => {
       newErrors.lastName = "must should be fill the last";
     }
 
-    if (!usernameRegex.test(formData.username)) {
+    if (!usernameRegex.test(formData.userName)) {
       newErrors.username = "3-15 chars, letters/numbers/_ only";
     }
 

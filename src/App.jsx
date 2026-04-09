@@ -23,6 +23,7 @@ import EditExam from "./component/EditExam";
 import TopicsShow from "./component/TopicsShow";
 import CreateUser from "./pages/CreateUser";
 import ExamUpdate from "./pages/ExamUpdate";
+import Userdashboar from "./Dashboard/Userdashboard";
 // import UserSignin from "./pages/UserSiginin";
 
 
@@ -43,12 +44,17 @@ const App = () => {
           <Route path="/createadmin" element={<UserSignup />} />
 
           <Route path="/CreateUser" element={<CreateUser/>} />
+          
           <Route path="/adminhome" element={
             <ProtectedRoute><Home /></ProtectedRoute>
           } />
           <Route path="/test" element={
             <ProtectedRoute><TestLogin /></ProtectedRoute>
           } />
+          <Route path="/userdashboard" element={
+            <ProtectedRoute><Userdashboar/></ProtectedRoute>
+          } />
+
           <Route path="/userpromote" element={
             <ProtectedRoute><UserPromote /></ProtectedRoute>
           } />

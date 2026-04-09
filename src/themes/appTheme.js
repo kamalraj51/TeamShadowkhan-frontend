@@ -12,8 +12,8 @@ export const appTheme = {
 
     border: "#E5E9F0",        // very light border
 
-    success: "#A3BE8C",       // soft green
-    error: "#BF616A",         // soft red
+    success: "#52a905",       // soft green
+    error: "#e61d31",         // soft red
     warning: "#D08770",       // warm orange
     info: "#5E81AC",
   },

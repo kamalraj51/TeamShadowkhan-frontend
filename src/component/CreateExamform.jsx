@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { Button, Field, Form, Input, Label } from '../styles/CreateExam.style'
+import { ApiError, Button, Container, Field, Form, Heading, Input, Label } from '../styles/CreateExam.style'
 import {  NavLink, useNavigate } from 'react-router-dom'
+import { RegisterError } from '../styles/SignupStyle'
 
 const CreateExamform = () => {
     const navigate=useNavigate()
     const [msg,setMsg]=useState("")
+    const [errors,setErrors]=useState({})
     let [formData,setFormData]=useState({
         examName:"",
         description:"",
@@ -12,6 +14,14 @@ const CreateExamform = () => {
         duration:"",
         passPercentage:""
     })
+     
+  
+
+   const durationRegex=/^(1[0-9]|[2-9][0-9]|\d{3,})$/
+
+  const noOfQuestionRegex=  /^[1-9]\d*$/
+  const passPercentageRegex=/^(100|[1-9][0-9]?)$/
+  
 
        
     let handleChange=(e)=>{
@@ -23,6 +33,45 @@ const CreateExamform = () => {
    
     let handleCreate=async (e)=>{
         e.preventDefault()
+        let flag=true
+         const err={}
+     if(formData.examName.trim()==""){
+        err.examName="Exam name is mandatory"
+        flag=false
+      }
+
+       if(!durationRegex.test(formData.duration) && formData.duration){
+        err.duration="valid duration"
+         flag=false
+      }else if(formData.duration==""){
+        err.duration="duration is mandatory"
+         flag=false
+      }
+      if(!noOfQuestionRegex.test(formData.noOfQuestions) && formData.noOfQuestions){
+        err.noOfQuestions="should be enter valid noofquestions"
+         flag=false
+      }else if(formData.noOfQuestions==""){
+        err.noOfQuestions="npof questions is a mandatory"
+         flag=false
+      }
+
+       if(!passPercentageRegex.test(formData.passPercentage) && formData.passPercentage){
+        err.passPercentage="should be enter valid pass percentage"
+         flag=false
+      }else if(formData.passPercentage==""){
+        err.passPercentage="pass percentage is a mandatory"
+         flag=false
+      }
+
+      if(formData.description.trim()==""){
+        err.description="description is a mandatory"
+         flag=false
+      }
+      if(! flag){
+        setErrors(err)
+        return
+      }
+      
         let response=await fetch("https://localhost:8443/sphinx/api/exam/createexam",{
            
             method: "POST",
@@ -45,36 +94,58 @@ const CreateExamform = () => {
              setMsg(data.error)
 
         }
+        
 
     }
   return (
     <>
-    <p>{msg}</p>
+    <Container>
+        <Heading>Create Exam</Heading>
+        
+         <ApiError>{msg}</ApiError>
         <Form onSubmit={handleCreate}>
              
             <Field>
-                <Label>Exam.Name</Label>
+                <Label>Exam Name</Label>
                 <Input type="text" name="examName" onChange={handleChange}/>
             </Field>
+            {errors.examName && (
+                  <RegisterError>{errors.examName}</RegisterError>
+              )}
             <Field>
                 <Label>Description</Label>
                 <Input type="text"  name="description" onChange={handleChange}/>
             </Field>
+             {errors.description && (
+                  <RegisterError>{errors.description}</RegisterError>
+              )}
+
             <Field>
                 <Label>No.Of.Questions</Label>
                 <Input type="text" name="noOfQuestions" onChange={handleChange}/>
             </Field>
+             {errors.noOfQuestions && (
+                  <RegisterError>{errors.noOfQuestions}</RegisterError>
+              )}
             <Field>
                 <Label>Duration (<span><b>Minutes</b></span>)</Label>
                 <Input type="text" name="duration" onChange={handleChange}/>
             </Field>
+               {errors.duration && (
+                  <RegisterError>{errors.duration}</RegisterError>
+              )}
              <Field>
                 <Label>Pass percentage <span><b>%</b></span></Label>
                 <Input type="text" name="passPercentage" onChange={handleChange}/>
             </Field>
+              {errors.passPercentage && (
+                  <RegisterError>{errors.passPercentage}</RegisterError>
+              )}
             <Button type="submit">submit</Button>
 
         </Form>
+    </Container>
+   
         
     </>
   )

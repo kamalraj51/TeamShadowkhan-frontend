@@ -38,7 +38,7 @@ const TopicsShow = () => {
   <Layout>
      <TopicContainer>
            <TopicHeading>Topics</TopicHeading>
-          <Buttons>\
+          <Buttons>
            <Button style={{marginBottom:'10px'}} onClick={()=>{navigate('/addquestion')}}>Create Question</Button>
             <Button style={{marginBottom:'10px'}} onClick={()=>{navigate('/addquestion')}}>Upload Question</Button>
 
