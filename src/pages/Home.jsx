@@ -9,9 +9,8 @@ const Home = () => {
     <>
      
       <Layout>
-      
       <AvailableExam></AvailableExam>
-    
+      
     </Layout>
     </>
     

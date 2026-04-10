@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Add,AvailableContainer, AvailableTable, ButtonDiv, Delete, Edit, H2, HeadingTable, TableWrapper, Td, Th, Upload } from '../styles/AvailableExamStyle'
+
+import { Add,AvailableContainer, AvailableTable, ButtonDiv, Delete, Edit, ExamUpdate, H2, HeadingTable, TableWrapper, Td, Th, Upload } from '../styles/AvailableExamStyle'
+
 import { Button } from '../styles/CreateExam.style'
 import UsersList from '../pages/UsersList'
 import { NavLink2 } from '../styles/ExamTDetails.style'
@@ -7,9 +9,12 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { toggle } from '../reducer/apiReduce'
 import { useDispatch, useSelector } from 'react-redux'
 
+
+
 const AvailableExam = () => {
    const dispatch=useDispatch()
    const navigate=useNavigate()
+   const [confirm,setConfirm]=useState(false)
   const [examData,setExamData]=useState([])
    const apiRefresh=useSelector((state)=>state.api.value)
    const getAllExam=async()=>{
@@ -25,6 +30,7 @@ const AvailableExam = () => {
     }
     const handleExamDelete=async (examId)=>{
       console.log(examId)
+      setConfirm(false)
         try{
           const response=await fetch("https://localhost:8443/sphinx/api/exam/examDelete",{
           method:"DELETE",
@@ -99,6 +105,7 @@ const AvailableExam = () => {
       <Td>{data.passPercentage}</Td>
 
       <Td>
+
        <ButtonDiv>
            <Add onClick={() =>{
                let examId=data.examId
@@ -107,7 +114,10 @@ const AvailableExam = () => {
                let examId=data.examId
 
            navigate(`/editexam/${examId}`)}}>Edit</Edit>
-       
+
+        <Upload>Upload</Upload>
+        <Edit onClick={() =>navigate("/examupdate", { state: { examData: data  } })}>updateExam</Edit>
+
        </ButtonDiv>
 
       </Td>
@@ -115,10 +125,14 @@ const AvailableExam = () => {
       
       
 
-      <Td><Delete onClick={()=>handleExamDelete(data.examId)}>
-    Delete
-  </Delete>
-</Td>
+      <Td><Delete onClick={()=>setConfirm(true)}>Delete</Delete>
+      </Td>
+      {
+        
+      confirm&&<Button onClick={()=>handleExamDelete(data.examId)}>confirm</Button>
+
+      }
+
 <Td>
   <Button onClick={() =>{
                let examId=data.examId

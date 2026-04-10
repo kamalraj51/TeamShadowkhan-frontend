@@ -78,8 +78,13 @@ const handleSubmit=async (e)=>{
     //sucess =>redirect
     dispatch(login({ userLoginId: formData.userLoginId }));
     await new Promise(resolve => setTimeout(resolve, 1000));
-
-      navigate("/adminhome");
+      const data=await response.json()
+      if(data.role=="admin"){
+         navigate("/adminhome");
+      }else if(data.role=="user"){
+         navigate("/userdashboard");
+      }
+     
  
   }catch(err){
     setApiError("Network error. Please try again.")

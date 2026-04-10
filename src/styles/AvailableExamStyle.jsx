@@ -181,3 +181,6 @@ export const ButtonSecondary = styled(Button)`
     opacity: 0.85;
   }
 `;
+export const ExamUpdate=styled.a`
+
+`

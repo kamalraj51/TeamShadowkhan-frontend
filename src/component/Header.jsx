@@ -39,7 +39,7 @@ const Header = () => {
         <NavLink to="/topicmaster" onClick={() => setIsOpen(false)}>
           Topic Master
         </NavLink>
-         <NavLink to="/createadmin">Add Admin</NavLink>
+         <NavLink to="/addadmin">Add Admin</NavLink>
          <NavLink to="/" onClick={async(e) => {setIsOpen(false)
          e.preventDefault();
          setLoading(true);

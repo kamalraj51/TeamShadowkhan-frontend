@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { Container } from '../styles/UserList.style'
 import { Button, ButtonSecondary, Form, Input, Option, Select } from '../styles/AvailableExamStyle'
+import Layout from '../component/Layout'
 
 
 const UsersList = () => {
@@ -63,6 +64,7 @@ const UsersList = () => {
 
     return (
     <>
+    <Layout>
         <Form onSubmit={handleSubmit}>
             <Select onChange={(e)=>handleform(e)} name="partyId">
             <Option>select </Option>
@@ -79,7 +81,9 @@ const UsersList = () => {
          <Input type="text" name="timeoutDays" onChange={(e)=>handleform(e)} placeholder='timeoutdays'/>
          <Button type="submit">assign</Button>
         </Form>
-     <ButtonSecondary onClick={lastSubmit}>submit all</ButtonSecondary>
+
+         <ButtonSecondary onClick={lastSubmit}>submit all</ButtonSecondary>
+    </Layout>
 
     </>
        

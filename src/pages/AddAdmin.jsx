@@ -28,7 +28,7 @@ const passwordRegex =
 const phNoRegex = /^[1-9]\d{9}$/;
 const usernameRegex = /^[a-zA-Z0-9_]{3,15}$/;
 
-const UserSignup = () => {
+const AddAdmin = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -42,14 +42,13 @@ const UserSignup = () => {
     phNo: "",
     password: "",
     confirmPassword: "",
-    role: "SPX_ADMIN"
+    role:"SPX_ADMIN"
   });
 
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // ✅ FIX: safer update
   const handleChange = (e) => {
     const { id, value } = e.target;
 
@@ -78,7 +77,8 @@ const UserSignup = () => {
     }
 
     if (!usernameRegex.test(formData.userName)) {
-      newErrors.userName = "3-15 chars, letters/numbers/_ only";
+
+      newErrors.username = "3-15 chars, letters/numbers/_ only";
     }
 
     if (!emailRegex.test(formData.email)) {
@@ -248,4 +248,4 @@ const UserSignup = () => {
   );
 };
 
-export default UserSignup;
+export default AddAdmin;

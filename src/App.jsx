@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import UserSignin from "./pages/UserSiginin";
-import UserSignup from "./pages/UserSignup";
+import AddAdmin from "./pages/AddAdmin";
 import TestLogin from "./pages/TestLogin";
 import UserPromote from "./pages/UserPromote";
 import CreateQuestion from "./pages/CreateQuestion";
@@ -23,7 +23,8 @@ import EditExam from "./component/EditExam";
 import TopicsShow from "./component/TopicsShow";
 import CreateUser from "./pages/CreateUser";
 import SimpleCollapse from "./pages/TestLogin";
-// import UserSignin from "./pages/UserSiginin";
+import ExamUpdate from "./pages/ExamUpdate";
+import Userdashboar from "./Dashboard/Userdashboard";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -40,7 +41,7 @@ const App = () => {
 
           <Route path="/" element={<UserSignin/>} />
           <Route path="/usersignin" element={<UserSignin/>} />
-          <Route path="/createadmin" element={<UserSignup />} />
+          <Route path="/addadmin" element={<AddAdmin />} />
 
           <Route path="/CreateUser" element={<CreateUser/>} />
           
@@ -50,6 +51,10 @@ const App = () => {
           <Route path="/test" element={
             <ProtectedRoute><TestLogin /></ProtectedRoute>
           } />
+          <Route path="/userdashboard" element={
+            <ProtectedRoute><Userdashboar/></ProtectedRoute>
+          } />
+
           <Route path="/userpromote" element={
             <ProtectedRoute><UserPromote /></ProtectedRoute>
           } />
@@ -93,6 +98,11 @@ const App = () => {
             <ProtectedRoute><CreateExamTopics /></ProtectedRoute>
           } />
           <Route path="/test" element={<SimpleCollapse/>}/>
+
+          <Route path="/examupdate" element={
+            <ProtectedRoute><ExamUpdate/></ProtectedRoute>
+          } />
+
           <Route path="/*" element={<NoPage />} />
 
         </Routes>
