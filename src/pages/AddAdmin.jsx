@@ -231,7 +231,7 @@ const AddAdmin = () => {
             </PasswordWrapper>
 
             {/* BUTTON */}
-            <RegisterButton type="submit" disabled={loading}>
+            <RegisterButton type="submit">
               {loading ? (
                 <>
                   <Spinner /> Creating...

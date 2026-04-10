@@ -134,7 +134,7 @@ const handleSubmit=async (e)=>{
       
  
     {/* BUTTON */}
-               <RegisterButton type="submit" disabled={loading}>
+               <RegisterButton type="submit" >
                  {loading ? (
                    <>
                      <Spinner /> Signing In...
