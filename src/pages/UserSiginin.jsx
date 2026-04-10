@@ -20,7 +20,6 @@ import { ApiError } from "../styles/SignupStyle";
 import { useDispatch } from "react-redux";
 
 import { login } from "../reducer/authSlice";
-//riswan
 const UserSignin = () => {
   const [formData, setFormData] = useState({
     userLoginId: "",
@@ -63,44 +62,48 @@ const UserSignin = () => {
     setErrors(newErrors);
 
     return Object.keys(newErrors).length === 0;
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validate()) return;
-    setLoading(true);
-    setApiError("");
-
-    try {
-      const response = await fetch(
-        "https://localhost:8443/sphinx/api/user/signIn",
-        {
-          method: "POST",
-          headers: {
-            "content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        },
-      );
-      if (!response.ok) {
-        console.log("not login...");
-        setApiError("invalid credinatilas ");
-        return;
-      }
-
-      //sucess =>redirect
-      dispatch(login({ userLoginId: formData.userLoginId }));
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      navigate("/adminhome");
-    } catch (err) {
-      setLoading(false);
-      setApiError("Network error. Please try again.");
-    } finally {
-      setLoading(false);
+ }
+ 
+ 
+const handleSubmit=async (e)=>{
+  e.preventDefault();
+  if(!validate()) return;
+  setLoading(true);
+  setApiError("")
+ 
+  try{
+    const response=await fetch("https://localhost:8443/sphinx/api/user/signIn",{
+      method:"POST",
+      headers:{
+        "content-Type":"application/json",
+      },
+      body:JSON.stringify(formData),
+    });
+    if(!response.ok){
+      console.log("not login...")
+      setApiError( "invalid credinatilas ");
+      return;
     }
-  };
-
+ 
+    //sucess =>redirect
+    dispatch(login({ userLoginId: formData.userLoginId }));
+    await new Promise(resolve => setTimeout(resolve, 1000));
+      const data=await response.json()
+      if(data.role=="admin"){
+         navigate("/adminhome");
+      }else if(data.role=="user"){
+         navigate("/userdashboard");
+      }
+     
+ 
+  }catch(err){
+    setApiError("Network error. Please try again.")
+  }finally{
+    setLoading(false)
+  }
+}
+ 
   return (
     <>
       <LoginContainer>

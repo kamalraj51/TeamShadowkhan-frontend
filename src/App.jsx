@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 import UserSignin from "./pages/UserSiginin";
 import UserSignup from "./pages/UserSignup";
-import TestLogin from "./pages/TestLogin";
+import  CardDemo from "./pages/TestLogin";
 import UserPromote from "./pages/UserPromote";
 import CreateQuestion from "./pages/CreateQuestion";
 import Getalluser from "./database/Getalluser";
@@ -23,6 +23,8 @@ import EditExam from "./component/EditExam";
 import TopicsShow from "./component/TopicsShow";
 import TestLoader from "./pages/TestLoader";
 import CreateUser from "./pages/CreateUser";
+import ExamUpdate from "./pages/ExamUpdate";
+import Userdashboar from "./Dashboard/Userdashboard";
 // import UserSignin from "./pages/UserSiginin";
 
 
@@ -48,8 +50,12 @@ const App = () => {
             <ProtectedRoute><Home /></ProtectedRoute>
           } />
           <Route path="/test" element={
-            <ProtectedRoute><TestLogin /></ProtectedRoute>
+            <ProtectedRoute><CardDemo /></ProtectedRoute>
           } />
+          <Route path="/userdashboard" element={
+            <ProtectedRoute><Userdashboar/></ProtectedRoute>
+          } />
+
           <Route path="/userpromote" element={
             <ProtectedRoute><UserPromote /></ProtectedRoute>
           } />
@@ -92,6 +98,11 @@ const App = () => {
           <Route path="/examcreatetopic/:examId" element={
             <ProtectedRoute><CreateExamTopics /></ProtectedRoute>
           } />
+
+          <Route path="/examupdate" element={
+            <ProtectedRoute><ExamUpdate/></ProtectedRoute>
+          } />
+
 
           <Route path="/*" element={<NoPage />} />
 

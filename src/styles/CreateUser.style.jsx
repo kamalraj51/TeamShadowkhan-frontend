@@ -60,3 +60,14 @@ export const Button = styled.button`
     opacity: 0.9;
   }
 `;
+export const Form=styled.form`
+`
+export const Card=styled.p`
+
+color: #2e7d32;
+  background-color: #e8f5e9;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #4caf50;
+  font-weight: 500;
+`;
