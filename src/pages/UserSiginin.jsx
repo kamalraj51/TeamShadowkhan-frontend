@@ -148,8 +148,8 @@ const UserSignin = () => {
               />
               <FloatingLabel>Password</FloatingLabel>
 
-              <TogglePassword onClick={() => setShowPassword((p) => !p)}>
-                {showPassword ? "Hide" : "Show"}
+              <TogglePassword className={showPassword ? "fa fa-eye-slash" : "fa fa-eye"} onClick={() => setShowPassword((p) => !p)}>
+                
               </TogglePassword>
 
               {errors.password && <LoginError>{errors.password}</LoginError>}

@@ -202,8 +202,8 @@ const AddAdmin = () => {
               />
               <FloatingLabel>Password</FloatingLabel>
 
-              <TogglePassword onClick={() => setShowPassword((p) => !p)}>
-                {showPassword ? "Hide" : "Show"}
+              <TogglePassword className={showPassword ? "fa fa-eye-slash" : "fa fa-eye"} onClick={() => setShowPassword((p) => !p)}>
+                
               </TogglePassword>
 
               {errors.password && (
@@ -221,8 +221,8 @@ const AddAdmin = () => {
               />
               <FloatingLabel>Confirm Password</FloatingLabel>
 
-              <TogglePassword onClick={() => setShowConfirm((p) => !p)}>
-                {showConfirm ? "Hide" : "Show"}
+              <TogglePassword  className={showConfirm ? "fa fa-eye-slash" : "fa fa-eye"}onClick={() => setShowConfirm((p) => !p)}>
+                
               </TogglePassword>
 
               {errors.confirmPassword && (
