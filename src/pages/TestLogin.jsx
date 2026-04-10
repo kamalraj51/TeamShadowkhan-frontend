@@ -1,67 +1,73 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { toast } from "sonner";
 import Layout from "../component/Layout";
 
-const TestLogin = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+import Box from "@mui/material/Box";
+import Switch from "@mui/material/Switch";
+import Paper from "@mui/material/Paper";
+import Collapse from "@mui/material/Collapse";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-    setError("");
+export default function SimpleCollapse() {
+  const [checked, setChecked] = React.useState(false);
+
+  const handleChange = () => {
+    setChecked((prev) => !prev);
+    toast.success("Toggled collapse!");
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-    setSuccess("");
-
-    try {
-      const response = await fetch(
-        "https://localhost:8443/sphinx/api/students/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        },
-      );
-
-      const data = await response.json();
-      console.log("data", data);
-
-      if (data.status === "200" && data.message === "error") {
-        setError("Login failed: Invalid credentials");
-      } else if (data.status === "200" || data.status === "success") {
-        setSuccess("Login successful!");
-        console.log("Login successful:", data);
-      } else {
-        setError("Login failed. Please try again.");
-      }
-    } catch (err) {
-      console.error("Login error:", err);
-      setError("Network error. Please check your connection and try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const icon = (
+    <Paper sx={{ m: 1, width: 100, height: 100 }} elevation={4}>
+      <svg width="100" height="100">
+        <polygon
+          points="0,100 50,0 100,100"
+          style={{ fill: "white", stroke: "#ccc", strokeWidth: 1 }}
+        />
+      </svg>
+    </Paper>
+  );
 
   return (
     <Layout>
-  <button onClick={()=>toast.info("Event has been created.")}>click me</button>
+      <Box sx={{ height: 300, p: 3 }}>
+        <FormControlLabel
+          control={<Switch checked={checked} onChange={handleChange} />}
+          label="Show"
+        />
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-around",
+            mt: 3,
+          }}
+        >
+          <div>
+            <Collapse in={checked}>{icon}</Collapse>
+            <Collapse in={checked} collapsedSize={40}>
+              {icon}
+            </Collapse>
+          </div>
+
+          <div>
+            <Box sx={{ width: "120px" }}>
+              <Collapse orientation="horizontal" in={checked}>
+                {icon}
+              </Collapse>
+            </Box>
+
+            <Box sx={{ width: "120px", mt: 2 }}>
+              <Collapse
+                orientation="horizontal"
+                in={checked}
+                collapsedSize={40}
+              >
+                {icon}
+              </Collapse>
+            </Box>
+          </div>
+        </Box>
+      </Box>
     </Layout>
   );
-};
-
-export default TestLogin;
+}

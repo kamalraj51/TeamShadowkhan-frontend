@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
  
 import { InputWrapper, LoginButton, LoginContainer, LoginError, LoginField, LoginFooter, LoginForm, LoginInput, LoginInputPass, LoginLabel, LoginTitle, LoginWrapper } from "../styles/LoginStyle";
-import { ApiError } from "../styles/SignupStyle";
+import { ApiError, FieldWrapper, FloatingInput, FloatingLabel, PasswordWrapper, RegisterButton, Spinner, TogglePassword } from "../styles/SignupStyle";
 import { useDispatch } from "react-redux";
 
 import { login } from "../reducer/authSlice";
+import Header from "../component/Header";
 //riswan
 const UserSignin = () => {
   const[formData,setFormData]=useState({
@@ -17,7 +18,7 @@ const UserSignin = () => {
  const dispatch=useDispatch()
 const navigate = useNavigate();
   const [errors, setErrors] = useState({});
- 
+   const [showPassword, setShowPassword] = useState(false);
  const [show, setShow] = useState(false);
  const [apiError,setApiError]=useState("")
  
@@ -89,6 +90,7 @@ const handleSubmit=async (e)=>{
  
   return (
     <>
+    <Header/>
      
       <LoginContainer>
   <LoginWrapper>
@@ -98,54 +100,44 @@ const handleSubmit=async (e)=>{
     <LoginForm onSubmit={handleSubmit}>
       <h2>SignIn</h2>
        {apiError && <ApiError>{apiError}</ApiError>}
-      <LoginField>
-        <LoginLabel htmlFor="userLoginId">Username</LoginLabel>
-        <LoginInput
-          type="text"
-          id="userLoginId"
-          value={formData.userLoginId}
-          onChange={handleForm}
-        />
-        {errors.userLoginId && <LoginError>{errors.userLoginId}</LoginError>}
-      </LoginField>
- 
-      <LoginField>
-        <LoginLabel htmlFor="password">Password</LoginLabel>
-       
-       <InputWrapper>
-           <LoginInputPass
-         type={show ? "text" : "password"}
-          id="password"
-          value={formData.password}
-          onChange={handleForm}
-        />
-        {show ? (
-              <i
-                className="fa-regular fa-eye"
-                onClick={() => setShow(false)}
-                style={{ cursor: "pointer" }}
-              ></i>
-            ) : (
-              <i
-                className="fa-solid fa-eye-slash"
-                onClick={() => setShow(true)}
-                style={{ cursor: "pointer" }}
-              ></i>
-            )}
-       </InputWrapper>
-       
 
-        {errors.password && <LoginError>{errors.password}</LoginError>}
-      </LoginField>
- 
-      <LoginButton type="submit" disabled={loading}>
-        {loading ? "Signing in..." : "Login"}
-      </LoginButton>
- 
-      <LoginFooter>
-       
 
-      </LoginFooter>
+
+ 
+  <FieldWrapper>
+               <FloatingInput id="userLoginId" placeholder=" " value={formData.userLoginId}
+          onChange={handleForm} />
+               <FloatingLabel>Username</FloatingLabel>
+               {errors.userLoginId && <LoginError>{errors.userLoginId}</LoginError>}
+             </FieldWrapper>
+
+       <PasswordWrapper>
+                    <FloatingInput
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      placeholder=" "
+                      onChange={handleForm}
+                    />
+                    <FloatingLabel>Password</FloatingLabel>
+      
+                    <TogglePassword onClick={() => setShowPassword((p) => !p)}>
+                      {showPassword ? "Hide" : "Show"}
+                    </TogglePassword>
+      
+                  {errors.password && <LoginError>{errors.password}</LoginError>}
+                  </PasswordWrapper>
+      
+ 
+    {/* BUTTON */}
+               <RegisterButton type="submit" disabled={loading}>
+                 {loading ? (
+                   <>
+                     <Spinner /> Signing In...
+                   </>
+                 ) : (
+                   "Sign In"
+                 )}
+               </RegisterButton>
     </LoginForm>
   </LoginWrapper>
 </LoginContainer>

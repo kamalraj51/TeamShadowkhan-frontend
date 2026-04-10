@@ -22,6 +22,7 @@ import UsersList from "./pages/UsersList";
 import EditExam from "./component/EditExam";
 import TopicsShow from "./component/TopicsShow";
 import CreateUser from "./pages/CreateUser";
+import SimpleCollapse from "./pages/TestLogin";
 // import UserSignin from "./pages/UserSiginin";
 
 
@@ -91,7 +92,7 @@ const App = () => {
           <Route path="/examcreatetopic/:examId" element={
             <ProtectedRoute><CreateExamTopics /></ProtectedRoute>
           } />
-          <Route path="/test" element={<TestLogin/>}/>
+          <Route path="/test" element={<SimpleCollapse/>}/>
           <Route path="/*" element={<NoPage />} />
 
         </Routes>

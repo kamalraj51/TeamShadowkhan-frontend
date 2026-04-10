@@ -4,12 +4,13 @@ import { NavLink } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { RegisterButton } from "../styles/SignupStyle";
 import {logout} from "../reducer/authSlice"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading,setLoading]=useState(false);
   const dispatch=useDispatch()
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
     <HeaderMain>
@@ -17,7 +18,7 @@ const Header = () => {
         <h2>Sphinx</h2>
       </Logo>
 
-      <MenuToggle onClick={() => setIsOpen(!isOpen)}>
+    {isAuthenticated ?  ( <><MenuToggle onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? <FaTimes /> : <FaBars />}
       </MenuToggle>
 
@@ -38,7 +39,7 @@ const Header = () => {
         <NavLink to="/topicmaster" onClick={() => setIsOpen(false)}>
           Topic Master
         </NavLink>
-         <NavLink to="/createadmin">Register</NavLink>
+         <NavLink to="/createadmin">Add Admin</NavLink>
          <NavLink to="/" onClick={async(e) => {setIsOpen(false)
          e.preventDefault();
          setLoading(true);
@@ -51,7 +52,7 @@ const Header = () => {
         </NavLink>
        
 
-      </Menu>
+      </Menu></>):null}
     </HeaderMain>
   );
 };

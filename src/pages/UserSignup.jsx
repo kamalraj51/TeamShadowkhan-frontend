@@ -1,22 +1,38 @@
 import React, { useState } from "react";
-
 import { NavLink, useNavigate } from "react-router-dom";
-import { ApiError, RegisterButton, RegisterContainer, RegisterError, RegisterField, RegisterFooter, RegisterForm, RegisterInput, RegisterLabel, RegisterSubtitle, RegisterTitle, RegisterWrapper } from "../styles/SignupStyle";
+
+import {
+  ApiError,
+  RegisterButton,
+  RegisterContainer,
+  RegisterError,
+  RegisterFooter,
+  RegisterForm,
+  RegisterSubtitle,
+  RegisterTitle,
+  RegisterWrapper,
+  FieldWrapper,
+  FloatingInput,
+  FloatingLabel,
+  PasswordWrapper,
+  TogglePassword,
+  Spinner,
+} from "../styles/SignupStyle";
+
 import Layout from "../component/Layout";
-
-
 
 // REGEX
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-
-// phNo validation (10 digits, India style)
-const phNoRegex = /^[6-9]\d{9}$/;
-
+const passwordRegex =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+const phNoRegex = /^[1-9]\d{9}$/;
 const usernameRegex = /^[a-zA-Z0-9_]{3,15}$/;
 
 const UserSignup = () => {
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -26,40 +42,43 @@ const UserSignup = () => {
     phNo: "",
     password: "",
     confirmPassword: "",
+    role: "SPX_ADMIN"
   });
 
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // ✅ FIX: safer update
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
+    const { id, value } = e.target;
 
-    setErrors({
-      ...errors,
-      [e.target.id]: "",
-    });
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [id]: "",
+    }));
 
     setApiError("");
   };
 
-  // VALIDATION
   const validate = () => {
-    let newErrors = {};
+    const newErrors = {};
 
-    if (!formData.userName) {
-      newErrors.firstName = "must should be fill the firstName";
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = "First name is required";
     }
 
-    if (!formData.lastName) {
-      newErrors.lastName = "must should be fill the last";
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = "Last name is required";
     }
 
-    if (!usernameRegex.test(formData.username)) {
-      newErrors.username = "3-15 chars, letters/numbers/_ only";
+    if (!usernameRegex.test(formData.userName)) {
+      newErrors.userName = "3-15 chars, letters/numbers/_ only";
     }
 
     if (!emailRegex.test(formData.email)) {
@@ -80,7 +99,6 @@ const UserSignup = () => {
     }
 
     setErrors(newErrors);
-
     return Object.keys(newErrors).length === 0;
   };
 
@@ -93,21 +111,19 @@ const UserSignup = () => {
     setApiError("");
 
     try {
-      const response = await fetch(
+      const res = await fetch(
         "https://localhost:8443/sphinx/api/user/signUp",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
-        },
+        }
       );
 
-      const data = await response.json();
+      const data = await res.json();
 
-      if (!response.ok) {
-        setApiError(data.message || "Signup failed!");
+      if (!res.ok) {
+        setApiError(data.message || "Signup failed");
         return;
       }
 
@@ -120,127 +136,116 @@ const UserSignup = () => {
   };
 
   return (
-    
-      <Layout>
-         <RegisterContainer>
-      <RegisterWrapper>
-    
-        <RegisterTitle>SPHINX</RegisterTitle>
-        <RegisterSubtitle>Admin Registration</RegisterSubtitle>
+    <Layout>
+      <RegisterContainer>
+        <RegisterWrapper>
+          <RegisterTitle>SPHINX</RegisterTitle>
+          <RegisterSubtitle>Add Admin</RegisterSubtitle>
 
-        <RegisterForm onSubmit={handleSubmit}>
-          <h2>Register</h2>
+          <RegisterForm onSubmit={handleSubmit}>
 
-          {apiError && <ApiError>{apiError}</ApiError>}
+            {apiError && <ApiError>{apiError}</ApiError>}
 
-          <RegisterField>
-            <RegisterLabel>First Name</RegisterLabel>
-            <RegisterInput
-              type="text"
-              id="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-            />
-            {errors.firstName && (
-              <RegisterError>{errors.firstName}</RegisterError>
-            )}
-          </RegisterField>
+            {/* FIRST NAME */}
+            <FieldWrapper>
+              <FloatingInput id="firstName" placeholder=" " onChange={handleChange} />
+              <FloatingLabel>First Name</FloatingLabel>
+              {errors.firstName && (
+                <RegisterError>{errors.firstName}</RegisterError>
+              )}
+            </FieldWrapper>
 
-          <RegisterField>
-            <RegisterLabel>Last Name</RegisterLabel>
-            <RegisterInput
-              type="text"
-              id="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-            />
-            {errors.lastName && (
-              <RegisterError>{errors.lastName}</RegisterError>
-            )}
-          </RegisterField>
+            {/* LAST NAME */}
+            <FieldWrapper>
+              <FloatingInput id="lastName" placeholder=" " onChange={handleChange} />
+              <FloatingLabel>Last Name</FloatingLabel>
+              {errors.lastName && (
+                <RegisterError>{errors.lastName}</RegisterError>
+              )}
+            </FieldWrapper>
 
-          <RegisterField>
-            <RegisterLabel>Username</RegisterLabel>
-            <RegisterInput
-              type="text"
-              id="userName"
-              value={formData.userName}
-              onChange={handleChange}
-            />
-            {errors.username && (
-              <RegisterError>{errors.userName}</RegisterError>
-            )}
-          </RegisterField>
+            {/* USERNAME */}
+            <FieldWrapper>
+              <FloatingInput id="userName" placeholder=" " onChange={handleChange} />
+              <FloatingLabel>Username</FloatingLabel>
+              {errors.userName && (
+                <RegisterError>{errors.userName}</RegisterError>
+              )}
+            </FieldWrapper>
 
-          <RegisterField>
-            <RegisterLabel>Email</RegisterLabel>
-            <RegisterInput
-              type="email"
-              id="email"
-              placeholder=""
-              value={formData.email}
-              onChange={handleChange}
-            />
-            {errors.email && (
-              <RegisterError>{errors.email}</RegisterError>
-            )}
-          </RegisterField>
+            {/* EMAIL */}
+            <FieldWrapper>
+              <FloatingInput
+                type="email"
+                id="email"
+                placeholder=" "
+                onChange={handleChange}
+              />
+              <FloatingLabel>Email</FloatingLabel>
+              {errors.email && <RegisterError>{errors.email}</RegisterError>}
+            </FieldWrapper>
 
-          <RegisterField>
-            <RegisterLabel>Phone Number</RegisterLabel>
-            <RegisterInput
-              type="text"
-              id="phNo"
-              value={formData.phNo}
-              onChange={handleChange}
-              placeholder=""
-            />
-            {errors.phNo && (
-              <RegisterError>{errors.phNo}</RegisterError>
-            )}
-          </RegisterField>
+            {/* PHONE */}
+            <FieldWrapper>
+              <FloatingInput id="phNo" placeholder=" " onChange={handleChange} />
+              <FloatingLabel>Phone Number</FloatingLabel>
+              {errors.phNo && <RegisterError>{errors.phNo}</RegisterError>}
+            </FieldWrapper>
 
-          <RegisterField>
-            <RegisterLabel>Password</RegisterLabel>
-            <RegisterInput
-              type="password"
-              id="password"
-              value={formData.password}
-              onChange={handleChange}
-            />
-            {errors.password && (
-              <RegisterError>{errors.password}</RegisterError>
-            )}
-          </RegisterField>
+            {/* PASSWORD */}
+            <PasswordWrapper>
+              <FloatingInput
+                type={showPassword ? "text" : "password"}
+                id="password"
+                placeholder=" "
+                onChange={handleChange}
+              />
+              <FloatingLabel>Password</FloatingLabel>
 
-          <RegisterField>
-            <RegisterLabel>Confirm Password</RegisterLabel>
-            <RegisterInput
-              type="password"
-              id="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-            />
-            {errors.confirmPassword && (
-              <RegisterError>{errors.confirmPassword}</RegisterError>
-            )}
-          </RegisterField>
+              <TogglePassword onClick={() => setShowPassword((p) => !p)}>
+                {showPassword ? "Hide" : "Show"}
+              </TogglePassword>
 
-          <RegisterButton type="submit" disabled={loading}>
-            {loading ? "Signing up..." : "Signup"}
-          </RegisterButton>
+              {errors.password && (
+                <RegisterError>{errors.password}</RegisterError>
+              )}
+            </PasswordWrapper>
 
-          <RegisterFooter>
-            Already have an account?{" "}
-            <NavLink to="/">Go to login</NavLink>
-          </RegisterFooter>
-        </RegisterForm>
-      </RegisterWrapper>
-    </RegisterContainer>
-      </Layout>
-    
+            {/* CONFIRM PASSWORD */}
+            <PasswordWrapper>
+              <FloatingInput
+                type={showConfirm ? "text" : "password"}
+                id="confirmPassword"
+                placeholder=" "
+                onChange={handleChange}
+              />
+              <FloatingLabel>Confirm Password</FloatingLabel>
+
+              <TogglePassword onClick={() => setShowConfirm((p) => !p)}>
+                {showConfirm ? "Hide" : "Show"}
+              </TogglePassword>
+
+              {errors.confirmPassword && (
+                <RegisterError>{errors.confirmPassword}</RegisterError>
+              )}
+            </PasswordWrapper>
+
+            {/* BUTTON */}
+            <RegisterButton type="submit" disabled={loading}>
+              {loading ? (
+                <>
+                  <Spinner /> Creating...
+                </>
+              ) : (
+                "Create"
+              )}
+            </RegisterButton>
+
+          </RegisterForm>
+        </RegisterWrapper>
+      </RegisterContainer>
+    </Layout>
   );
 };
 
 export default UserSignup;
- 
