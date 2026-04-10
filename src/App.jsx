@@ -4,8 +4,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import UserSignin from "./pages/UserSiginin";
-import UserSignup from "./pages/UserSignup";
-import  CardDemo from "./pages/TestLogin";
+import AddAdmin from "./pages/AddAdmin";
+import TestLogin from "./pages/TestLogin";
 import UserPromote from "./pages/UserPromote";
 import CreateQuestion from "./pages/CreateQuestion";
 import Getalluser from "./database/Getalluser";
@@ -21,16 +21,14 @@ import CreateExamTopics from "./pages/CreateExamTopics";
 import UsersList from "./pages/UsersList";
 import EditExam from "./component/EditExam";
 import TopicsShow from "./component/TopicsShow";
-import TestLoader from "./pages/TestLoader";
 import CreateUser from "./pages/CreateUser";
+import SimpleCollapse from "./pages/TestLogin";
 import ExamUpdate from "./pages/ExamUpdate";
 import Userdashboar from "./Dashboard/Userdashboard";
-// import UserSignin from "./pages/UserSiginin";
-
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  return isAuthenticated ? children : <Navigate to="/"  />;
+  return isAuthenticated ? children : <Navigate to="/" replace />;
 };
 
 const App = () => {
@@ -38,75 +36,161 @@ const App = () => {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<UserSignin />} />
+          <Route path="/usersignin" element={<UserSignin />} />
+          <Route path="/addadmin" element={<AddAdmin />} />
 
+          <Route path="/CreateUser" element={<CreateUser />} />
 
-          <Route path="/" element={<UserSignin/>} />
-          <Route path="/usersignin" element={<UserSignin/>} />
-          <Route path="/createadmin" element={<UserSignup />} />
+          <Route
+            path="/adminhome"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/test"
+            element={
+              <ProtectedRoute>
+                <TestLogin />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/userdashboard"
+            element={
+              <ProtectedRoute>
+                <Userdashboar />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="/CreateUser" element={<CreateUser/>} />
-          
-          <Route path="/adminhome" element={
-            <ProtectedRoute><Home /></ProtectedRoute>
-          } />
-          <Route path="/test" element={
-            <ProtectedRoute><CardDemo /></ProtectedRoute>
-          } />
-          <Route path="/userdashboard" element={
-            <ProtectedRoute><Userdashboar/></ProtectedRoute>
-          } />
+          <Route
+            path="/userpromote"
+            element={
+              <ProtectedRoute>
+                <UserPromote />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/getalluser"
+            element={
+              <ProtectedRoute>
+                <Getalluser />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/createxam"
+            element={
+              <ProtectedRoute>
+                <CreateExam />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/examtopic"
+            element={
+              <ProtectedRoute>
+                <ExamTopic />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/showalltopic"
+            element={
+              <ProtectedRoute>
+                <TopicsShow />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/updatequestion/:quesId"
+            element={
+              <ProtectedRoute>
+                <UpdateQuestion />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/editexam/:examId"
+            element={
+              <ProtectedRoute>
+                <EditExam />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/topicmaster"
+            element={
+              <ProtectedRoute>
+                <TopicMaster />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/getuser"
+            element={
+              <ProtectedRoute>
+                <UsersList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/getuser/:exmaId"
+            element={
+              <ProtectedRoute>
+                <UsersList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/upload"
+            element={
+              <ProtectedRoute>
+                <QuestionUpload />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/showquestion/:topicID"
+            element={
+              <ProtectedRoute>
+                <ShowQuestion />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/addquestion"
+            element={
+              <ProtectedRoute>
+                <CreateQuestion />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/examcreatetopic/:examId"
+            element={
+              <ProtectedRoute>
+                <CreateExamTopics />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/test" element={<SimpleCollapse />} />
 
-          <Route path="/userpromote" element={
-            <ProtectedRoute><UserPromote /></ProtectedRoute>
-          } />
-          <Route path="/getalluser" element={
-            <ProtectedRoute><Getalluser /></ProtectedRoute>
-          } />
-          <Route path="/createxam" element={
-            <ProtectedRoute><CreateExam /></ProtectedRoute>
-          } />
-          <Route path="/examtopic" element={
-            <ProtectedRoute><ExamTopic /></ProtectedRoute>
-          } />
-          <Route path="/showalltopic" element={
-            <ProtectedRoute><TopicsShow /></ProtectedRoute>
-          } />
-          <Route path="/updatequestion/:quesId" element={
-            <ProtectedRoute><UpdateQuestion /></ProtectedRoute>
-          } />
-          <Route path="/editexam/:examId" element={
-            <ProtectedRoute><EditExam /></ProtectedRoute>
-          } />
-          <Route path="/topicmaster" element={
-            <ProtectedRoute><TopicMaster /></ProtectedRoute>
-          } />
-          <Route path="/getuser" element={
-            <ProtectedRoute><UsersList /></ProtectedRoute>
-          } />
-          <Route path="/getuser/:exmaId" element={
-            <ProtectedRoute><UsersList /></ProtectedRoute>
-          } />
-          <Route path="/upload" element={
-            <ProtectedRoute><QuestionUpload /></ProtectedRoute>
-          } />
-          <Route path="/showquestion/:topicID" element={
-            <ProtectedRoute><ShowQuestion /></ProtectedRoute>
-          } />
-          <Route path="/addquestion" element={
-            <ProtectedRoute><CreateQuestion /></ProtectedRoute>
-          } />
-          <Route path="/examcreatetopic/:examId" element={
-            <ProtectedRoute><CreateExamTopics /></ProtectedRoute>
-          } />
-
-          <Route path="/examupdate" element={
-            <ProtectedRoute><ExamUpdate/></ProtectedRoute>
-          } />
-
+          <Route
+            path="/examupdate"
+            element={
+              <ProtectedRoute>
+                <ExamUpdate />
+              </ProtectedRoute>
+            }
+          />
 
           <Route path="/*" element={<NoPage />} />
-
-<Route path="/load" element={<TestLoader/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

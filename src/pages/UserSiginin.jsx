@@ -16,10 +16,21 @@ import {
   LoginTitle,
   LoginWrapper,
 } from "../styles/LoginStyle";
-import { ApiError } from "../styles/SignupStyle";
+import {
+  ApiError,
+  FieldWrapper,
+  FloatingInput,
+  FloatingLabel,
+  PasswordWrapper,
+  RegisterButton,
+  Spinner,
+  TogglePassword,
+} from "../styles/SignupStyle";
 import { useDispatch } from "react-redux";
 
 import { login } from "../reducer/authSlice";
+import Header from "../component/Header";
+//riswan
 const UserSignin = () => {
   const [formData, setFormData] = useState({
     userLoginId: "",
@@ -29,7 +40,7 @@ const UserSignin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
-
+  const [showPassword, setShowPassword] = useState(false);
   const [show, setShow] = useState(false);
   const [apiError, setApiError] = useState("");
 
@@ -62,50 +73,51 @@ const UserSignin = () => {
     setErrors(newErrors);
 
     return Object.keys(newErrors).length === 0;
+  };
 
- }
- 
- 
-const handleSubmit=async (e)=>{
-  e.preventDefault();
-  if(!validate()) return;
-  setLoading(true);
-  setApiError("")
- 
-  try{
-    const response=await fetch("https://localhost:8443/sphinx/api/user/signIn",{
-      method:"POST",
-      headers:{
-        "content-Type":"application/json",
-      },
-      body:JSON.stringify(formData),
-    });
-    if(!response.ok){
-      console.log("not login...")
-      setApiError( "invalid credinatilas ");
-      return;
-    }
- 
-    //sucess =>redirect
-    dispatch(login({ userLoginId: formData.userLoginId }));
-    await new Promise(resolve => setTimeout(resolve, 1000));
-      const data=await response.json()
-      if(data.role=="admin"){
-         navigate("/adminhome");
-      }else if(data.role=="user"){
-         navigate("/userdashboard");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    setLoading(true);
+    setApiError("");
+
+    try {
+      const response = await fetch(
+        "https://localhost:8443/sphinx/api/user/signIn",
+        {
+          method: "POST",
+          headers: {
+            "content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        },
+      );
+      if (!response.ok) {
+        console.log("not login...");
+        setApiError("invalid credinatilas ");
+        return;
       }
-     
- 
-  }catch(err){
-    setApiError("Network error. Please try again.")
-  }finally{
-    setLoading(false)
-  }
-}
- 
+
+      //sucess =>redirect
+      dispatch(login({ userLoginId: formData.userLoginId }));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const data = await response.json();
+      if (data.role == "admin") {
+        navigate("/adminhome");
+      } else if (data.role == "user") {
+        navigate("/userdashboard");
+      }
+    } catch (err) {
+      setApiError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
+      <Header />
+
       <LoginContainer>
         <LoginWrapper>
           <LoginTitle>SPHINX</LoginTitle>
@@ -113,52 +125,46 @@ const handleSubmit=async (e)=>{
           <LoginForm onSubmit={handleSubmit}>
             <h2>SignIn</h2>
             {apiError && <ApiError>{apiError}</ApiError>}
-            <LoginField>
-              <LoginLabel htmlFor="userLoginId">Username</LoginLabel>
-              <LoginInput
-                type="text"
+
+            <FieldWrapper>
+              <FloatingInput
                 id="userLoginId"
+                placeholder=" "
                 value={formData.userLoginId}
                 onChange={handleForm}
               />
+              <FloatingLabel>Username</FloatingLabel>
               {errors.userLoginId && (
                 <LoginError>{errors.userLoginId}</LoginError>
               )}
-            </LoginField>
+            </FieldWrapper>
 
-            <LoginField>
-              <LoginLabel htmlFor="password">Password</LoginLabel>
+            <PasswordWrapper>
+              <FloatingInput
+                type={showPassword ? "text" : "password"}
+                id="password"
+                placeholder=" "
+                onChange={handleForm}
+              />
+              <FloatingLabel>Password</FloatingLabel>
 
-              <InputWrapper>
-                <LoginInputPass
-                  type={show ? "text" : "password"}
-                  id="password"
-                  value={formData.password}
-                  onChange={handleForm}
-                />
-                {show ? (
-                  <i
-                    className="fa-regular fa-eye"
-                    onClick={() => setShow(false)}
-                    style={{ cursor: "pointer" }}
-                  ></i>
-                ) : (
-                  <i
-                    className="fa-solid fa-eye-slash"
-                    onClick={() => setShow(true)}
-                    style={{ cursor: "pointer" }}
-                  ></i>
-                )}
-              </InputWrapper>
+              <TogglePassword onClick={() => setShowPassword((p) => !p)}>
+                {showPassword ? "Hide" : "Show"}
+              </TogglePassword>
 
               {errors.password && <LoginError>{errors.password}</LoginError>}
-            </LoginField>
+            </PasswordWrapper>
 
-            <LoginButton type="submit" disabled={loading}>
-              {loading ? "Signing in..." : "Login"}
-            </LoginButton>
-
-            <LoginFooter></LoginFooter>
+            {/* BUTTON */}
+            <RegisterButton type="submit">
+              {loading ? (
+                <>
+                  <Spinner /> Signing In...
+                </>
+              ) : (
+                "Sign In"
+              )}
+            </RegisterButton>
           </LoginForm>
         </LoginWrapper>
       </LoginContainer>
